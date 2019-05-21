@@ -5,6 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * The class that will create saves of our game
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 0.0.1
+ */
+
 public class Save {
     private static String saveDir = System.getProperty("user.home") + "\\almostcreative\\dghsaw";
     private static String fileName = "\\save.dat\\";

@@ -1,5 +1,15 @@
 package com.almostcreativegames.adversity.Scenes;
 
+/**
+ * Manages the different scenes in our game.
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 0.0.1
+ */
+
 public class SceneManager {
     private Scene[][] scenes = new Scene[10][10];
 

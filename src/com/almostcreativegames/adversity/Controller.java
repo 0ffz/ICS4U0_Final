@@ -5,6 +5,16 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+/**
+ * This class listens to button presses.
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 0.0.1
+ */
+
 public class Controller {
     public Button gameButton;
     public Button exit;
