@@ -23,7 +23,7 @@ public class Controller {
         if(!Save.saveExists())
             gameButton.setText("New Game");
 
-//        Save.saveGame(1, 10);
+        Save.saveGame(1, 10);
     }
 
     public void startGame(ActionEvent e){

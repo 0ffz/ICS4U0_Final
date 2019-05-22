@@ -1,4 +1,4 @@
-package com.almostcreativegames.adversity;
+package com.almostcreativegames.adversity.Entity;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
  * @author Daniel Voznyy
  * @version 0.0.1
  */
-public class Sprite {
+public class Entity {
     private Image image;
     private double x;
     private double y;
@@ -24,18 +24,41 @@ public class Sprite {
     private double width;
     private double height;
     private boolean isRemoved;
-    public Sprite() {
+    private int layer;
+    public Entity() {
         x = 0;
         y = 0;
         velocityX = 0;
         velocityY = 0;
     }
 
+    public Entity(Image image, int layer) {
+        this.image = image;
+        this.layer = layer;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(String filename) {
+        Image i = new Image(filename);
+        setImage(i);
+    }
+
+    public int getLayer() {
+        return layer;
+    }
+
+    public void setLayer(int layer) {
+        this.layer = layer;
+    }
+
     public double getX() {
         return x;
     }
 
-    public Sprite setX(double x) {
+    public Entity setX(double x) {
         this.x = x;
         return this;
     }
@@ -44,7 +67,7 @@ public class Sprite {
         return y;
     }
 
-    public Sprite setY(double y) {
+    public Entity setY(double y) {
         this.y = y;
         return this;
     }
@@ -61,11 +84,6 @@ public class Sprite {
         image = i;
         width = i.getWidth();
         height = i.getHeight();
-    }
-
-    public void setImage(String filename) {
-        Image i = new Image(filename);
-        setImage(i);
     }
 
     public void setPosition(double x, double y) {
@@ -86,6 +104,8 @@ public class Sprite {
     public void update(double time) {
         x += velocityX * time;
         y += velocityY * time;
+        velocityX /= 1.3;
+        velocityY /= 1.3;
     }
 
     public void render(GraphicsContext gc) {
@@ -96,7 +116,7 @@ public class Sprite {
         return new Rectangle2D(x, y, width, height);
     }
 
-    public boolean intersects(Sprite s) {
+    public boolean intersects(Entity s) {
         return s.getBoundary().intersects(this.getBoundary());
     }
 

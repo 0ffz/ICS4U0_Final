@@ -1,9 +1,8 @@
 package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Drawing.Renderer;
-import com.almostcreativegames.adversity.Examples.IntValue;
-import com.almostcreativegames.adversity.Examples.LongValue;
-import com.almostcreativegames.adversity.Scenes.SceneManager;
+import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Scenes.RoomManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -33,7 +32,9 @@ import java.util.Iterator;
  * @version 0.0.1
  */
 public class GameRunner extends Application {
-    private static Canvas canvas;
+    private Canvas canvas;
+    private RoomManager rooms = new RoomManager();
+    private Entity background = new Entity();
 
     public static void main(String[] args) {
         launch(args);
@@ -100,19 +101,13 @@ public class GameRunner extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Renderer renderer = new Renderer(gc);
 
-        int[] coords = new int[2];
-        SceneManager scenes = new SceneManager();
-        Sprite background = new Sprite();
-        background.setImage(scenes.getScene(coords[0], coords[0]).getImage());
-
-
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
         gc.setFont(theFont);
         gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        Sprite player = new Sprite();
+        Entity player = new Entity();
         player.setImage("briefcase.png");
         player.setPosition(200, 0);
 
@@ -120,10 +115,10 @@ public class GameRunner extends Application {
         renderer.register(player, 3);
 
 
-        ArrayList<Sprite> moneybagList = new ArrayList<Sprite>();
+        ArrayList<Entity> moneybagList = new ArrayList<Entity>();
 
         for (int i = 0; i < 15; i++) {
-            Sprite moneybag = new Sprite();
+            Entity moneybag = new Entity();
             moneybag.setImage("moneybag.png");
             double px = 350 * Math.random() + 50;
             double py = 350 * Math.random() + 50;
@@ -133,19 +128,19 @@ public class GameRunner extends Application {
         }
 
         //what actually runs during the game
-        LongValue lastNanoTime = new LongValue(System.nanoTime());
-        IntValue score = new IntValue(0);
+        final long[] lastNanoTime = {System.nanoTime()};
+        final int[] score = {0};
         new AnimationTimer() {
             long startTime = System.currentTimeMillis();
 
             public void handle(long currentNanoTime) {
                 // calculate time since last update.
-                double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
-                lastNanoTime.value = currentNanoTime;
+                double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
+                lastNanoTime[0] = currentNanoTime;
 
                 // game logic
 
-                player.setVelocity(0, 0);
+//                player.setVelocity(0, 0);
                 if (input.contains("LEFT") || input.contains("A"))
                     player.addVelocity(-300, 0);
                 if (input.contains("RIGHT") || input.contains("D"))
@@ -163,13 +158,13 @@ public class GameRunner extends Application {
 
                 // collision detection
 
-                Iterator<Sprite> moneybagIter = moneybagList.iterator();
+                Iterator<Entity> moneybagIter = moneybagList.iterator();
                 while (moneybagIter.hasNext()) {
-                    Sprite moneybag = moneybagIter.next();
+                    Entity moneybag = moneybagIter.next();
                     if (player.intersects(moneybag)) {
                         moneybagIter.remove();
                         moneybag.remove();
-                        score.value++;
+                        score[0]++;
                     }
                 }
 
@@ -179,7 +174,7 @@ public class GameRunner extends Application {
                 gc.clearRect(0, 0, 1000, 1000);
                 renderer.render();
 
-                String pointsText = "Cash: $" + (100 * score.value);
+                String pointsText = "Cash: $" + (100 * score[0]);
                 gc.fillText(pointsText, 360, 36);
                 gc.strokeText(pointsText, 360, 36);
             }
@@ -204,10 +199,9 @@ public class GameRunner extends Application {
 
     }
 
-    public void wrapScreen(Sprite entity) {
+    public void wrapScreen(Entity entity) {
         double w = canvas.getWidth();
         double h = canvas.getHeight();
-
         Rectangle2D boundary = entity.getBoundary();
         if (boundary.getMinX() > w)
             entity.setX(-boundary.getMaxX() + boundary.getMinX());
@@ -218,6 +212,8 @@ public class GameRunner extends Application {
             entity.setY(-boundary.getMaxY() + boundary.getMinY());
         else if (entity.getBoundary().getMaxY() < 0)
             entity.setY(h);
+        background.setImage(rooms.getCurrentRoom().getBackground());
+
     }
 
     /**
