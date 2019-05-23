@@ -27,7 +27,6 @@ public class Controller {
     }
 
     public void startGame(ActionEvent e){
-        System.out.println("Hello");
         Stage stage = new Stage();
         GameRunner game = new GameRunner();
         game.start(stage);

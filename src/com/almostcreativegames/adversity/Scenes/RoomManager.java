@@ -1,6 +1,7 @@
 package com.almostcreativegames.adversity.Scenes;
 
 import com.almostcreativegames.adversity.Drawing.Renderer;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  * Manages the different rooms in our game.
@@ -17,26 +18,34 @@ public class RoomManager {
     private int currentX;
     private int currentY;
 
-    public RoomManager() {
-        rooms[0][0] = new Room();
-        rooms[0][1] = new Room();
+    public RoomManager(){
+        rooms[0][0] = new Room("Rooms/Home");
+//        rooms[0][1] = new Room("Rooms/Living Room");
     }
 
-    public Room getRoom(int row, int col) {
+    public Room getRoom(int row, int col){
         try {
             return rooms[row][col];
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e){
             return null;
         }
     }
 
-    public Room getCurrentRoom() {
-        return rooms[currentX][currentY];
+    public Room getCurrentRoom(){
+        return rooms[currentY][currentX];
     }
 
-    public void loadRoom(Renderer renderer, int offsetX, int offsetY) {
+    public String getCurrentPosition(){
+        return currentX + ", " + currentY;
+    }
+
+    public Room getRoomAtOffset(int offsetX, int offsetY){
+        return rooms[currentY + offsetY][currentX + offsetX];
+    }
+
+    public void loadRoom(Renderer renderer, int offsetX, int offsetY){
         currentX += offsetX;
         currentY += offsetY;
-        renderer.loadRoom(rooms[currentX][currentY]);
+        renderer.loadRoom(rooms[currentY][currentX]);
     }
 }

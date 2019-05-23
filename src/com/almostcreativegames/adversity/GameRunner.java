@@ -2,6 +2,7 @@ package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Scenes.Room;
 import com.almostcreativegames.adversity.Scenes.RoomManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -32,9 +33,11 @@ import java.util.Iterator;
  * @version 0.0.1
  */
 public class GameRunner extends Application {
-    private Canvas canvas;
+    Entity player = new Entity(3);
+    private Canvas canvas = new Canvas(1000, 1000);
+    private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
-    private Entity background = new Entity();
+    private Renderer renderer = new Renderer(gc);
 
     public static void main(String[] args) {
         launch(args);
@@ -78,9 +81,8 @@ public class GameRunner extends Application {
         stage.setScene(scene);
         stage.setResizable(true);
         stage.setFullScreen(true);
-        stage.setFullScreenExitHint("Press `F11` to toggle fullscreen");
+        stage.setFullScreenExitHint("Press 'F11' to toggle fullscreen");
 
-        canvas = new Canvas(1000, 1000);
         root.getChildren().add(canvas);
 
         ArrayList<String> input = new ArrayList<String>(); //the keys that are currently pressed
@@ -97,35 +99,30 @@ public class GameRunner extends Application {
             input.remove(code);
         });
 
-        //
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        Renderer renderer = new Renderer(gc);
-
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
         gc.setFont(theFont);
         gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        Entity player = new Entity();
         player.setImage("briefcase.png");
-        player.setPosition(200, 0);
+        player.setPosition(500, 500);
 
-        renderer.register(background, 0);
-        renderer.register(player, 3);
-
+        rooms.getCurrentRoom().addEntity(player);
 
         ArrayList<Entity> moneybagList = new ArrayList<Entity>();
 
         for (int i = 0; i < 15; i++) {
-            Entity moneybag = new Entity();
+            Entity moneybag = new Entity(1);
             moneybag.setImage("moneybag.png");
             double px = 350 * Math.random() + 50;
             double py = 350 * Math.random() + 50;
             moneybag.setPosition(px, py);
             moneybagList.add(moneybag);
-            renderer.register(moneybag, 1);
+            rooms.getCurrentRoom().addEntity(moneybag);
         }
+
+        rooms.loadRoom(renderer, 0, 0); //load starting room
 
         //what actually runs during the game
         final long[] lastNanoTime = {System.nanoTime()};
@@ -153,7 +150,8 @@ public class GameRunner extends Application {
                     stage.setFullScreen(!stage.isFullScreen());
                     startTime = System.currentTimeMillis();
                 }
-
+                if (rooms.getCurrentRoom().isColliding(player, elapsedTime))
+                    player.setVelocity(0, 0);
                 player.update(elapsedTime);
 
                 // collision detection
@@ -182,19 +180,19 @@ public class GameRunner extends Application {
 
         scene.setFill(Color.BLACK); //makes letterbox black
         letterbox(scene);
-
         stage.show();
 
         stage.setOnCloseRequest((e) -> {
-            System.out.println("Stage is closing");
+//            System.out.println("Stage is closing");
 
-            Stage mainStage = new Stage();
+            //TODO temporarily turned off while debugging
+            /*Stage mainStage = new Stage();
             Main main = new Main();
             try {
                 main.start(mainStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
-            }
+            }*/
         });
 
     }
@@ -203,17 +201,31 @@ public class GameRunner extends Application {
         double w = canvas.getWidth();
         double h = canvas.getHeight();
         Rectangle2D boundary = entity.getBoundary();
-        if (boundary.getMinX() > w)
+        int offsetX = 0;
+        int offsetY = 0;
+
+        if (boundary.getMinX() > w) {
             entity.setX(-boundary.getMaxX() + boundary.getMinX());
-        else if (entity.getBoundary().getMaxX() < 0)
+            offsetX++;
+        } else if (entity.getBoundary().getMaxX() < 0) {
             entity.setX(w);
+            offsetX--;
+        }
 
-        if (boundary.getMinY() > h)
+        if (boundary.getMinY() > h) {
             entity.setY(-boundary.getMaxY() + boundary.getMinY());
-        else if (entity.getBoundary().getMaxY() < 0)
+            offsetY++;
+        } else if (entity.getBoundary().getMaxY() < 0) {
             entity.setY(h);
-        background.setImage(rooms.getCurrentRoom().getBackground());
-
+            offsetY--;
+        }
+        if (offsetX != 0 || offsetY != 0) {
+            System.out.println("Current Room" + rooms.getCurrentRoom());
+            rooms.getCurrentRoom().moveEntity(rooms.getRoomAtOffset(offsetX, offsetY), player);
+            rooms.loadRoom(renderer, offsetX, offsetY);
+            Room newRoom = rooms.getCurrentRoom();
+            System.out.println(rooms.getCurrentPosition());
+        }
     }
 
     /**

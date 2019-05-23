@@ -25,6 +25,7 @@ public class Entity {
     private double height;
     private boolean isRemoved;
     private int layer;
+
     public Entity() {
         x = 0;
         y = 0;
@@ -32,9 +33,15 @@ public class Entity {
         velocityY = 0;
     }
 
-    public Entity(Image image, int layer) {
-        this.image = image;
-        this.layer = layer;
+    public Entity(int layer) {
+    }
+
+    public double getVelocityX() {
+        return velocityX;
+    }
+
+    public double getVelocityY() {
+        return velocityY;
     }
 
     public Image getImage() {
@@ -44,6 +51,12 @@ public class Entity {
     public void setImage(String filename) {
         Image i = new Image(filename);
         setImage(i);
+    }
+
+    public void setImage(Image i) {
+        image = i;
+        width = i.getWidth();
+        height = i.getHeight();
     }
 
     public int getLayer() {
@@ -80,12 +93,6 @@ public class Entity {
         isRemoved = true;
     }
 
-    public void setImage(Image i) {
-        image = i;
-        width = i.getWidth();
-        height = i.getHeight();
-    }
-
     public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
@@ -106,6 +113,10 @@ public class Entity {
         y += velocityY * time;
         velocityX /= 1.3;
         velocityY /= 1.3;
+    }
+
+    public double[] simulateUpdate(double time) {
+        return new double[]{velocityX * time, velocityY * time};
     }
 
     public void render(GraphicsContext gc) {

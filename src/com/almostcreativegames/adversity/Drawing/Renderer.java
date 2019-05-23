@@ -3,6 +3,7 @@ package com.almostcreativegames.adversity.Drawing;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Scenes.Room;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Renderer {
     private GraphicsContext gc;
+    private Image background;
 
     //TODO Instead of containing a list of Sprites, have a layer object which would render in order
     // based on an object's y coordinate.
@@ -37,7 +39,6 @@ public class Renderer {
      * @param layer
      */
     public void register(Entity entity, int layer) {
-        System.out.println(layers.get(layer));
         if (layers.get(layer) == null)
             layers.put(layer, new CopyOnWriteArrayList<Entity>() {{
                 add(entity);
@@ -51,6 +52,8 @@ public class Renderer {
     }
 
     public void render() {
+        gc.drawImage(background, 0, 0); //draw the background first, then every other entity in order by layer
+
         for (List<Entity> layer : layers.values()) {
             for (Entity entity : layer) {
                 if (entity.isRemoved()) {
@@ -63,9 +66,14 @@ public class Renderer {
     }
 
     public void loadRoom(Room room) {
+        if(room == null)
+            System.out.println("Room is null");
         unregisterAll();
-        for (Entity e : room.getEntities())
-            if (e.getImage() != null) //if the entity has something to render
-                register(e, e.getLayer());
+        if (room != null) {
+            background = room.getBackground();
+            for (Entity e : room.getEntities())
+                if (e.getImage() != null) //if the entity has something to render
+                    register(e, e.getLayer());
+        }
     }
 }
