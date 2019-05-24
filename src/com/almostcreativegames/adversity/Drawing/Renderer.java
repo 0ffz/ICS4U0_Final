@@ -1,5 +1,6 @@
 package com.almostcreativegames.adversity.Drawing;
 
+import com.almostcreativegames.adversity.Entity.AnimatedEntity;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Scenes.Room;
 import javafx.scene.canvas.GraphicsContext;
@@ -51,7 +52,7 @@ public class Renderer {
         layers = new TreeMap<Integer, CopyOnWriteArrayList<Entity>>();
     }
 
-    public void render() {
+    public void render(double time) {
         gc.drawImage(background, 0, 0); //draw the background first, then every other entity in order by layer
 
         for (List<Entity> layer : layers.values()) {
@@ -60,7 +61,7 @@ public class Renderer {
                     layer.remove(entity);
                     continue;
                 }
-                entity.render(gc);
+                entity.render(gc, time);
             }
         }
     }
@@ -75,5 +76,6 @@ public class Renderer {
                 if (e.getImage() != null) //if the entity has something to render
                     register(e, e.getLayer());
         }
+        System.out.println(room.getEntities());
     }
 }

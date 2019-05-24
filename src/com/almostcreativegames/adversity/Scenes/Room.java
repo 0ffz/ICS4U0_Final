@@ -1,6 +1,7 @@
 package com.almostcreativegames.adversity.Scenes;
 
 
+import com.almostcreativegames.adversity.Entity.AnimatedEntity;
 import com.almostcreativegames.adversity.Entity.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
@@ -50,13 +51,16 @@ public class Room {
         double changeX = change[0];
         double changeY = change[1];
 
-        int topX = toIntCoord(e.getX() + changeX), topY = toIntCoord(e.getY() + changeY);
-        int botX = toIntCoord(e.getBoundary().getMaxX() + changeX), botY = toIntCoord(e.getBoundary().getMaxY() + changeY);
+        int topX = toIntCoord(e.getX() + changeX);
+        int topY = toIntCoord(e.getY() + changeY);
+        int botX = toIntCoord(e.getBoundary().getMaxX() + changeX);
+        int botY = toIntCoord(e.getBoundary().getMaxY() + changeY);
 
-        if (topX >= 0 && topY >= 0 && topX < 100 && topY < 100 && collision[topX][topY])
-            return true;
-//        if (botX >= 0 && botY >= 0 && botX < 100 && botY < 100 && collision[botX][botY])
-//            return true;
+        //check if the boundaries of our future position overlap with a wall
+        for (int row = topX; row <= botX; row++)
+            for (int col = topY; col <= botY; col++)
+                if (row >= 0 && col >= 0 && row < 100 && col < 100 && collision[row][col])
+                    return true;
         return false;
     }
 

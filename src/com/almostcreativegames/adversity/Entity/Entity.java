@@ -108,18 +108,18 @@ public class Entity {
         velocityY += y;
     }
 
-    public void update(double time) {
+    public void update(double time, double friction) {
         x += velocityX * time;
         y += velocityY * time;
-        velocityX /= 1.3;
-        velocityY /= 1.3;
+        velocityX /= friction;
+        velocityY /= friction;
     }
 
     public double[] simulateUpdate(double time) {
         return new double[]{velocityX * time, velocityY * time};
     }
 
-    public void render(GraphicsContext gc) {
+    public void render(GraphicsContext gc, double time) {
         gc.drawImage(image, x, y);
     }
 

@@ -1,9 +1,12 @@
 package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Drawing.Renderer;
+import com.almostcreativegames.adversity.Entity.AnimatedEntity;
 import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Scenes.Room;
 import com.almostcreativegames.adversity.Scenes.RoomManager;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -13,12 +16,14 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,7 +38,7 @@ import java.util.Iterator;
  * @version 0.0.1
  */
 public class GameRunner extends Application {
-    Entity player = new Entity(3);
+    private AnimatedEntity player = new AnimatedEntity(5);
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
@@ -80,7 +85,7 @@ public class GameRunner extends Application {
         Scene scene = new Scene(new Group(root));
         stage.setScene(scene);
         stage.setResizable(true);
-        stage.setFullScreen(true);
+//        stage.setFullScreen(true);
         stage.setFullScreenExitHint("Press 'F11' to toggle fullscreen");
 
         root.getChildren().add(canvas);
@@ -105,9 +110,6 @@ public class GameRunner extends Application {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        player.setImage("briefcase.png");
-        player.setPosition(500, 500);
-
         rooms.getCurrentRoom().addEntity(player);
 
         ArrayList<Entity> moneybagList = new ArrayList<Entity>();
@@ -121,6 +123,11 @@ public class GameRunner extends Application {
             moneybagList.add(moneybag);
             rooms.getCurrentRoom().addEntity(moneybag);
         }
+
+
+        player.setAnimation("player.png", 0, 0, 50, 50, 2, 1, 2);
+        player.setPosition(600, 600);
+        rooms.getCurrentRoom().addEntity(player);
 
         rooms.loadRoom(renderer, 0, 0); //load starting room
 
@@ -139,20 +146,20 @@ public class GameRunner extends Application {
 
 //                player.setVelocity(0, 0);
                 if (input.contains("LEFT") || input.contains("A"))
-                    player.addVelocity(-300, 0);
+                    player.addVelocity(-100, 0);
                 if (input.contains("RIGHT") || input.contains("D"))
-                    player.addVelocity(300, 0);
+                    player.addVelocity(100, 0);
                 if (input.contains("UP") || input.contains("W"))
-                    player.addVelocity(0, -300);
+                    player.addVelocity(0, -100);
                 if (input.contains("DOWN") || input.contains("S"))
-                    player.addVelocity(0, 300);
+                    player.addVelocity(0, 100);
                 if (input.contains("F11") && System.currentTimeMillis() - startTime > 100) { //TODO eventually have buttonpress objects that can take in a delay/only be clicked once
                     stage.setFullScreen(!stage.isFullScreen());
                     startTime = System.currentTimeMillis();
                 }
                 if (rooms.getCurrentRoom().isColliding(player, elapsedTime))
                     player.setVelocity(0, 0);
-                player.update(elapsedTime);
+                player.update(elapsedTime, 1.3);
 
                 // collision detection
 
@@ -170,7 +177,7 @@ public class GameRunner extends Application {
 
                 //render
                 gc.clearRect(0, 0, 1000, 1000);
-                renderer.render();
+                renderer.render(elapsedTime);
 
                 String pointsText = "Cash: $" + (100 * score[0]);
                 gc.fillText(pointsText, 360, 36);

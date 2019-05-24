@@ -20,7 +20,7 @@ public class RoomManager {
 
     public RoomManager(){
         rooms[0][0] = new Room("Rooms/Home");
-//        rooms[0][1] = new Room("Rooms/Living Room");
+        rooms[0][1] = new Room("Rooms/Living Room");
     }
 
     public Room getRoom(int row, int col){
