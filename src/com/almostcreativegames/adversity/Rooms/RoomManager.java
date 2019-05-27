@@ -30,6 +30,7 @@ public class RoomManager {
         rooms[3][3] = new Room ("Rooms/Road 2");
         rooms[3][4] = new Room ("Rooms/Outside Factory");
         rooms[2][4] = new Room ("Rooms/Factory Entrance");
+        //rooms[1]
     }
 
     public Room getRoom(int row, int col){

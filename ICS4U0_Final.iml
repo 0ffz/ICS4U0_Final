@@ -12,5 +12,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="fxgl-11.2-beta-uber" level="project" />
     <orderEntry type="library" name="fxgl-0.5.4-uber" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
