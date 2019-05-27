@@ -125,7 +125,8 @@ public class GameRunner extends Application {
         }
 
 
-        player.setAnimation("player.png", 0, 0, 50, 50, 2, 1, 2);
+        player.addAnimation("idle", new SpriteAnimation("player.png", 0, 0, 50, 50, 2, 1, 2));
+        player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
         rooms.getCurrentRoom().addEntity(player);
 

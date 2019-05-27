@@ -1,13 +1,10 @@
 package com.almostcreativegames.adversity.Entity;
 
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -21,9 +18,8 @@ import java.util.ArrayList;
  * @version 0.0.1
  */
 public class AnimatedEntity extends Entity {
-    private ArrayList<Image> frames;
-    private double fps = 1;
-    private double progress;
+    private Map<String, SpriteAnimation> animations = new HashMap<>();
+    private SpriteAnimation currentAnimation;
 
     public AnimatedEntity() {
         super();
@@ -33,33 +29,18 @@ public class AnimatedEntity extends Entity {
         super(layer);
     }
 
-    public void setAnimation(String spriteSheetPath, int topX, int topY, int width, int height, int rows, int columns, int numFrames) {
-        Image spriteSheet = new Image(spriteSheetPath);
-        frames = new ArrayList<Image>();
-        ImageView view = new ImageView();
-        view.setImage(spriteSheet);
-        view.setViewport(new Rectangle2D(topX, topY, width, height));
+    public void addAnimation(String name, SpriteAnimation animation) {
+        animations.put(name, animation);
+    }
 
-        for (int x = 0; x < rows; x++)
-            for (int y = 0; y < columns; y++) {
-                if (y * columns + x == numFrames) //if on last frame
-                    return;
-                PixelReader reader = spriteSheet.getPixelReader();
-                System.out.println(x * (width) + " " + y * height + " " + width + " " + height);
-                WritableImage newImage = new WritableImage(reader, x * (width), y * height, width, height);
-                frames.add(newImage);
-            }
-        setImage(frames.get(0));
+    public void setCurrentAnimation(String name) {
+        currentAnimation = animations.get(name);
+        setImage(currentAnimation.getFrame(0));
     }
 
     @Override
     public void render(GraphicsContext gc, double time) {
-        progress += time;
-
-        if ((int) (progress / fps) >= frames.size()) //if looped through all frames
-            progress -= frames.size(); //start from the beginning
-
-        setImage(frames.get((int) (progress / fps)));
+        setImage(currentAnimation.getFrame(time));
         super.render(gc, time);
     }
 }

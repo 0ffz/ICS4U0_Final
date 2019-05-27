@@ -3,45 +3,43 @@ package com.almostcreativegames.adversity.Entity;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.util.Duration;
 
-public class SpriteAnimation extends Transition {
+import java.util.ArrayList;
 
-    private final ImageView imageView;
-    private final int count;
-    private final int columns;
-    private final int offsetX;
-    private final int offsetY;
-    private final int width;
-    private final int height;
+public class SpriteAnimation {
+    private ArrayList<Image> frames;
+    private double fps = 1;
+    private double progress;
 
-    private int lastIndex;
+    public SpriteAnimation(String spriteSheetPath, int topX, int topY, int width, int height, int rows, int columns, int numFrames) {
+        Image spriteSheet = new Image(spriteSheetPath);
+        frames = new ArrayList<Image>();
+        ImageView view = new ImageView();
+        view.setImage(spriteSheet);
+        view.setViewport(new Rectangle2D(topX, topY, width, height));
 
-    public SpriteAnimation(
-            ImageView imageView,
-            Duration duration,
-            int count,   int columns,
-            int offsetX, int offsetY,
-            int width,   int height) {
-        this.imageView = imageView;
-        this.count     = count;
-        this.columns   = columns;
-        this.offsetX   = offsetX;
-        this.offsetY   = offsetY;
-        this.width     = width;
-        this.height    = height;
-        setCycleDuration(duration);
-        setInterpolator(Interpolator.LINEAR);
+        for (int x = 0; x < rows; x++)
+            for (int y = 0; y < columns; y++) {
+                if (y * columns + x == numFrames) //if on last frame
+                    return;
+                PixelReader reader = spriteSheet.getPixelReader();
+                System.out.println(x * (width) + " " + y * height + " " + width + " " + height);
+                WritableImage newImage = new WritableImage(reader, x * (width), y * height, width, height);
+                frames.add(newImage);
+            }
     }
 
-    protected void interpolate(double k) {
-        final int index = Math.min((int) Math.floor(k * count), count - 1);
-        if (index != lastIndex) {
-            final int x = (index % columns) * width  + offsetX;
-            final int y = (index / columns) * height + offsetY;
-            imageView.setViewport(new Rectangle2D(x, y, width, height));
-            lastIndex = index;
-        }
+    public Image getFrame(double time){
+        progress += time;
+
+        if ((int) (progress / fps) >= frames.size()) //if looped through all frames
+            progress -= frames.size(); //start from the beginning
+
+        return frames.get((int) (progress / fps));
     }
 }
