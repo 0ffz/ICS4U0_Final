@@ -14,13 +14,17 @@ import javafx.scene.canvas.GraphicsContext;
  */
 
 public class RoomManager {
-    private Room[][] rooms = new Room[10][10];
+    private Room[][] rooms = new Room[4][7];
     private int currentX;
     private int currentY;
 
     public RoomManager(){
-        rooms[0][0] = new Room("Rooms/Home");
-        rooms[0][1] = new Room("Rooms/Living Room");
+        rooms[3][0] = new Room("Rooms/Home");
+        rooms[3][1] = new Room("Rooms/Living Room");
+        rooms[3][2] = new Room ("Rooms/Road 1");
+        rooms[3][3] = new Room ("Rooms/Road 2");
+        rooms[3][4] = new Room ("Rooms/Outside Factory");
+        rooms[2][4] = new Room ("Rooms/Factory Entrance");
     }
 
     public Room getRoom(int row, int col){
