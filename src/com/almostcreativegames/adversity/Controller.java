@@ -6,13 +6,19 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
- * This class listens to button presses.
+ * This class listens to button presses. It checks for saved game when initialized. When start game button pressed,
+ * closes menu and opens game window. Closes window when exit button pressed.
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.0.1
+ * @version 0.1.2
+ *
+ * <h2>Changelog</h2>
+ * <p>0.0.1 - Checks for saved game when initialized. When start game button pressed, closes menu and opens game
+ * window. Closes window when exit button pressed</p>
+ * <p>0.1.2 - Removed print message</p>
  */
 
 public class Controller {
@@ -23,9 +29,13 @@ public class Controller {
         if(!Save.saveExists())
             gameButton.setText("New Game");
 
-        Save.saveGame(1, 10);
+//        Save.saveGame(1, 10);
     }
 
+    /**
+     *
+     * @param e
+     */
     public void startGame(ActionEvent e){
         Stage stage = new Stage();
         GameRunner game = new GameRunner();
@@ -33,6 +43,10 @@ public class Controller {
         ((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
     }
 
+    /**
+     *
+     * @param e
+     */
     public void exit(ActionEvent e){
         ((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
     }

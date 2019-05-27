@@ -4,18 +4,22 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-
 /**
- * A class for managing sprites
- * TODO Make an entity class that uses this class
+ * A class for managing sprites. Stores position, image, velocity
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.0.1
+ * @version 0.1.2
+ *
+ * <h2>Changelog</h2>
+ * <p>0.0.1 - Simple sprite with position, size and movement capabilities</p>
+ * <p>0.1.2 - Renamed to entity, now stores layer. Velocity now slows down with friction.
+ * New method for seeing what position will be for collision detection.</p>
  */
 public class Entity {
+
     private Image image;
     private double x;
     private double y;

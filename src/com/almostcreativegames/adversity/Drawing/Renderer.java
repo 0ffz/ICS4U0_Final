@@ -1,8 +1,7 @@
 package com.almostcreativegames.adversity.Drawing;
 
-import com.almostcreativegames.adversity.Entity.AnimatedEntity;
 import com.almostcreativegames.adversity.Entity.Entity;
-import com.almostcreativegames.adversity.Scenes.Room;
+import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -18,7 +17,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.0.1
+ * @version 0.1.2
+ *
+ * <h2>Changelog</h2>
+ * <p>0.0.1 - Basic map with layer functionality</p>
+ * <p>0.1.2 - Added background and changed to TreeMap to preserve layer order</p>
  */
 public class Renderer {
     private GraphicsContext gc;
@@ -67,15 +70,15 @@ public class Renderer {
     }
 
     public void loadRoom(Room room) {
-        if(room == null)
-            System.out.println("Room is null");
         unregisterAll();
         if (room != null) {
             background = room.getBackground();
             for (Entity e : room.getEntities())
                 if (e.getImage() != null) //if the entity has something to render
                     register(e, e.getLayer());
+            System.out.println(room.getEntities());
         }
-        System.out.println(room.getEntities());
+        else
+            System.out.println("Room is null");
     }
 }

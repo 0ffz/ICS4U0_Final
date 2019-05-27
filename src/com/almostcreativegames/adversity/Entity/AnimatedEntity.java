@@ -2,20 +2,23 @@ package com.almostcreativegames.adversity.Entity;
 
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 /**
- * A class for managing sprites
- * TODO Make an entity class that uses this class
+ * A class for animated entities. Holds multiple animations in a hashmap and sets the current image to the frame from
+ * the current animation
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.0.1
+ * @version 0.1.1
+ *
+ * <h2>Changelog</h2>
+ * <p>0.1.1 - Holds multiple animations in a hashmap and sets the current image to the frame from the current animation
+ * and renders it</p>
  */
 public class AnimatedEntity extends Entity {
     private Map<String, SpriteAnimation> animations = new HashMap<>();

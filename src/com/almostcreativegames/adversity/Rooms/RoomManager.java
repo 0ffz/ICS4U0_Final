@@ -1,7 +1,6 @@
-package com.almostcreativegames.adversity.Scenes;
+package com.almostcreativegames.adversity.Rooms;
 
 import com.almostcreativegames.adversity.Drawing.Renderer;
-import javafx.scene.canvas.GraphicsContext;
 
 /**
  * Manages the different rooms in our game.
@@ -10,7 +9,11 @@ import javafx.scene.canvas.GraphicsContext;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.0.1
+ * @version 0.1.2
+ *
+ * <h2>Changelog</h2>
+ * <p>0.0.1 - Map containing two Rooms</p>
+ * <p>0.1.2 - Now contains proper Rooms for the game. Added methods for getting and moving between rooms</p>
  */
 
 public class RoomManager {
@@ -19,6 +22,8 @@ public class RoomManager {
     private int currentY;
 
     public RoomManager(){
+        currentX = 0;
+        currentY = 3;
         rooms[3][0] = new Room("Rooms/Home");
         rooms[3][1] = new Room("Rooms/Living Room");
         rooms[3][2] = new Room ("Rooms/Road 1");

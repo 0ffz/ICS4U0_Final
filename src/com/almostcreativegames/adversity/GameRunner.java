@@ -4,9 +4,8 @@ import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.AnimatedEntity;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
-import com.almostcreativegames.adversity.Scenes.Room;
-import com.almostcreativegames.adversity.Scenes.RoomManager;
-import javafx.animation.Animation;
+import com.almostcreativegames.adversity.Rooms.Room;
+import com.almostcreativegames.adversity.Rooms.RoomManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -16,14 +15,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,7 +32,12 @@ import java.util.Iterator;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.0.1
+ * @version 0.1.2
+ *
+ * <h2>Changelog</h2>
+ * <p>0.0.1 - Basic game setup</p>
+ * <p>0.1.2 - Added has proper room transition and an animated player. Moved many important objects to be instance
+ * variables</p>
  */
 public class GameRunner extends Application {
     private AnimatedEntity player = new AnimatedEntity(5);
@@ -111,8 +113,6 @@ public class GameRunner extends Application {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        rooms.getCurrentRoom().addEntity(player);
-
         ArrayList<Entity> moneybagList = new ArrayList<Entity>();
 
         for (int i = 0; i < 15; i++) {
@@ -128,7 +128,9 @@ public class GameRunner extends Application {
         dialogBox.setPosition(600, 600);
         rooms.getCurrentRoom().addEntity(dialogBox);
 
-        player.addAnimation("idle", new SpriteAnimation("player.png", 0, 0, 50, 50, 2, 1, 2));
+        player.addAnimation("idle", new SpriteAnimation("Entities/Player/Player-spritesheet.png", 0, 0, 11, 15, 1, 1, 1, 5, 5, 1));
+        player.addAnimation("left", new SpriteAnimation("Entities/Player/Player-spritesheet.png", 0, 15, 11, 15, 2, 1, 2, 5, 5, 5));
+
         player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
         rooms.getCurrentRoom().addEntity(player);
@@ -148,9 +150,12 @@ public class GameRunner extends Application {
 
                 // game logic
 
+                player.setCurrentAnimation("idle");
 //                player.setVelocity(0, 0);
-                if (input.contains("LEFT") || input.contains("A"))
+                if (input.contains("LEFT") || input.contains("A")) {
                     player.addVelocity(-100, 0);
+                    player.setCurrentAnimation("left");
+                }
                 if (input.contains("RIGHT") || input.contains("D"))
                     player.addVelocity(100, 0);
                 if (input.contains("UP") || input.contains("W"))

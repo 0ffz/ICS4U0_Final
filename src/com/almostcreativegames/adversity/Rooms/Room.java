@@ -1,7 +1,6 @@
-package com.almostcreativegames.adversity.Scenes;
+package com.almostcreativegames.adversity.Rooms;
 
 
-import com.almostcreativegames.adversity.Entity.AnimatedEntity;
 import com.almostcreativegames.adversity.Entity.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
@@ -11,13 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO Eventually will be a map of scenes for out game.
+ * Room system that holds entities, a background and collision map from black and white image.
+ * Can check if an entity is going to collide with the collision map. Can move entities between rooms.
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.0.1
+ * @version 0.1.2
+ *
+ * <h2>Changelog</h2>
+ * <p>0.0.1 - Beginning of scene system</p>
+ * <p>0.1.2 - Renamed to Room, now holds entities, a background and collision map from black and white image.
+ * Can check if an entity is going to collide with the collision map. Can move entities between rooms.</p>
  */
 
 public class Room {
