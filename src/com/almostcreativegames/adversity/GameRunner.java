@@ -39,6 +39,7 @@ import java.util.Iterator;
  */
 public class GameRunner extends Application {
     private AnimatedEntity player = new AnimatedEntity(5);
+    private Entity dialogBox = new Entity(6);
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
@@ -124,6 +125,8 @@ public class GameRunner extends Application {
             rooms.getCurrentRoom().addEntity(moneybag);
         }
 
+        dialogBox.setPosition(600, 600);
+        rooms.getCurrentRoom().addEntity(dialogBox);
 
         player.setAnimation("player.png", 0, 0, 50, 50, 2, 1, 2);
         player.setPosition(600, 600);
