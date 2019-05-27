@@ -1,13 +1,12 @@
 package com.almostcreativegames.adversity;
 
+import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.AnimatedEntity;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Rooms.Room;
 import com.almostcreativegames.adversity.Rooms.RoomManager;
-import com.almostcreativegames.adversity.Dialog.Dialog;
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
