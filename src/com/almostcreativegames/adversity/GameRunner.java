@@ -6,6 +6,7 @@ import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Scenes.Room;
 import com.almostcreativegames.adversity.Scenes.RoomManager;
+import com.almostcreativegames.adversity.Dialog.Dialog;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -21,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -44,6 +46,7 @@ public class GameRunner extends Application {
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
     private Renderer renderer = new Renderer(gc);
+    private Text dialogText;
 
     public static void main(String[] args) {
         launch(args);
@@ -125,9 +128,6 @@ public class GameRunner extends Application {
             rooms.getCurrentRoom().addEntity(moneybag);
         }
 
-        dialogBox.setPosition(600, 600);
-        rooms.getCurrentRoom().addEntity(dialogBox);
-
         player.addAnimation("idle", new SpriteAnimation("player.png", 0, 0, 50, 50, 2, 1, 2));
         player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
@@ -160,6 +160,12 @@ public class GameRunner extends Application {
                 if (input.contains("F11") && System.currentTimeMillis() - startTime > 100) { //TODO eventually have buttonpress objects that can take in a delay/only be clicked once
                     stage.setFullScreen(!stage.isFullScreen());
                     startTime = System.currentTimeMillis();
+                }
+                if (input.contains("E")) {
+                    Dialog dialog = new Dialog(player);
+                    dialogText = new Text(dialog.getMessage());
+                    dialogBox.setPosition(600, 600);
+                    rooms.getCurrentRoom().addEntity(dialogBox);
                 }
                 if (rooms.getCurrentRoom().isColliding(player, elapsedTime))
                     player.setVelocity(0, 0);
