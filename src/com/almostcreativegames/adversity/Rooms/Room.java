@@ -69,6 +69,14 @@ public class Room {
         return false;
     }
 
+    public ArrayList<Entity> getIntersects(Entity entity) {
+        ArrayList<Entity> intersects = new ArrayList<>();
+        for (Entity other : entities)
+            if (!entity.equals(other) && entity.intersects(other))
+                intersects.add(other);
+        return intersects;
+    }
+
     private int toIntCoord(double coord) {
         return (int) (coord / 10);
     }
@@ -78,6 +86,7 @@ public class Room {
     }
 
     public void addEntity(Entity e) {
+        e.setRoom(this);
         entities.add(e);
     }
 
@@ -96,6 +105,7 @@ public class Room {
 
     public void moveEntity(Room newRoom, Entity entity) {
         entities.remove(entity);
+        System.out.println("Adding player");
         newRoom.addEntity(entity);
     }
 }

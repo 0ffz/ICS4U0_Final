@@ -25,7 +25,6 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * The main class for running the game.
@@ -116,24 +115,18 @@ public class GameRunner extends Application {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        ArrayList<Entity> moneybagList = new ArrayList<Entity>();
+        Room currentRoom = rooms.getCurrentRoom();
 
-        for (int i = 0; i < 15; i++) {
-            Entity moneybag = new Entity(1);
-            moneybag.setImage("moneybag.png");
-            double px = 350 * Math.random() + 50;
-            double py = 350 * Math.random() + 50;
-            moneybag.setPosition(px, py);
-            moneybagList.add(moneybag);
-            rooms.getCurrentRoom().addEntity(moneybag);
-        }
-
-        player.addAnimation("idle", new SpriteAnimation("Entities/Player/Player-spritesheet.png", 0, 0, 11, 15, 1, 1, 1, 5, 5, 1));
-        player.addAnimation("left", new SpriteAnimation("Entities/Player/Player-spritesheet.png", 0, 15, 11, 15, 2, 1, 2, 5, 5, 5));
+        String playerSprite = "Entities/Player/Player-spritesheet.png";
+        player.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 1));
+        player.addAnimation("left", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
+        player.addAnimation("right", new SpriteAnimation(playerSprite, 0, 30, 11, 15, 2, 2, 5, 5, 5));
+        player.addAnimation("up", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
+        player.addAnimation("down", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 5));
 
         player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
-        rooms.getCurrentRoom().addEntity(player);
+        currentRoom.addEntity(player);
 
         rooms.loadRoom(renderer, 0, 0); //load starting room
 
@@ -144,23 +137,17 @@ public class GameRunner extends Application {
             long startTime = System.currentTimeMillis();
 
             public void handle(long currentNanoTime) {
+                Room currentRoom = rooms.getCurrentRoom();
                 // calculate time since last update.
                 double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
                 lastNanoTime[0] = currentNanoTime;
 
                 // game logic
 
-                player.setCurrentAnimation("idle");
-                if (input.contains("LEFT") || input.contains("A")) {
-                    player.addVelocity(-100, 0);
-                    player.setCurrentAnimation("left");
-                }
-                if (input.contains("RIGHT") || input.contains("D"))
-                    player.addVelocity(100, 0);
-                if (input.contains("UP") || input.contains("W"))
-                    player.addVelocity(0, -100);
-                if (input.contains("DOWN") || input.contains("S"))
-                    player.addVelocity(0, 100);
+                if (input.contains("LEFT") || input.contains("A")) player.addVelocity(-100, 0);
+                if (input.contains("RIGHT") || input.contains("D")) player.addVelocity(100, 0);
+                if (input.contains("UP") || input.contains("W")) player.addVelocity(0, -100);
+                if (input.contains("DOWN") || input.contains("S")) player.addVelocity(0, 100);
                 if (input.contains("F11") && System.currentTimeMillis() - startTime > 100) { //TODO eventually have buttonpress objects that can take in a delay/only be clicked once
                     stage.setFullScreen(!stage.isFullScreen());
                     startTime = System.currentTimeMillis();
@@ -169,25 +156,37 @@ public class GameRunner extends Application {
                     Dialog dialog = new Dialog(player);
                     dialogText = new Text(dialog.getMessage());
                     dialogBox.setPosition(600, 600);
-                    rooms.getCurrentRoom().addEntity(dialogBox);
+                    currentRoom.addEntity(dialogBox);
                 }
-                if (rooms.getCurrentRoom().isColliding(player, elapsedTime))
-                    player.setVelocity(0, 0);
+
+                if (currentRoom.isColliding(player, elapsedTime)) {
+                    double tempVX = player.getVelocityX();
+                    player.setVelocity(0, player.getVelocityY());
+                    if (currentRoom.isColliding(player, elapsedTime)) {
+                        player.setVelocity(tempVX, 0);
+                        if (currentRoom.isColliding(player, elapsedTime))
+                            player.setVelocity(0, 0);
+                    }
+
+                }
                 player.update(elapsedTime, 1.3);
 
-                // collision detection
+                player.setCurrentAnimation("idle");
+                if (player.getVelocityY() < -1)
+                    player.setCurrentAnimation("up");
+                else if (player.getVelocityY() > 1)
+                    player.setCurrentAnimation("down");
+                else if (player.getVelocityX() < -1)
+                    player.setCurrentAnimation("left");
+                else if (player.getVelocityX() > 1)
+                    player.setCurrentAnimation("right");
 
-                Iterator<Entity> moneybagIter = moneybagList.iterator();
-                while (moneybagIter.hasNext()) {
-                    Entity moneybag = moneybagIter.next();
-                    if (player.intersects(moneybag)) {
-                        moneybagIter.remove();
-                        moneybag.remove();
-                        score[0]++;
-                    }
+                // TODO collision detection example; Enfei use something like this for initiating dialogs
+                for (Entity collider : currentRoom.getIntersects(player)) {
+                    score[0]++;
+//                    if(collider.getName().equals("Mom"))
+//                        dialogBox.doSomething()
                 }
-
-                wrapScreen(player);
 
                 //render
                 gc.clearRect(0, 0, 1000, 1000);
@@ -196,6 +195,8 @@ public class GameRunner extends Application {
                 String pointsText = "Cash: $" + (100 * score[0]);
                 gc.fillText(pointsText, 360, 36);
                 gc.strokeText(pointsText, 360, 36);
+
+                wrapScreen(player);
             }
         }.start();
 
@@ -241,11 +242,8 @@ public class GameRunner extends Application {
             offsetY--;
         }
         if (offsetX != 0 || offsetY != 0) {
-            System.out.println("Current Room" + rooms.getCurrentRoom());
             rooms.getCurrentRoom().moveEntity(rooms.getRoomAtOffset(offsetX, offsetY), player);
             rooms.loadRoom(renderer, offsetX, offsetY);
-            Room newRoom = rooms.getCurrentRoom();
-            System.out.println(rooms.getCurrentPosition());
         }
     }
 

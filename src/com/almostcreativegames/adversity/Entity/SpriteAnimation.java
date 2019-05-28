@@ -18,13 +18,14 @@ import java.util.ArrayList;
  * <h2>Changelog</h2>
  * <p>0.1.1 - Image can be resized, on creation. The getFrame() method is assumed to be called every frame with the
  * amount of time that has passed</p>
+ * <p>0.2.2 - Reduced number of parameters needed to be passed in constructor</p>
  */
 public class SpriteAnimation {
     private ArrayList<Image> frames;
     private double fps;
     private double progress;
 
-    public SpriteAnimation(String spriteSheetPath, int topX, int topY, int width, int height, int rows, int columns, int numFrames, double sizeX, double sizeY, double speed) {
+    public SpriteAnimation(String spriteSheetPath, int topX, int topY, int width, int height, int columns, int numFrames, double sizeX, double sizeY, double speed) {
         fps = speed;
         width *= sizeX;
         topX *= sizeX;
@@ -36,12 +37,14 @@ public class SpriteAnimation {
         frames = new ArrayList<Image>();
 
         PixelReader reader = spriteSheet.getPixelReader();
-
-        for (int x = 0; x < rows; x++)
-            for (int y = 0; y < columns; y++) {
-                if (y * columns + x == numFrames) //if on last frame
+        int rows = ((numFrames - (numFrames % columns)) / columns) + 1; //TODO make sure this is correct
+        System.out.println(numFrames + " " + (numFrames % columns));
+        for (int row = 0; row < rows; row++)
+            for (int col = 0; col < columns; col++) {
+                if (row * columns + col == numFrames) //if on last frame
                     return;
-                WritableImage newImage = new WritableImage(reader, x * (width) + topX, y * height + topY, width, height);
+                System.out.println("Loading: " + row + " " + col);
+                WritableImage newImage = new WritableImage(reader, col * (width) + topX, row * height + topY, width, height);
                 frames.add(newImage);
             }
     }

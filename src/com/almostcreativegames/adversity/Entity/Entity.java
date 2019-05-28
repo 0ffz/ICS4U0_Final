@@ -1,5 +1,6 @@
 package com.almostcreativegames.adversity.Entity;
 
+import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -17,10 +18,28 @@ import javafx.scene.image.Image;
  * <p>0.0.1 - Simple sprite with position, size and movement capabilities</p>
  * <p>0.1.2 - Renamed to entity, now stores layer. Velocity now slows down with friction.
  * New method for seeing what position will be for collision detection.</p>
+ * <p>0.2.3 - Now holds a room object to remove itself from it when remove() is called.
+ * Now holds a name that can be used as an identifier.</p>
  */
 public class Entity {
 
     private Image image;
+    private Room room;
+    private String name;
+
+    public Entity(int layer) {
+        this.layer = layer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Entity setName(String name) {
+        this.name = name;
+        return this;
+    }
+
     private double x;
     private double y;
     private double velocityX;
@@ -37,7 +56,13 @@ public class Entity {
         velocityY = 0;
     }
 
-    public Entity(int layer) {
+    public Room getRoom() {
+        return room;
+    }
+
+    public Entity setRoom(Room room) {
+        this.room = room;
+        return this;
     }
 
     public double getVelocityX() {
@@ -95,6 +120,7 @@ public class Entity {
 
     public void remove() {
         isRemoved = true;
+        room.removeEntity(this);
     }
 
     public void setPosition(double x, double y) {
