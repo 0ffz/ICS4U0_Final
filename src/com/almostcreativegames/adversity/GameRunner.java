@@ -47,7 +47,9 @@ public class GameRunner extends Application {
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
     private Renderer renderer = new Renderer(gc);
-    private Text dialogText;
+    private String dialogText;
+    private Dialog dialog;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -109,13 +111,15 @@ public class GameRunner extends Application {
             input.remove(code);
         });
 
-        Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
+        Font theFont = Font.font("Helvetica", FontWeight.BOLD, 48);
         gc.setFont(theFont);
         gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
         Room currentRoom = rooms.getCurrentRoom();
+        dialogBox.setPosition(600, 600);
+        currentRoom.addEntity(dialogBox);
 
         String playerSprite = "Entities/Player/Player-spritesheet.png";
         player.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 1));
@@ -153,10 +157,14 @@ public class GameRunner extends Application {
                     startTime = System.currentTimeMillis();
                 }
                 if (input.contains("E")) {
-                    Dialog dialog = new Dialog(player);
-                    dialogText = new Text(dialog.getMessage());
+                    dialog = new Dialog(player, currentRoom);
+                    dialogText = dialog.getMessage();
+                    gc.fillText(dialogText, 600, 600);
+                    gc.strokeText(dialogText, 600, 600);
+                    dialogBox.setImage("DialogBox.png");
                     dialogBox.setPosition(600, 600);
                     currentRoom.addEntity(dialogBox);
+
                 }
 
                 if (currentRoom.isColliding(player, elapsedTime)) {

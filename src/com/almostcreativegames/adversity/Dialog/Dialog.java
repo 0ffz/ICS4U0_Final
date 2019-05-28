@@ -1,6 +1,7 @@
 package com.almostcreativegames.adversity.Dialog;
 
-import com.almostcreativegames.adversity.Entity.*;
+import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Rooms.Room;
 
 /**
  * A class for determining the output of the dialog
@@ -18,18 +19,27 @@ import com.almostcreativegames.adversity.Entity.*;
 public class Dialog {
     private String message;
     private Entity player;
+    private Room currentRoom;
 
-    public Dialog(Entity e){
+    public Dialog(Entity e, Room current) {
         player = e;
-    }
-    private void determineMessage(){
-        if (player.getX() == 10 && player.getY() == 20)
-            message = "Oh no!";
-        else
-            message = "I wonder what to do!";
+        currentRoom = current;
     }
 
-    public String getMessage(){
+    private void determineMessage() {
+        for (Entity collider : currentRoom.getIntersects(player)) {
+            if (collider.getName() != null) {
+                if (collider.getName().equals("Mom"))
+                    message = "You should be going to work now";
+                else
+                    message = "I shouldn't be wasting time on this!";
+            }
+            else
+                message = "I shouldn't be wasting time on this!";
+        }
+    }
+
+    public String getMessage() {
         determineMessage();
         return message;
     }
