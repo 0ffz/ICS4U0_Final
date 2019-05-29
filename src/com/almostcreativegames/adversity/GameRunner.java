@@ -1,10 +1,10 @@
 package com.almostcreativegames.adversity;
 
-import com.almostcreativegames.adversity.Dialog.Dialog;
+import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Drawing.Renderer;
-import com.almostcreativegames.adversity.Entity.AnimatedEntity;
 import com.almostcreativegames.adversity.Entity.Entity;
-import com.almostcreativegames.adversity.Entity.SpriteAnimation;
+import com.almostcreativegames.adversity.Entity.Player;
+import com.almostcreativegames.adversity.Input.InputListener;
 import com.almostcreativegames.adversity.Rooms.Room;
 import com.almostcreativegames.adversity.Rooms.RoomManager;
 import javafx.animation.AnimationTimer;
@@ -33,22 +33,22 @@ import java.util.ArrayList;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.1.2
+ * @version 0.2.3
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Basic game setup</p>
  * <p>0.1.2 - Added has proper room transition and an animated player. Moved many important objects to be instance
  * variables</p>
+ * <p>0.2.3 - Improved player collision</p>
  */
 public class GameRunner extends Application {
-    private AnimatedEntity player = new AnimatedEntity(5);
+    private Player player = new Player("Entities/Player/Player-spritesheet.png");
     private Entity dialogBox = new Entity(6);
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
     private Renderer renderer = new Renderer(gc);
     private Text dialogText;
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -90,24 +90,11 @@ public class GameRunner extends Application {
         Scene scene = new Scene(new Group(root));
         stage.setScene(scene);
         stage.setResizable(true);
+        InputListener.registerScene(scene);
 //        stage.setFullScreen(true);
         stage.setFullScreenExitHint("Press 'F11' to toggle fullscreen");
 
         root.getChildren().add(canvas);
-
-        ArrayList<String> input = new ArrayList<String>(); //the keys that are currently pressed
-
-        //track keys being pressed and released
-        scene.setOnKeyPressed(e -> { //lambda used as per Intellij's suggestion
-            String code = e.getCode().toString();
-            if (!input.contains(code))
-                input.add(code);
-        });
-
-        scene.setOnKeyReleased(e -> {
-            String code = e.getCode().toString();
-            input.remove(code);
-        });
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
         gc.setFont(theFont);
@@ -116,13 +103,6 @@ public class GameRunner extends Application {
         gc.setLineWidth(1);
 
         Room currentRoom = rooms.getCurrentRoom();
-
-        String playerSprite = "Entities/Player/Player-spritesheet.png";
-        player.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 1));
-        player.addAnimation("left", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
-        player.addAnimation("right", new SpriteAnimation(playerSprite, 0, 30, 11, 15, 2, 2, 5, 5, 5));
-        player.addAnimation("up", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
-        player.addAnimation("down", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 5));
 
         player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
@@ -142,44 +122,21 @@ public class GameRunner extends Application {
                 double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
                 lastNanoTime[0] = currentNanoTime;
 
-                // game logic
+                if (InputListener.isKeyPressed("E") && System.currentTimeMillis() - startTime > 100) {
+                    /*Dialog dialog = new Dialog(player);
+                    dialogText = new Text(dialog.getMessage());
+                    dialogBox.setPosition(600, 600);
+                    currentRoom.addEntity(dialogBox);*/
+                    renderer.loadRoom(new Battle("Rooms/Factory Entrance", player, currentRoom));
+                    startTime = System.currentTimeMillis();
+                }
 
-                if (input.contains("LEFT") || input.contains("A")) player.addVelocity(-100, 0);
-                if (input.contains("RIGHT") || input.contains("D")) player.addVelocity(100, 0);
-                if (input.contains("UP") || input.contains("W")) player.addVelocity(0, -100);
-                if (input.contains("DOWN") || input.contains("S")) player.addVelocity(0, 100);
-                if (input.contains("F11") && System.currentTimeMillis() - startTime > 100) { //TODO eventually have buttonpress objects that can take in a delay/only be clicked once
+                if (InputListener.isKeyPressed("F11") && System.currentTimeMillis() - startTime > 100) { //TODO eventually have buttonpress objects that can take in a delay/only be clicked once
                     stage.setFullScreen(!stage.isFullScreen());
                     startTime = System.currentTimeMillis();
                 }
-                if (input.contains("E")) {
-                    Dialog dialog = new Dialog(player);
-                    dialogText = new Text(dialog.getMessage());
-                    dialogBox.setPosition(600, 600);
-                    currentRoom.addEntity(dialogBox);
-                }
 
-                if (currentRoom.isColliding(player, elapsedTime)) {
-                    double tempVX = player.getVelocityX();
-                    player.setVelocity(0, player.getVelocityY());
-                    if (currentRoom.isColliding(player, elapsedTime)) {
-                        player.setVelocity(tempVX, 0);
-                        if (currentRoom.isColliding(player, elapsedTime))
-                            player.setVelocity(0, 0);
-                    }
-
-                }
                 player.update(elapsedTime, 1.3);
-
-                player.setCurrentAnimation("idle");
-                if (player.getVelocityY() < -1)
-                    player.setCurrentAnimation("up");
-                else if (player.getVelocityY() > 1)
-                    player.setCurrentAnimation("down");
-                else if (player.getVelocityX() < -1)
-                    player.setCurrentAnimation("left");
-                else if (player.getVelocityX() > 1)
-                    player.setCurrentAnimation("right");
 
                 // TODO collision detection example; Enfei use something like this for initiating dialogs
                 for (Entity collider : currentRoom.getIntersects(player)) {
@@ -205,8 +162,6 @@ public class GameRunner extends Application {
         stage.show();
 
         stage.setOnCloseRequest((e) -> {
-//            System.out.println("Stage is closing");
-
             //TODO temporarily turned off while debugging
             /*Stage mainStage = new Stage();
             Main main = new Main();

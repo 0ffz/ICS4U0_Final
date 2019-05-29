@@ -30,6 +30,10 @@ public class Room {
     private boolean[][] collision;
     private List<Entity> entities = new ArrayList<Entity>();
 
+    protected Room(){
+
+    }
+
     public Room(String imageURL) {
         background = new Image(imageURL + ".png", 1000, 1000, false, true);
         Image backgroundCollision = new Image(imageURL + " col.png");

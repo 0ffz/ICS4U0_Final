@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -10,6 +12,11 @@
         <Button fx:id="gameButton" mnemonicParsing="false" onAction="#startGame" prefWidth="200.0" text="Start Game" GridPane.rowIndex="0" />
         <Button fx:id="start_game2" layoutX="106.0" layoutY="160.0" mnemonicParsing="false" onAction="#startGame" prefWidth="200.0" text="Start Game" GridPane.rowIndex="1" />
         <Button fx:id="exit" alignment="CENTER" layoutX="116.0" layoutY="175.0" mnemonicParsing="false" onAction="#exit" prefWidth="200.0" text="Exit" GridPane.rowIndex="2" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#startGame" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+         <image>
+            <Image url="@../../../../resources/moneybag.png" />
+         </image>
+      </ImageView>
     </children>
     <columnConstraints>
         <ColumnConstraints />
@@ -18,5 +25,6 @@
         <RowConstraints />
         <RowConstraints />
         <RowConstraints />
+      <RowConstraints />
     </rowConstraints>
 </GridPane>

@@ -24,7 +24,7 @@ import javafx.scene.image.Image;
 public class Entity {
 
     private Image image;
-    private Room room;
+    protected Room room;
     private String name;
 
     public Entity(int layer) {
