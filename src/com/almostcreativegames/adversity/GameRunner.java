@@ -122,14 +122,20 @@ public class GameRunner extends Application {
                 double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
                 lastNanoTime[0] = currentNanoTime;
 
-                if (InputListener.isKeyPressed("E") && System.currentTimeMillis() - startTime > 100) {
-                    /*Dialog dialog = new Dialog(player);
-                    dialogText = new Text(dialog.getMessage());
-                    dialogBox.setPosition(600, 600);
-                    currentRoom.addEntity(dialogBox);*/
-                    renderer.loadRoom(new Battle("Rooms/Factory Entrance", player, currentRoom));
+                if (InputListener.isKeyPressed("M") && System.currentTimeMillis() - startTime > 100) {
+                    Battle battle = new Battle("Rooms/Factory Entrance", player, currentRoom);
+                    renderer.loadRoom(battle);
+                    player.setCanMove(false);
+                    player.hide();
                     startTime = System.currentTimeMillis();
+
+                    if (InputListener.isKeyPressed("N")) {
+                        battle.endBattle(renderer);
+                        player.setCanMove(true);
+                        player.show();
+                    }
                 }
+
 
                 if (InputListener.isKeyPressed("F11") && System.currentTimeMillis() - startTime > 100) { //TODO eventually have buttonpress objects that can take in a delay/only be clicked once
                     stage.setFullScreen(!stage.isFullScreen());
