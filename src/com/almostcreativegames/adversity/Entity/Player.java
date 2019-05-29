@@ -2,6 +2,9 @@ package com.almostcreativegames.adversity.Entity;
 
 import com.almostcreativegames.adversity.Input.InputListener;
 
+/**
+ *
+ */
 public class Player extends AnimatedEntity {
     public Player(String playerSprite) {
         //TODO is it better to leave this up to GameRunner to create the animations?
@@ -15,17 +18,30 @@ public class Player extends AnimatedEntity {
 
     @Override
     public void update(double time, double friction) {
-        super.update(time, friction);
-        // game logic
-
         if (InputListener.isKeyPressed("LEFT") || InputListener.isKeyPressed("A")) addVelocity(-100, 0);
         if (InputListener.isKeyPressed("RIGHT") || InputListener.isKeyPressed("D")) addVelocity(100, 0);
         if (InputListener.isKeyPressed("UP") || InputListener.isKeyPressed("W")) addVelocity(0, -100);
         if (InputListener.isKeyPressed("DOWN") || InputListener.isKeyPressed("S")) addVelocity(0, 100);
 
-        //TODO player sometimes gets stuck with this system
         collisionCheck(time);
+        super.update(time, friction);
 
+        animate();
+    }
+
+    private void collisionCheck(double time) {
+        if (room.isColliding(this, time)) {
+            double tempVX = getVelocityX();
+            setVelocity(0, getVelocityY());
+            if (room.isColliding(this, time)) {
+                setVelocity(tempVX, 0);
+                if (room.isColliding(this, time))
+                    setVelocity(0, 0);
+            }
+        }
+    }
+
+    private void animate(){
         setCurrentAnimation("idle");
         if (getVelocityX() < -50)
             setCurrentAnimation("left");
@@ -35,18 +51,5 @@ public class Player extends AnimatedEntity {
             setCurrentAnimation("up");
         else if (getVelocityY() > 50)
             setCurrentAnimation("down");
-    }
-
-    public void collisionCheck(double time) {
-        if (room.isColliding(this, time)) {
-            double tempVX = getVelocityX();
-            setVelocity(0, getVelocityY());
-            if (room.isColliding(this, time)) {
-                setVelocity(tempVX, 0);
-                if (room.isColliding(this, time))
-                    setVelocity(0, 0);
-            }
-
-        }
     }
 }

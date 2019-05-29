@@ -17,12 +17,13 @@ import java.util.List;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.1.2
+ * @version 0.2.3
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Beginning of scene system</p>
  * <p>0.1.2 - Renamed to Room, now holds entities, a background and collision map from black and white image.
  * Can check if an entity is going to collide with the collision map. Can move entities between rooms.</p>
+ * <p>0.2.3 Added entity collision checker.</p>
  */
 
 public class Room {
@@ -67,9 +68,24 @@ public class Room {
 
         //check if the boundaries of our future position overlap with a wall
         for (int row = topX; row <= botX; row++)
-            for (int col = topY; col <= botY; col++)
-                if (row >= 0 && col >= 0 && row < 100 && col < 100 && collision[row][col])
+            for (int col = topY; col <= botY; col++) {
+                //here we change the boundaries of the bounding box we got to stay in bounds
+                if (row < 0)
+                    row = 0;
+                else if (row >= 100) {
+                    row = 99;
+                    botX = 99;
+                }
+                if (col < 0)
+                    col = 0;
+                else if (col >= 100) {
+                    col = 99;
+                    botY = 99;
+                }
+                //then we check if any of the positions in the box are going to be on a collider
+                if (collision[row][col])
                     return true;
+            }
         return false;
     }
 

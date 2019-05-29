@@ -39,7 +39,7 @@ import java.util.ArrayList;
  * <p>0.0.1 - Basic game setup</p>
  * <p>0.1.2 - Added has proper room transition and an animated player. Moved many important objects to be instance
  * variables</p>
- * <p>0.2.3 - Improved player collision</p>
+ * <p>0.2.3 - Moved player collision and input detection into separate class</p>
  */
 public class GameRunner extends Application {
     private Player player = new Player("Entities/Player/Player-spritesheet.png");
@@ -136,6 +136,7 @@ public class GameRunner extends Application {
                     startTime = System.currentTimeMillis();
                 }
 
+
                 player.update(elapsedTime, 1.3);
 
                 // TODO collision detection example; Enfei use something like this for initiating dialogs
@@ -152,7 +153,6 @@ public class GameRunner extends Application {
                 String pointsText = "Cash: $" + (100 * score[0]);
                 gc.fillText(pointsText, 360, 36);
                 gc.strokeText(pointsText, 360, 36);
-
                 wrapScreen(player);
             }
         }.start();
@@ -177,6 +177,7 @@ public class GameRunner extends Application {
     public void wrapScreen(Entity entity) {
         double w = canvas.getWidth();
         double h = canvas.getHeight();
+
         Rectangle2D boundary = entity.getBoundary();
         int offsetX = 0;
         int offsetY = 0;
