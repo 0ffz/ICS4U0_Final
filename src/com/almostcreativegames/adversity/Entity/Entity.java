@@ -1,5 +1,6 @@
 package com.almostcreativegames.adversity.Entity;
 
+import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;

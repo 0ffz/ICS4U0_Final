@@ -16,6 +16,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -47,8 +48,6 @@ public class GameRunner extends Application {
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
     private Renderer renderer = new Renderer(gc);
-    private String dialogText;
-    private Dialog dialog;
 
 
     public static void main(String[] args) {
@@ -118,8 +117,6 @@ public class GameRunner extends Application {
         gc.setLineWidth(1);
 
         Room currentRoom = rooms.getCurrentRoom();
-        dialogBox.setPosition(600, 600);
-        currentRoom.addEntity(dialogBox);
 
         String playerSprite = "Entities/Player/Player-spritesheet.png";
         player.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 1));
@@ -157,14 +154,15 @@ public class GameRunner extends Application {
                     startTime = System.currentTimeMillis();
                 }
                 if (input.contains("E")) {
-                    dialog = new Dialog(player, currentRoom);
-                    dialogText = dialog.getMessage();
-                    gc.fillText(dialogText, 600, 600);
-                    gc.strokeText(dialogText, 600, 600);
-                    dialogBox.setImage("DialogBox.png");
-                    dialogBox.setPosition(600, 600);
-                    currentRoom.addEntity(dialogBox);
-
+                    if (!dialogBox.isRemoved()) {
+                        dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
+                        dialogBox.setPosition(250, 700);
+                        currentRoom.addEntity(dialogBox);
+                        renderer.register(dialogBox, dialogBox.getLayer());
+                    }
+                    else{
+                        //TODO Remove the dialog box
+                    }
                 }
 
                 if (currentRoom.isColliding(player, elapsedTime)) {
