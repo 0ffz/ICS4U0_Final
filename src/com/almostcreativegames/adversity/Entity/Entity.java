@@ -5,6 +5,11 @@ import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
+import java.awt.*;
 
 /**
  * A class for managing sprites. Stores position, image, velocity
@@ -40,6 +45,12 @@ public class Entity {
 
     public Entity(int layer) {
         this.layer = layer;
+    }
+
+
+    public Entity(int layer, boolean removed){
+        this.layer = layer;
+        this.removed = removed;
     }
 
     public Entity() {
@@ -144,6 +155,14 @@ public class Entity {
     public void remove() {
         removed = true;
         room.removeEntity(this);
+    }
+
+    public void add(){
+        removed = false;
+    }
+
+    public void addText(String text){
+
     }
 
     /**

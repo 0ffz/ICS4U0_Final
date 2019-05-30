@@ -1,6 +1,8 @@
 package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Battle.Battle;
+import com.almostcreativegames.adversity.Dialog.Dialog;
+import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
@@ -21,11 +23,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 /**
  * The main class for running the game.
@@ -44,7 +43,7 @@ import java.util.ArrayList;
  */
 public class GameRunner extends Application {
     private Player player = new Player("Entities/Player/Player-spritesheet.png");
-    private Entity dialogBox = new Entity(6);
+    private DialogBox dialogBox = new DialogBox(6, true);
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
@@ -141,15 +140,15 @@ public class GameRunner extends Application {
                     stage.setFullScreen(!stage.isFullScreen());
                     startTime = System.currentTimeMillis();
                 }
-                if (InputListener.isKeyPressed("E", 100)) {
+                if (InputListener.isKeyPressed("E", 200)) {
                     if (!dialogBox.isRemoved()) {
+                        dialogBox.remove();
+                    } else {
                         dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
                         dialogBox.setPosition(250, 700);
                         currentRoom.addEntity(dialogBox);
                         renderer.register(dialogBox, dialogBox.getLayer());
-                    }
-                    else{
-                        //TODO Remove the dialog box
+                        dialogBox.add();
                     }
                 }
 
