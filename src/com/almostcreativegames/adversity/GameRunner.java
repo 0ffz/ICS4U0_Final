@@ -105,6 +105,7 @@ public class GameRunner extends Application {
 
         Room currentRoom = rooms.getCurrentRoom();
 
+        player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
         currentRoom.addEntity(player);
 
@@ -140,7 +141,7 @@ public class GameRunner extends Application {
                     stage.setFullScreen(!stage.isFullScreen());
                     startTime = System.currentTimeMillis();
                 }
-                if (input.contains("E", 100)) {
+                if (InputListener.isKeyPressed("E", 100)) {
                     if (!dialogBox.isRemoved()) {
                         dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
                         dialogBox.setPosition(250, 700);
