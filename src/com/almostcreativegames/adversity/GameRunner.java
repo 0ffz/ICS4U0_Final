@@ -122,7 +122,7 @@ public class GameRunner extends Application {
                 double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
                 lastNanoTime[0] = currentNanoTime;
 
-                if (InputListener.isKeyPressed("M") && System.currentTimeMillis() - startTime > 100) {
+                if (InputListener.isKeyPressed("M", 100)) {
                     Battle battle = new Battle("Rooms/Factory Entrance", player, currentRoom);
                     renderer.loadRoom(battle);
                     player.setCanMove(false);
@@ -137,7 +137,7 @@ public class GameRunner extends Application {
                 }
 
 
-                if (InputListener.isKeyPressed("F11") && System.currentTimeMillis() - startTime > 100) { //TODO eventually have buttonpress objects that can take in a delay/only be clicked once
+                if (InputListener.isKeyPressed("F11", 200)) {
                     stage.setFullScreen(!stage.isFullScreen());
                     startTime = System.currentTimeMillis();
                 }

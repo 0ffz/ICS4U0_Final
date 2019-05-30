@@ -26,7 +26,7 @@ public class Battle extends Room {
         super(imageURL);
         this.fighting = fighting;
         this.fromRoom = fromRoom;
-        addEntity(fighting);
+//        addEntity(fighting);
     }
 
     public void endBattle(Renderer renderer) {
