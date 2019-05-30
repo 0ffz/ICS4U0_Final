@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * <p>0.1.1 - Added basic premise on how to return dialog</p>
  */
 
-public class Dialog {
+public class Dialog extends Entity {
     private String message;
     private Entity player;
     private Room currentRoom;
@@ -35,7 +35,9 @@ public class Dialog {
             if (collider.getName() != null) {
                 if (collider.getName().equals("Mom"))
                     message = "You should be going to work now";
-            }
+            } else
+                break;
+
         }
 
     }
@@ -44,4 +46,5 @@ public class Dialog {
         determineMessage();
         return message;
     }
+
 }

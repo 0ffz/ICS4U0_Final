@@ -1,6 +1,8 @@
 package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Battle.Battle;
+import com.almostcreativegames.adversity.Dialog.Dialog;
+import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
@@ -144,13 +146,17 @@ public class GameRunner extends Application {
                         collider.onInteract();
                     }
 
+                if (InputListener.isKeyPressed("E", 200)) {
                     if (!dialogBox.isRemoved()) {
+                        dialogBox.remove();
+                    } else {
                         dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
                         dialogBox.setPosition(250, 700);
                         currentRoom.addEntity(dialogBox);
                         renderer.register(dialogBox, dialogBox.getLayer());
                     } else {
                         //TODO Remove the dialog box
+                        dialogBox.add();
                     }
                 }
 
