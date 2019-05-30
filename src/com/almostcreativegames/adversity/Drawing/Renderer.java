@@ -60,11 +60,12 @@ public class Renderer {
 
         for (List<Entity> layer : layers.values()) {
             for (Entity entity : layer) {
-                if (entity.isRemoved()) {
+                if (entity.isRemoved()) { //if the entity got removed, unregister it
                     layer.remove(entity);
                     continue;
                 }
-                entity.render(gc, time);
+                if (!entity.isHidden()) //if the entity is hidden, don't render it
+                    entity.render(gc, time);
             }
         }
     }

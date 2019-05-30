@@ -58,7 +58,7 @@ public class SpriteAnimation {
         progress += time;
 
         if ((int) (progress * fps) >= frames.size()) //if looped through all frames
-            progress = time; //start from the beginning
+            progress = 0; //start from the beginning
         return frames.get((int) (progress * fps));
     }
 }
