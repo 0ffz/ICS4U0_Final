@@ -44,7 +44,7 @@ import javafx.stage.Stage;
  */
 public class GameRunner extends Application {
     private Player player = new Player();
-    private Entity dialogBox = new Entity(6);
+    private Entity dialogBox = new Entity(6, true);
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
@@ -141,10 +141,6 @@ public class GameRunner extends Application {
                 if (InputListener.isKeyPressed("F11", 200)) {
                     stage.setFullScreen(!stage.isFullScreen());
                 }
-                if (InputListener.isKeyPressed("E", 100)) {
-                    for (Entity collider : currentRoom.getIntersects(currentPlayer)) {
-                        collider.onInteract();
-                    }
 
                 if (InputListener.isKeyPressed("E", 200)) {
                     if (!dialogBox.isRemoved()) {
@@ -154,8 +150,6 @@ public class GameRunner extends Application {
                         dialogBox.setPosition(250, 700);
                         currentRoom.addEntity(dialogBox);
                         renderer.register(dialogBox, dialogBox.getLayer());
-                    } else {
-                        //TODO Remove the dialog box
                         dialogBox.add();
                     }
                 }
