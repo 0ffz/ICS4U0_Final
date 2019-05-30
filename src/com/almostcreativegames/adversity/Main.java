@@ -22,7 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("main menu.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("DGHSAW launcher");
         primaryStage.setScene(new Scene(root, 1000, 750));
         primaryStage.show();
 //        primaryStage.setFullScreen(true);

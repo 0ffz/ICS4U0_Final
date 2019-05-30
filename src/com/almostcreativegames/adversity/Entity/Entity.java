@@ -1,6 +1,5 @@
 package com.almostcreativegames.adversity.Entity;
 
-import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,6 +7,8 @@ import javafx.scene.image.Image;
 
 /**
  * A class for managing sprites. Stores position, image, velocity
+ * The basis for this code was taken from the Sprite class here:
+ * https://github.com/tutsplus/Introduction-to-JavaFX-for-Game-Development
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
@@ -47,6 +48,9 @@ public class Entity {
         y = 0;
         velocityX = 0;
         velocityY = 0;
+    }
+
+    public void onInteract() {
     }
 
     public String getName() {

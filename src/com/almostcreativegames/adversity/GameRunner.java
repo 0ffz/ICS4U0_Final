@@ -4,6 +4,7 @@ import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
+import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Input.InputListener;
 import com.almostcreativegames.adversity.Rooms.Room;
 import com.almostcreativegames.adversity.Rooms.RoomManager;
@@ -21,11 +22,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 /**
  * The main class for running the game.
@@ -43,7 +41,7 @@ import java.util.ArrayList;
  * <p>0.2.3 - Moved player collision and input detection into separate class</p>
  */
 public class GameRunner extends Application {
-    private Player player = new Player("Entities/Player/Player-spritesheet.png");
+    private Player player = new Player();
     private Entity dialogBox = new Entity(6);
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -103,22 +101,27 @@ public class GameRunner extends Application {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        Room currentRoom = rooms.getCurrentRoom();
+        String playerSprite = "Entities/Player/Player-spritesheet.png";
+        player.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 1));
+        player.addAnimation("left", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
+        player.addAnimation("right", new SpriteAnimation(playerSprite, 0, 30, 11, 15, 2, 2, 5, 5, 5));
+        player.addAnimation("up", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
+        player.addAnimation("down", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 5));
 
         player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
-        currentRoom.addEntity(player);
+        Player.setCurrentPlayer(player);
+        rooms.getCurrentRoom().addEntity(player); //we are using rooms' getCurrentRoom because we haven't actually loaded any room yet, so the renderer would give a NPE
 
         rooms.loadRoom(renderer, 0, 0); //load starting room
 
         //what actually runs during the game
-        final long[] lastNanoTime = {System.nanoTime()};
+        final long[] lastNanoTime = {System.nanoTime()}; //we turn these outside values into singular object arrays to be able to change them within the AnimationTimer
         final int[] score = {0};
         new AnimationTimer() {
-            long startTime = System.currentTimeMillis();
-
             public void handle(long currentNanoTime) {
-                Room currentRoom = rooms.getCurrentRoom();
+                Room currentRoom = renderer.getCurrentRoom();
+                Player currentPlayer = Player.getCurrentPlayer();
                 // calculate time since last update.
                 double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
                 lastNanoTime[0] = currentNanoTime;
@@ -126,41 +129,33 @@ public class GameRunner extends Application {
                 if (InputListener.isKeyPressed("M", 100)) {
                     Battle battle = new Battle("Rooms/Factory Entrance", player, currentRoom);
                     renderer.loadRoom(battle);
-                    player.setCanMove(false);
-                    player.hide();
-                    startTime = System.currentTimeMillis();
+                }
 
-                    if (InputListener.isKeyPressed("N")) {
-                        battle.endBattle(renderer);
-                        player.setCanMove(true);
-                        player.show();
-                    }
+                if (InputListener.isKeyPressed("N", 100)) {
+                    if (currentRoom instanceof Battle)
+                        ((Battle) currentRoom).endBattle(renderer);
                 }
 
                 if (InputListener.isKeyPressed("F11", 200)) {
                     stage.setFullScreen(!stage.isFullScreen());
-                    startTime = System.currentTimeMillis();
                 }
                 if (InputListener.isKeyPressed("E", 100)) {
+                    for (Entity collider : currentRoom.getIntersects(currentPlayer)) {
+                        collider.onInteract();
+                    }
+
                     if (!dialogBox.isRemoved()) {
                         dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
                         dialogBox.setPosition(250, 700);
                         currentRoom.addEntity(dialogBox);
                         renderer.register(dialogBox, dialogBox.getLayer());
-                    }
-                    else{
+                    } else {
                         //TODO Remove the dialog box
                     }
                 }
 
-                player.update(elapsedTime, 1.3);
 
-                // TODO collision detection example; Enfei use something like this for initiating dialogs
-                for (Entity collider : currentRoom.getIntersects(player)) {
-                    score[0]++;
-//                    if(collider.getName().equals("Mom"))
-//                        dialogBox.doSomething()
-                }
+                currentPlayer.update(elapsedTime, 1.3);
 
                 //render
                 gc.clearRect(0, 0, 1000, 1000);
@@ -169,7 +164,7 @@ public class GameRunner extends Application {
                 String pointsText = "Cash: $" + (100 * score[0]);
                 gc.fillText(pointsText, 360, 36);
                 gc.strokeText(pointsText, 360, 36);
-                wrapScreen(player);
+                wrapScreen(currentPlayer);
             }
         }.start();
 
@@ -190,7 +185,7 @@ public class GameRunner extends Application {
 
     }
 
-    public void wrapScreen(Entity entity) {
+    private void wrapScreen(Entity entity) {
         double w = canvas.getWidth();
         double h = canvas.getHeight();
 
@@ -214,7 +209,7 @@ public class GameRunner extends Application {
             offsetY--;
         }
         if (offsetX != 0 || offsetY != 0) {
-            rooms.getCurrentRoom().moveEntity(rooms.getRoomAtOffset(offsetX, offsetY), player);
+            renderer.getCurrentRoom().moveEntity(rooms.getRoomAtOffset(offsetX, offsetY), entity);
             rooms.loadRoom(renderer, offsetX, offsetY);
         }
     }

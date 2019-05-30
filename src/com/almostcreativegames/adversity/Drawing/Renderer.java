@@ -3,7 +3,6 @@ package com.almostcreativegames.adversity.Drawing;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 import java.util.List;
 import java.util.Map;
@@ -25,8 +24,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Renderer {
     private GraphicsContext gc;
-    private Image background;
-
+    private Room currentRoom;
     //TODO Instead of containing a list of Sprites, have a layer object which would render in order
     // based on an object's y coordinate.
     private Map<Integer, CopyOnWriteArrayList<Entity>> layers; //Concurrent version of ArrayList solves concurrency problems https://stackoverflow.com/questions/6916385/is-there-a-concurrent-list-in-javas-jdk
@@ -37,10 +35,19 @@ public class Renderer {
     }
 
     /**
+     * Returns the room that is currently rendering
+     *
+     * @return currentRoom
+     */
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    /**
      * Register sprites to be rendered when render() is called
      *
-     * @param entity
-     * @param layer
+     * @param entity the entity to be registered
+     * @param layer  the layer it should be drawn on
      */
     public void register(Entity entity, int layer) {
         if (layers.get(layer) == null)
@@ -56,7 +63,7 @@ public class Renderer {
     }
 
     public void render(double time) {
-        gc.drawImage(background, 0, 0); //draw the background first, then every other entity in order by layer
+        gc.drawImage(currentRoom.getBackground(), 0, 0); //draw the background first, then every other entity in order by layer
 
         for (List<Entity> layer : layers.values()) {
             for (Entity entity : layer) {
@@ -70,16 +77,20 @@ public class Renderer {
         }
     }
 
+    /**
+     * Loads a room to render it and its held entities
+     *
+     * @param room the room to be loaded
+     */
     public void loadRoom(Room room) {
+        currentRoom = room;
         unregisterAll();
         if (room != null) {
-            background = room.getBackground();
             for (Entity e : room.getEntities())
                 if (e.getImage() != null) //if the entity has something to render
                     register(e, e.getLayer());
             System.out.println(room.getEntities());
-        }
-        else
+        } else
             System.out.println("Room is null");
     }
 }

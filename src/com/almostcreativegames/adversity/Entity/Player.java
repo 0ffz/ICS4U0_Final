@@ -15,16 +15,18 @@ import com.almostcreativegames.adversity.Input.InputListener;
  * <p>0.2.3 - Moved most of GameRunner's manipulation of the player into its own class</p>
  */
 public class Player extends AnimatedEntity {
+    private static Player currentPlayer;
     private boolean canMove = true;
 
-    public Player(String playerSprite) {
-        //TODO is it better to leave this up to GameRunner to create the animations? (probably is since we'll be making another player object for the battle sequences)
-        addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 1));
-        addAnimation("left", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
-        addAnimation("right", new SpriteAnimation(playerSprite, 0, 30, 11, 15, 2, 2, 5, 5, 5));
-        addAnimation("up", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
-        addAnimation("down", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 5));
+    public Player() {
+    }
 
+    public static Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public static void setCurrentPlayer(Player currentPlayer) {
+        Player.currentPlayer = currentPlayer;
     }
 
     public boolean canMove() {
