@@ -104,6 +104,10 @@ public class GameRunner extends Application {
         gc.setLineWidth(1);
 
         //setup dialog box
+        dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
+        dialogBox.setPosition(250, 700);
+        renderer.register(dialogBox, dialogBox.getLayer());
+        rooms.getCurrentRoom().addEntity(dialogBox);
         dialogBox.hide();
 
         //setup player
@@ -116,6 +120,7 @@ public class GameRunner extends Application {
         player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
         Player.setCurrentPlayer(player);
+        dialogBox.setPlayer(player);
         rooms.getCurrentRoom().addEntity(player); //we are using rooms' getCurrentRoom because we haven't actually loaded any room yet, so the renderer would give a NPE
 
         //load starting room
@@ -147,27 +152,12 @@ public class GameRunner extends Application {
                 }
 
                 if (InputListener.isKeyPressed("E", 200)) {
-                    for (Entity collider : currentRoom.getIntersects(currentPlayer)) {
-                        collider.onInteract();
-                        //TODO have some sort of Talkable interface, which has an abstract method that returns a dialog
-                        //if(dialogHasntAlreadyStarted && collider instanceof Talkable) //P.S plz dont call it dialogHasntAlreadyStarted
-                        //  dialogBox.setDialog(((Talkable) collider).getDialog());
-                        //  proceed with other dialog code here
-                        //else
-                        //  dialogBox.nextMessage()
-                        //only hide it when we run out of options, the dialog box could hide itself and just set dialogHasntAlreadyStarted back to false once its done
-                    }
-
-                    //I guess this would go inside the for loop
                     if (!dialogBox.isHidden()) {
                         dialogBox.hide();
+                        currentPlayer.setCanMove(true);
                     } else {
-                        //all this creation stuff should go under the dialog setup part (scroll a little up to where I did dialogBox.show())
-                        dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
-                        dialogBox.setPosition(250, 700);
                         dialogBox.show();
-                        currentRoom.addEntity(dialogBox);
-                        renderer.register(dialogBox, dialogBox.getLayer());
+                        currentPlayer.setCanMove(false);
                     }
                 }
 
@@ -226,6 +216,7 @@ public class GameRunner extends Application {
         }
         if (offsetX != 0 || offsetY != 0) {
             renderer.getCurrentRoom().moveEntity(rooms.getRoomAtOffset(offsetX, offsetY), entity);
+            renderer.getCurrentRoom().moveEntity(rooms.getRoomAtOffset(offsetX, offsetY), dialogBox);
             rooms.loadRoom(renderer, offsetX, offsetY);
         }
     }
