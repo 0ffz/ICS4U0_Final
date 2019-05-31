@@ -5,6 +5,7 @@ import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Rooms.Room;
+import javafx.scene.image.Image;
 
 /**
  * A class for creating turn based battle sequences
@@ -21,7 +22,7 @@ import com.almostcreativegames.adversity.Rooms.Room;
  */
 public class Battle extends Room {
     private Room fromRoom; //the room from which the Battle Menu was opened (we use it to return to that room later)
-    private Entity fighting;
+    private Entity fightingSprite;
     private Player soul;
     private Player previousPlayer = Player.getCurrentPlayer();
     private Entity act;
@@ -30,7 +31,8 @@ public class Battle extends Room {
     public Battle(String imageURL, Entity fighting, Room fromRoom) {
         super(imageURL);
 
-        this.fighting = fighting;
+        //TODO render fighting Entity as a bigger texture in the middle of the screen
+//        fightingSprite = new Entity(fighting.getImage().getPixelReader());
         this.fromRoom = fromRoom;
 
         //hide overworld player
