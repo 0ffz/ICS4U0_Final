@@ -3,12 +3,15 @@ package com.almostcreativegames.adversity.Dialog;
 import com.almostcreativegames.adversity.Entity.Entity;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Arrays;
+
 public class DialogBox extends Entity {
+    private Dialog dialog;
 
-    Dialog dialog = new Dialog(this, this.getRoom());
-
-    public DialogBox(int layer, boolean removed){
-        super(layer, removed);
+    public DialogBox(int layer) {
+        super(layer);
+        dialog = new Dialog();
+        dialog.setResponses(Arrays.asList("Hello", "Goodbye"));
     }
 
     @Override
@@ -16,5 +19,4 @@ public class DialogBox extends Entity {
         super.render(gc, time);
         gc.strokeText(dialog.getMessage(), getX() + 20, getY() + 20);
     }
-
 }

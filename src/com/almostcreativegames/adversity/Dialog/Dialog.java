@@ -1,9 +1,7 @@
 package com.almostcreativegames.adversity.Dialog;
 
-import com.almostcreativegames.adversity.Entity.Entity;
-import com.almostcreativegames.adversity.Rooms.Room;
-
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class for determining the output of the dialog
@@ -18,33 +16,24 @@ import java.util.ArrayList;
  * <p>0.1.1 - Added basic premise on how to return dialog</p>
  */
 
-public class Dialog extends Entity {
-    private String message;
-    private Entity player;
-    private Room currentRoom;
-    private ArrayList<String> listOfResponses = new ArrayList<String>();
+public class Dialog {
+    private List<String> responses = new ArrayList<>();
+    private int index = 0;
 
-    public Dialog(Entity e, Room current) {
-        player = e;
-        currentRoom = current;
+    public List<String> getResponses() {
+        return responses;
     }
 
-    private void determineMessage() {
-        message = "I shouldn't be wasting time on this!";
-        for (Entity collider : currentRoom.getIntersects(player)) {
-            if (collider.getName() != null) {
-                if (collider.getName().equals("Mom"))
-                    message = "You should be going to work now";
-            } else
-                break;
+    public Dialog setResponses(List<String> responses) {
+        this.responses = responses;
+        return this;
+    }
 
-        }
-
+    public void nextMessage() {
+        index++;
     }
 
     public String getMessage() {
-        determineMessage();
-        return message;
+        return responses.get(index);
     }
-
 }

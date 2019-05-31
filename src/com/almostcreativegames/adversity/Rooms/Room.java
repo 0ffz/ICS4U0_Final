@@ -1,6 +1,7 @@
 package com.almostcreativegames.adversity.Rooms;
 
 
+import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;

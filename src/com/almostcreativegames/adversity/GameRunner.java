@@ -44,7 +44,7 @@ import javafx.stage.Stage;
  */
 public class GameRunner extends Application {
     private Player player = new Player();
-    private Entity dialogBox = new Entity(6, true);
+    private DialogBox dialogBox = new DialogBox(6);
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private RoomManager rooms = new RoomManager();
@@ -103,19 +103,23 @@ public class GameRunner extends Application {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
+        //setup dialog box
+        dialogBox.hide();
+
+        //setup player
         String playerSprite = "Entities/Player/Player-spritesheet.png";
         player.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 1));
         player.addAnimation("left", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
         player.addAnimation("right", new SpriteAnimation(playerSprite, 0, 30, 11, 15, 2, 2, 5, 5, 5));
         player.addAnimation("up", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
         player.addAnimation("down", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 5));
-
         player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
         Player.setCurrentPlayer(player);
         rooms.getCurrentRoom().addEntity(player); //we are using rooms' getCurrentRoom because we haven't actually loaded any room yet, so the renderer would give a NPE
 
-        rooms.loadRoom(renderer, 0, 0); //load starting room
+        //load starting room
+        rooms.loadRoom(renderer, 0, 0);
 
         //what actually runs during the game
         final long[] lastNanoTime = {System.nanoTime()}; //we turn these outside values into singular object arrays to be able to change them within the AnimationTimer
@@ -143,17 +147,29 @@ public class GameRunner extends Application {
                 }
 
                 if (InputListener.isKeyPressed("E", 200)) {
-                    if (!dialogBox.isRemoved()) {
-                        dialogBox.remove();
+                    for (Entity collider : currentRoom.getIntersects(currentPlayer)) {
+                        collider.onInteract();
+                        //TODO have some sort of Talkable interface, which has an abstract method that returns a dialog
+                        //if(dialogHasntAlreadyStarted && collider instanceof Talkable) //P.S plz dont call it dialogHasntAlreadyStarted
+                        //  dialogBox.setDialog(((Talkable) collider).getDialog());
+                        //  proceed with other dialog code here
+                        //else
+                        //  dialogBox.nextMessage()
+                        //only hide it when we run out of options, the dialog box could hide itself and just set dialogHasntAlreadyStarted back to false once its done
+                    }
+
+                    //I guess this would go inside the for loop
+                    if (!dialogBox.isHidden()) {
+                        dialogBox.hide();
                     } else {
+                        //all this creation stuff should go under the dialog setup part (scroll a little up to where I did dialogBox.show())
                         dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
                         dialogBox.setPosition(250, 700);
+                        dialogBox.show();
                         currentRoom.addEntity(dialogBox);
                         renderer.register(dialogBox, dialogBox.getLayer());
-                        dialogBox.add();
                     }
                 }
-
 
                 currentPlayer.update(elapsedTime, 1.3);
 
