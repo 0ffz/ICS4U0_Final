@@ -14,7 +14,7 @@ import com.almostcreativegames.adversity.Input.InputListener;
  * <h2>Changelog</h2>
  * <p>0.2.3 - Moved most of GameRunner's manipulation of the player into its own class</p>
  */
-public class Player extends AnimatedEntity {
+public class Player extends EntityAnimated {
     private static Player currentPlayer;
     private boolean canMove = true;
 

@@ -1,9 +1,9 @@
 package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Battle.Battle;
-import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
+import com.almostcreativegames.adversity.Entity.Characters.Wire;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
@@ -133,13 +133,15 @@ public class GameRunner extends Application {
                 lastNanoTime[0] = currentNanoTime;
 
                 if (InputListener.isKeyPressed("M", 100)) {
-                    Battle battle = new Battle("Rooms/Factory Entrance", player, currentRoom);
+                    Wire wire = new Wire();
+                    //TODO create battle background and colliders
+                    Battle battle = new Battle("Rooms/Factory Entrance", wire, currentRoom, renderer);
                     renderer.loadRoom(battle);
                 }
 
                 if (InputListener.isKeyPressed("N", 100)) {
                     if (currentRoom instanceof Battle)
-                        ((Battle) currentRoom).endBattle(renderer);
+                        ((Battle) currentRoom).endBattle();
                 }
 
                 if (InputListener.isKeyPressed("F11", 200)) {
@@ -148,7 +150,8 @@ public class GameRunner extends Application {
 
                 if (InputListener.isKeyPressed("E", 200)) {
                     for (Entity collider : currentRoom.getIntersects(currentPlayer)) {
-                        collider.onInteract();
+                        if (!collider.isHidden())
+                            collider.onInteract();
                         //TODO have some sort of Talkable interface, which has an abstract method that returns a dialog
                         //if(dialogHasntAlreadyStarted && collider instanceof Talkable) //P.S plz dont call it dialogHasntAlreadyStarted
                         //  dialogBox.setDialog(((Talkable) collider).getDialog());
