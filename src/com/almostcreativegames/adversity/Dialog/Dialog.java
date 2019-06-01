@@ -1,5 +1,8 @@
 package com.almostcreativegames.adversity.Dialog;
 
+import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Rooms.Room;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +36,21 @@ public class Dialog {
         index++;
     }
 
-    public String getMessage() {
+    public void onExit() {
+
+    }
+
+    public String getMessage(Room room, Entity player) {
+        for (Entity collider : room.getEntities()) {
+            if (collider.intersects(player))
+                break;
+            else {
+                if (index < responses.size() - 1)
+                    this.nextMessage();
+                else
+                    break;
+            }
+        }
         return responses.get(index);
     }
 }
