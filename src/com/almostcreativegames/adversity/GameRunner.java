@@ -135,7 +135,7 @@ public class GameRunner extends Application {
                 if (InputListener.isKeyPressed("M", 100)) {
                     Wire wire = new Wire();
                     //TODO create battle background and colliders
-                    Battle battle = new Battle("Rooms/Factory Entrance", wire, currentRoom, renderer);
+                    Battle battle = new Battle("Battle/Battle", wire, currentRoom, renderer);
                     renderer.loadRoom(battle);
                 }
 
@@ -144,9 +144,8 @@ public class GameRunner extends Application {
                         ((Battle) currentRoom).endBattle();
                 }
 
-                if (InputListener.isKeyPressed("F11", 200)) {
+                if (InputListener.isKeyPressed("F11", 200))
                     stage.setFullScreen(!stage.isFullScreen());
-                }
 
                 if (InputListener.isKeyPressed("E", 200)) {
                     for (Entity collider : currentRoom.getIntersects(currentPlayer)) {
