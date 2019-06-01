@@ -26,7 +26,6 @@ public class Battle extends Room {
     private Room fromRoom; //the room from which the Battle Menu was opened (we use it to return to that room later)
     private Entity fightingSprite;
     private Player soul;
-    private Renderer renderer;
     private Player previousPlayer = Player.getCurrentPlayer();
     private BattleButton act;
     private boolean playerTurn = true;
@@ -44,7 +43,7 @@ public class Battle extends Room {
         fightingSprite = ((Battleable) fighting).getBattleSprite();
 
         Rectangle2D boundary = fightingSprite.getBoundary();
-        fightingSprite.setPosition(500 - boundary.getWidth() / 2,200); //center the sprite
+        fightingSprite.setPosition(500 - boundary.getWidth() / 2, 200); //center the sprite
         addEntity(fightingSprite);
 
         //hide overworld player
@@ -72,6 +71,12 @@ public class Battle extends Room {
         act.setBattle(this);
         act.setImage("DialogBox.png");
         act.setPosition(100, 600);
+        Entity option1 = new BattleButton();
+        option1.setImage("DialogBox.png");
+        act.addSubOption(option1);
+        Entity option2 = new BattleButton();
+        option2.setImage("DialogBox.png");
+        act.addSubOption(option2);
         addEntity(act);
     }
 

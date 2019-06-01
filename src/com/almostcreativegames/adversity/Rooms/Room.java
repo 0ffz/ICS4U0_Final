@@ -28,11 +28,11 @@ import java.util.List;
  */
 
 public class Room {
+    protected Renderer renderer;
     private Image background;
     private boolean[][] collision;
     private List<Entity> entities = new ArrayList<Entity>();
-
-    protected Room(){
+    protected Room() {
 
     }
 
@@ -54,6 +54,11 @@ public class Room {
             }
         }
         return result;
+    }
+
+    public Room setRenderer(Renderer renderer) {
+        this.renderer = renderer;
+        return this;
     }
 
     public boolean isColliding(Entity e, double time) {
@@ -109,6 +114,9 @@ public class Room {
     public void addEntity(Entity e) {
         e.setRoom(this);
         entities.add(e);
+        Room renderedRoom = renderer.getCurrentRoom();
+        if(renderedRoom != null && renderedRoom.equals(this))
+            renderer.register(e);
     }
 
     public void removeEntity(Entity e) {

@@ -47,9 +47,9 @@ public class Renderer {
      * Register sprites to be rendered when render() is called
      *
      * @param entity the entity to be registered
-     * @param layer  the layer it should be drawn on
      */
-    public void register(Entity entity, int layer) {
+    public void register(Entity entity) {
+        int layer = entity.getLayer();
         if (layers.get(layer) == null)
             layers.put(layer, new CopyOnWriteArrayList<Entity>() {{
                 add(entity);
@@ -88,7 +88,7 @@ public class Renderer {
         if (room != null) {
             for (Entity e : room.getEntities())
                 if (e.getImage() != null) //if the entity has something to render
-                    register(e, e.getLayer());
+                    register(e);
             System.out.println(room.getEntities());
         } else
             System.out.println("Room is null");

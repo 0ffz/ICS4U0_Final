@@ -47,8 +47,8 @@ public class GameRunner extends Application {
     private DialogBox dialogBox = new DialogBox(6);
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
-    private RoomManager rooms = new RoomManager();
     private Renderer renderer = new Renderer(gc);
+    private RoomManager rooms = new RoomManager(renderer);
 
     public static void main(String[] args) {
         launch(args);
@@ -162,7 +162,7 @@ public class GameRunner extends Application {
                     }
 
                     //I guess this would go inside the for loop
-                    if (!dialogBox.isHidden()) {
+                    /*if (!dialogBox.isHidden()) {
                         dialogBox.hide();
                     } else {
                         //all this creation stuff should go under the dialog setup part (scroll a little up to where I did dialogBox.show())
@@ -170,8 +170,7 @@ public class GameRunner extends Application {
                         dialogBox.setPosition(250, 700);
                         dialogBox.show();
                         currentRoom.addEntity(dialogBox);
-                        renderer.register(dialogBox, dialogBox.getLayer());
-                    }
+                    }*/
                 }
 
                 currentPlayer.update(elapsedTime, 1.3);

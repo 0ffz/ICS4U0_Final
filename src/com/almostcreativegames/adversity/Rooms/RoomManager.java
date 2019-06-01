@@ -21,39 +21,43 @@ public class RoomManager {
     private int currentX;
     private int currentY;
 
-    public RoomManager(){
+    public RoomManager(Renderer renderer) {
         currentX = 0;
         currentY = 3;
         rooms[3][0] = new Room("Rooms/Home");
         rooms[3][1] = new Room("Rooms/Living Room");
-        rooms[3][2] = new Room ("Rooms/Road 1");
-        rooms[3][3] = new Room ("Rooms/Road 2");
-        rooms[3][4] = new Room ("Rooms/Outside Factory");
-        rooms[2][4] = new Room ("Rooms/Factory Entrance");
-        //rooms[1]
+        rooms[3][2] = new Room("Rooms/Road 1");
+        rooms[3][3] = new Room("Rooms/Road 2");
+        rooms[3][4] = new Room("Rooms/Outside Factory");
+        rooms[2][4] = new Room("Rooms/Factory Entrance");
+
+        for (Room[] row : rooms)
+            for (Room room : row)
+                if (room != null)
+                    room.setRenderer(renderer);
     }
 
-    public Room getRoom(int row, int col){
+    public Room getRoom(int row, int col) {
         try {
             return rooms[row][col];
-        } catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             return null;
         }
     }
 
-    public Room getCurrentRoom(){
+    public Room getCurrentRoom() {
         return rooms[currentY][currentX];
     }
 
-    public String getCurrentPosition(){
+    public String getCurrentPosition() {
         return currentX + ", " + currentY;
     }
 
-    public Room getRoomAtOffset(int offsetX, int offsetY){
+    public Room getRoomAtOffset(int offsetX, int offsetY) {
         return rooms[currentY + offsetY][currentX + offsetX];
     }
 
-    public void loadRoom(Renderer renderer, int offsetX, int offsetY){
+    public void loadRoom(Renderer renderer, int offsetX, int offsetY) {
         currentX += offsetX;
         currentY += offsetY;
         renderer.loadRoom(rooms[currentY][currentX]);
