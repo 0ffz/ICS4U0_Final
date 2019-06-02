@@ -26,11 +26,17 @@ public class SpriteAnimation {
     private double progress;
 
     public SpriteAnimation(String spriteSheetPath, int topX, int topY, int width, int height, int columns, int numFrames, double sizeX, double sizeY, double speed) {
+        this(spriteSheetPath, topX, topY, width, height, columns, numFrames, sizeX, sizeY, speed, 0, 0);
+    }
+
+    public SpriteAnimation(String spriteSheetPath, int topX, int topY, int width, int height, int columns, int numFrames, double sizeX, double sizeY, double speed, int gapX, int gapY) {
         fps = speed;
         width *= sizeX;
         topX *= sizeX;
         height *= sizeY;
         topY *= sizeY;
+        gapX *= sizeX;
+        gapY *= sizeY;
 
         Image beforeResize = new Image(spriteSheetPath);
         Image spriteSheet = new Image(spriteSheetPath, beforeResize.getWidth() * sizeX, beforeResize.getHeight() * sizeY, false, false);
@@ -43,18 +49,16 @@ public class SpriteAnimation {
             for (int col = 0; col < columns; col++) {
                 if (row * columns + col == numFrames) //if on last frame
                     return;
-                System.out.println("Loading: " + row + " " + col);
-                WritableImage newImage = new WritableImage(reader, col * (width) + topX, row * height + topY, width, height);
+                WritableImage newImage = new WritableImage(reader, col * (width + gapX) + topX, row * (height + gapY) + topY, width, height);
                 frames.add(newImage);
             }
     }
 
     /**
-     *
      * @param time the amount of time passed
      * @return the frame that should currently be played
      */
-    public Image getFrame(double time){
+    public Image getFrame(double time) {
         progress += time;
 
         if ((int) (progress * fps) >= frames.size()) //if looped through all frames

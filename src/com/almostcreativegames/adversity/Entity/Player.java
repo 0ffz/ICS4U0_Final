@@ -45,8 +45,10 @@ public class Player extends EntityAnimated {
             if (InputListener.isKeyPressed("UP") || InputListener.isKeyPressed("W")) addVelocity(0, -100);
             if (InputListener.isKeyPressed("DOWN") || InputListener.isKeyPressed("S")) addVelocity(0, 100);
 
-            collisionCheck(time);
         }
+
+        collisionCheck(time);
+
         super.update(time, friction);
 
         animate();
