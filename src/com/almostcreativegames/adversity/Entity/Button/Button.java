@@ -18,7 +18,7 @@ public class Button extends Entity {
     private Battle battle;
     private Color fillColor = Color.WHITE;
     private Color strokeColor = Color.BLACK;
-    private Font font = Fonts.battleMenuItem;
+    private Font font = Fonts.NORMAL;
     private Dialog dialog;
 
     public Button(String text) {

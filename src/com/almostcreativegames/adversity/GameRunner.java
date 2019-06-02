@@ -125,7 +125,7 @@ public class GameRunner extends Application {
         rooms.getCurrentRoom().addEntity(player); //we are using rooms' getCurrentRoom because we haven't actually loaded any room yet, so the renderer would give a NPE
 
         //setup dialog box
-        dialogBox = new DialogBox(10);
+        dialogBox = new DialogBox();
         dialogBox.setImage(new Image("Menu/DialogBox.png", 500, 0, true, true));
         dialogBox.setPosition(250, 700);
         renderer.register(dialogBox);
@@ -148,7 +148,6 @@ public class GameRunner extends Application {
 
                 if (InputListener.isKeyPressed("M", 100)) {
                     Wire wire = new Wire();
-                    //TODO create battle background and colliders
                     Battle battle = new Battle("Battle/Battle", wire, currentRoom, GameRunner.this);
                     renderer.loadRoom(battle);
                 }

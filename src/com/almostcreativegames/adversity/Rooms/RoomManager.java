@@ -1,7 +1,9 @@
 package com.almostcreativegames.adversity.Rooms;
 
+import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Drawing.Renderer;
+import com.almostcreativegames.adversity.Entity.Characters.Wire;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.GameRunner;
 import javafx.scene.image.Image;
@@ -20,7 +22,7 @@ import java.util.Arrays;
  * <h2>Changelog</h2>
  * <p>0.0.1 - Map containing two Rooms</p>
  * <p>0.1.2 - Now contains proper Rooms for the game. Added methods for getting and moving between rooms</p>
- * <p>0.1.2 - Now contains a reference to the GameRunner, which can then be used to access something like the renderer.</p>
+ * <p>0.2.3 - Now contains a reference to the GameRunner, which can then be used to access something like the renderer.</p>
  */
 
 public class RoomManager {
@@ -32,6 +34,10 @@ public class RoomManager {
         currentX = 0;
         currentY = 3;
         rooms[3][0] = new Room("Rooms/Home");
+        Wire wire = new Wire();
+        wire.setPosition(600, 600);
+        rooms[3][0].addEntity(wire);
+
         rooms[3][1] = new Room("Rooms/Living Room");
 
         Entity mom = new Entity() {

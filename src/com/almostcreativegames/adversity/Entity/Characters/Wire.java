@@ -15,12 +15,22 @@ import java.util.List;
  *
  */
 public class Wire extends EntityAnimated implements Battleable {
+    {
+        setName("Sparking wire");
+    }
+
     @Override
     public Entity getBattleSprite() {
         EntityAnimated sprite = new EntityAnimated();
         sprite.addAnimation("idle", new SpriteAnimation("Entities/Wire-spritesheet.png", 0, 0, 32, 16, 2, 1, 20, 20, 1));
         sprite.setCurrentAnimation("idle");
         return sprite;
+    }
+
+    @Override
+    public void onInteract() {
+        Battle battle = new Battle("Battle/Battle", this, room, room.getGame());
+        room.getGame().getRenderer().loadRoom(battle);
     }
 
     @Override
@@ -44,7 +54,7 @@ public class Wire extends EntityAnimated implements Battleable {
     @Override
     protected void registerAnimations() {
         String playerSprite = "Entities/Player/Player-spritesheet.png";
-        addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 20, 20, 1));
+        addAnimation("idle", new SpriteAnimation("Entities/Wire-spritesheet.png", 0, 0, 32, 16, 2, 1, 5, 5, 1));
         setCurrentAnimation("idle");
     }
 }

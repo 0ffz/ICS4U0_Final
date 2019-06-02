@@ -1,7 +1,6 @@
 package com.almostcreativegames.adversity.Battle;
 
 import com.almostcreativegames.adversity.Drawing.Fonts;
-import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.*;
 import com.almostcreativegames.adversity.Entity.Behaviours.Battleable;
 import com.almostcreativegames.adversity.Entity.Button.BackButton;
@@ -45,6 +44,12 @@ public class Battle extends Room {
         fightingSprite.setPosition(500 - boundary.getWidth() / 2, 200); //center the sprite
         addEntity(fightingSprite);
 
+        //battle title
+        Button name = new Button(((Entity) fighting).getName());
+        name.setPosition(20, 20);
+        name.setImage(new Image("Menu/LongButton.png", 0, 50, true, true));
+        addEntity(name);
+
         //hide overworld player
         previousPlayer.setCanMove(false);
         previousPlayer.hide();
@@ -68,7 +73,7 @@ public class Battle extends Room {
         //creating buttons with options
         //act button
         act = new BattleButton("ACT");
-        act.setFont(Fonts.battleButton);
+        act.setFont(Fonts.BATTLE_BUTTON);
         act.setBattle(this);
         act.setImage(new Image("Menu/Button.png", 200, 0, true, true));
         act.setPosition(40, 875);
@@ -76,7 +81,7 @@ public class Battle extends Room {
 
 
         item = new BattleButton("ITEM");
-        item.setFont(Fonts.battleButton);
+        item.setFont(Fonts.BATTLE_BUTTON);
         item.setBattle(this);
         item.setImage(new Image("Menu/Button.png", 200, 0, true, true));
         item.setPosition(250, 875);

@@ -4,6 +4,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class Fonts {
-    public static final Font battleButton = Font.font("Helvetica", FontWeight.BOLD, 40);
-    public static final Font battleMenuItem = Font.font("Helvetica", FontWeight.BOLD, 30);
+    public static final Font BATTLE_BUTTON = Font.font("Helvetica", FontWeight.BOLD, 40);
+    public static final Font NORMAL = Font.font("Helvetica", FontWeight.BOLD, 30);
 }

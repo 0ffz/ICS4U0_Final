@@ -14,6 +14,8 @@ public class BattleButton extends Button {
         super(text);
     }
 
+    //TODO some of the methods return the class itself, which is nice for setting lots of stuff for one object, but we
+    // need to decide whether they should all return void or `this` for consistency.
     public BattleButton setText(String text) {
         this.text = text;
         return this;
