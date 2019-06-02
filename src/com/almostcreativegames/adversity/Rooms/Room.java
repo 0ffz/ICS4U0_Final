@@ -3,12 +3,14 @@ package com.almostcreativegames.adversity.Rooms;
 
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.GameRunner;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Room system that holds entities, a background and collision map from black and white image.
@@ -24,17 +26,15 @@ import java.util.List;
  * <p>0.0.1 - Beginning of scene system</p>
  * <p>0.1.2 - Renamed to Room, now holds entities, a background and collision map from black and white image.
  * Can check if an entity is going to collide with the collision map. Can move entities between rooms.</p>
- * <p>0.2.3 Added entity collision checker.</p>
+ * <p>0.2.3 Added entity collision checker. Fixed bugs to do with concurrency. Now using direct reference to GameRunner object</p>
  */
 
 public class Room {
     protected Renderer renderer;
+    protected GameRunner game;
     private Image background;
     private boolean[][] collision;
-    private List<Entity> entities = new ArrayList<Entity>();
-    protected Room() {
-
-    }
+    private List<Entity> entities = new CopyOnWriteArrayList<>(); //fix concurrency issues when going through entities
 
     public Room(String imageURL) {
         background = new Image(imageURL + ".png", 1000, 1000, false, true);
@@ -56,9 +56,13 @@ public class Room {
         return result;
     }
 
-    public Room setRenderer(Renderer renderer) {
-        this.renderer = renderer;
-        return this;
+    public GameRunner getGame() {
+        return game;
+    }
+
+    public void setGame(GameRunner game) {
+        this.game = game;
+        renderer = game.getRenderer();
     }
 
     public boolean isColliding(Entity e, double time) {
@@ -115,7 +119,7 @@ public class Room {
         e.setRoom(this);
         entities.add(e);
         Room renderedRoom = renderer.getCurrentRoom();
-        if(renderedRoom != null && renderedRoom.equals(this))
+        if (renderedRoom != null && renderedRoom.equals(this))
             renderer.register(e);
     }
 
@@ -127,14 +131,14 @@ public class Room {
         return background;
     }
 
-    public Room setBackground(Image background) {
+    public void setBackground(Image background) {
         this.background = background;
-        return this;
     }
 
     public void moveEntity(Room newRoom, Entity entity) {
+        if (newRoom == this) //prevent moving within the same room
+            return;
         entities.remove(entity);
-        System.out.println("Adding player");
         newRoom.addEntity(entity);
     }
 }

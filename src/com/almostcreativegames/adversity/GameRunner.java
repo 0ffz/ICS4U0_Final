@@ -1,10 +1,9 @@
 package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Battle.Battle;
+import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
-import com.almostcreativegames.adversity.Entity.Behaviours.Talkable;
-import com.almostcreativegames.adversity.Entity.Characters.Mom;
 import com.almostcreativegames.adversity.Entity.Characters.Wire;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
@@ -29,29 +28,36 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+
 /**
  * The main class for running the game.
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
- * @author Daniel Voznyy
+ * @author Daniel Voznyy & Enfei Zhang
  * @version 0.2.3
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Basic game setup</p>
  * <p>0.1.2 - Added has proper room transition and an animated player. Moved many important objects to be instance
  * variables</p>
- * <p>0.2.3 - Moved player collision and input detection into separate class</p>
+ * <p>0.2.3 - Moved player collision and input detection into separate class. Added entity interaction system (pressing "E")</p>
  */
 public class GameRunner extends Application {
     private Player player = new Player();
-    private Mom mom = new Mom();
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private Renderer renderer = new Renderer(gc);
-    private RoomManager rooms = new RoomManager(renderer);
-    private DialogBox dialogBox = new DialogBox(5);
+    private RoomManager rooms = new RoomManager(this);
+    private DialogBox dialogBox;
+    private Entity mom = new Entity() {
+        @Override
+        public void onInteract() {
+            startDialog(new Dialog(Arrays.asList("You should be going to work honey.", "And another message!")));
+        }
+    };
 
     public static void main(String[] args) {
         launch(args);
@@ -77,6 +83,10 @@ public class GameRunner extends Application {
         scale.setPivotY(0);
         scene.getRoot().getTransforms().setAll(scale);
 
+    }
+
+    public Renderer getRenderer() {
+        return renderer;
     }
 
     /**
@@ -119,7 +129,8 @@ public class GameRunner extends Application {
         rooms.getCurrentRoom().addEntity(player); //we are using rooms' getCurrentRoom because we haven't actually loaded any room yet, so the renderer would give a NPE
 
         //setup dialog box
-        dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
+        dialogBox = new DialogBox(10);
+        dialogBox.setImage(new Image("Menu/DialogBox.png", 500, 0, true, true));
         dialogBox.setPosition(250, 700);
         renderer.register(dialogBox);
         rooms.getCurrentRoom().addEntity(dialogBox);
@@ -137,7 +148,7 @@ public class GameRunner extends Application {
 
         //what actually runs during the game
         final long[] lastNanoTime = {System.nanoTime()}; //we turn these outside values into singular object arrays to be able to change them within the AnimationTimer
-        final int[] score = {0};
+
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 Room currentRoom = renderer.getCurrentRoom();
@@ -149,7 +160,7 @@ public class GameRunner extends Application {
                 if (InputListener.isKeyPressed("M", 100)) {
                     Wire wire = new Wire();
                     //TODO create battle background and colliders
-                    Battle battle = new Battle("Battle/Battle", wire, currentRoom, renderer);
+                    Battle battle = new Battle("Battle/Battle", wire, currentRoom, GameRunner.this);
                     renderer.loadRoom(battle);
                 }
 
@@ -167,12 +178,6 @@ public class GameRunner extends Application {
                     else
                         for (Entity entity : currentRoom.getEntities()) {
                             if (entity.intersects(currentPlayer) && !entity.isHidden()) {
-                                if(entity instanceof Talkable) {
-                                    dialogBox.setDialog(((Talkable) entity).getDialog());
-                                    dialogBox.show();
-                                    currentPlayer.setCanMove(false);
-                                    break;
-                                }
                                 entity.onInteract();
                             }
                         }
@@ -191,10 +196,6 @@ public class GameRunner extends Application {
                 //render
                 gc.clearRect(0, 0, 1000, 1000);
                 renderer.render(elapsedTime);
-
-                String pointsText = "Cash: $" + (100 * score[0]);
-                gc.fillText(pointsText, 360, 36);
-                gc.strokeText(pointsText, 360, 36);
                 wrapScreen(currentPlayer);
             }
         }.start();
@@ -214,6 +215,13 @@ public class GameRunner extends Application {
             }*/
         });
 
+    }
+
+    public void startDialog(Dialog dialog, Room room) {
+        dialogBox.getRoom().moveEntity(room, dialogBox); //move dialog box to specified room
+        dialogBox.setDialog(dialog);
+        dialogBox.show();
+        Player.getCurrentPlayer().setCanMove(false);
     }
 
     private void wrapScreen(Entity entity) {
@@ -241,7 +249,6 @@ public class GameRunner extends Application {
         }
         if (offsetX != 0 || offsetY != 0) {
             renderer.getCurrentRoom().moveEntity(rooms.getRoomAtOffset(offsetX, offsetY), entity);
-            renderer.getCurrentRoom().moveEntity(rooms.getRoomAtOffset(offsetX, offsetY), dialogBox);
             rooms.loadRoom(renderer, offsetX, offsetY);
         }
     }

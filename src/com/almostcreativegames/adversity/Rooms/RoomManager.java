@@ -1,6 +1,7 @@
 package com.almostcreativegames.adversity.Rooms;
 
 import com.almostcreativegames.adversity.Drawing.Renderer;
+import com.almostcreativegames.adversity.GameRunner;
 
 /**
  * Manages the different rooms in our game.
@@ -9,11 +10,12 @@ import com.almostcreativegames.adversity.Drawing.Renderer;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.1.2
+ * @version 0.2.3
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Map containing two Rooms</p>
  * <p>0.1.2 - Now contains proper Rooms for the game. Added methods for getting and moving between rooms</p>
+ * <p>0.1.2 - Now contains a reference to the GameRunner, which can then be used to access something like the renderer.</p>
  */
 
 public class RoomManager {
@@ -21,7 +23,7 @@ public class RoomManager {
     private int currentX;
     private int currentY;
 
-    public RoomManager(Renderer renderer) {
+    public RoomManager(GameRunner game) {
         currentX = 0;
         currentY = 3;
         rooms[3][0] = new Room("Rooms/Home");
@@ -34,7 +36,7 @@ public class RoomManager {
         for (Room[] row : rooms)
             for (Room room : row)
                 if (room != null)
-                    room.setRenderer(renderer);
+                    room.setGame(game);
     }
 
     public Room getRoom(int row, int col) {

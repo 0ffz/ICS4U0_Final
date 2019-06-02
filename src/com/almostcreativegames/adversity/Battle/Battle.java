@@ -1,10 +1,16 @@
 package com.almostcreativegames.adversity.Battle;
 
+import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.*;
 import com.almostcreativegames.adversity.Entity.Behaviours.Battleable;
+import com.almostcreativegames.adversity.Entity.Button.BackButton;
+import com.almostcreativegames.adversity.Entity.Button.BattleButton;
+import com.almostcreativegames.adversity.Entity.Button.Button;
+import com.almostcreativegames.adversity.GameRunner;
 import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
 
 /**
  * A class for creating turn based battle sequences
@@ -25,19 +31,15 @@ public class Battle extends Room {
     private Player soul;
     private Player previousPlayer = Player.getCurrentPlayer();
     private BattleButton act;
+    private BattleButton item;
     private boolean playerTurn = true;
 
-    public Battle(String imageURL, Battleable fighting, Room fromRoom, Renderer renderer) {
+    public Battle(String imageURL, Battleable fighting, Room fromRoom, GameRunner game) {
         super(imageURL);
-        this.renderer = renderer;
+        setGame(game);
         this.fromRoom = fromRoom;
 
-        /*if (!(fighting instanceof Battleable)) { //if entity is not battleable, end the battle
-            endBattle();
-            return;
-        }*/
-
-        fightingSprite = ((Battleable) fighting).getBattleSprite();
+        fightingSprite = fighting.getBattleSprite();
 
         Rectangle2D boundary = fightingSprite.getBoundary();
         fightingSprite.setPosition(500 - boundary.getWidth() / 2, 200); //center the sprite
@@ -49,6 +51,7 @@ public class Battle extends Room {
 
         //creating soul
         soul = new Player();
+        soul.setLayer(5);
         String playerSprite = "Entities/Player/Soul-spritesheet.png";
         soul.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 11, 2, 1, 5, 5, 1));
         soul.addAnimation("left", new SpriteAnimation(playerSprite, 0, 12, 11, 11, 5, 5, 5, 5, 5, 1, 0));
@@ -64,29 +67,43 @@ public class Battle extends Room {
         //TODO create all the other buttons with textures
         //creating buttons with options
         //act button
-        act = new BattleButton();
-        act.setText("ACT");
+        act = new BattleButton("ACT");
+        act.setFont(Fonts.battleButton);
         act.setBattle(this);
-        act.setImage("DialogBox.png");
-        act.setPosition(100, 800);
+        act.setImage(new Image("Menu/Button.png", 200, 0, true, true));
+        act.setPosition(40, 875);
+        addEntity(act);
 
-        //register all the act options stored in the battleable entity
-        for(Button button: fighting.getActOptions(this))
+
+        item = new BattleButton("ITEM");
+        item.setFont(Fonts.battleButton);
+        item.setBattle(this);
+        item.setImage(new Image("Menu/Button.png", 200, 0, true, true));
+        item.setPosition(250, 875);
+        addEntity(item);
+
+
+        //register all the menu options stored in the battleable entity
+        for (Button button : fighting.getActOptions(this))
             act.addSubOption(button);
 
         //Adding a back button to all menus
-        Button back = new Button(){
-            @Override
-            public void onInteract() {
-                act.closeMenu();
-            }
-        };
-        back.setText("Back");
-        back.setImage("DialogBox.png");
+        BackButton actBack = new BackButton(this);
+        BackButton itemBack = new BackButton(this);
 
-        act.addSubOption(back);
+        act.addSubOption(actBack);
+        item.addSubOption(itemBack);
 
-        addEntity(act);
+    }
+
+    public void hideMenuButtons() {
+        act.hide();
+        item.hide();
+    }
+
+    public void closeMenus() {
+        act.closeMenu();
+        item.closeMenu();
     }
 
     public void endBattle() {

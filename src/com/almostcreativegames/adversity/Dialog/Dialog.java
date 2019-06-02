@@ -23,8 +23,8 @@ public class Dialog {
     private List<String> messages = new ArrayList<>();
     private int index = 0;
 
-    public Dialog() {
-
+    public Dialog(List<String> messages) {
+        this.messages = messages;
     }
 
     public void setMessages(List<String> messages) {

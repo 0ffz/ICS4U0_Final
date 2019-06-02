@@ -51,7 +51,7 @@ public class EntityAnimated extends Entity {
 
     @Override
     public void render(GraphicsContext gc, double time) {
-        setImage(currentAnimation.getFrame(time));
+        currentAnimation.getFrame(time);
         super.render(gc, time);
     }
 }

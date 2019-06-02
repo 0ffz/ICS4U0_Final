@@ -4,6 +4,9 @@ import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ *
+ */
 public class DialogBox extends Entity {
     private Dialog dialog;
     private String message;
@@ -34,6 +37,8 @@ public class DialogBox extends Entity {
             dialog = null;
             return;
         }
+        //TODO make text wrap here. Check the text's length and separate it into multiple strings drawn at different Y values.
+        gc.fillText(message, getX() + 20, getY() + 40);
         gc.strokeText(message, getX() + 20, getY() + 40);
     }
 }

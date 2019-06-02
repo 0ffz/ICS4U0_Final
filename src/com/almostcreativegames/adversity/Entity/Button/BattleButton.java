@@ -1,7 +1,7 @@
-package com.almostcreativegames.adversity.Entity;
+package com.almostcreativegames.adversity.Entity.Button;
 
 import com.almostcreativegames.adversity.Battle.Battle;
-import javafx.scene.canvas.GraphicsContext;
+import com.almostcreativegames.adversity.Entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,10 @@ import java.util.List;
 public class BattleButton extends Button {
     private List<Button> subOptions = new ArrayList<>();
     private Battle battle;
+
+    public BattleButton(String text) {
+        super(text);
+    }
 
     public BattleButton setText(String text) {
         this.text = text;
@@ -21,7 +25,7 @@ public class BattleButton extends Button {
 
     @Override
     public void onInteract() {
-        hide();
+        battle.hideMenuButtons();
         for (Entity option : subOptions) {
             option.show();
         }
@@ -29,10 +33,10 @@ public class BattleButton extends Button {
 
     public void addSubOption(Button option) {
         subOptions.add(option);
-        int offsetX = 200;
-        int offsetY = 700;
-        //TODO I'm calculating something wrong here right now, fix it
-        option.setPosition(offsetX + (subOptions.size() - 1) % 2 * 100, offsetY + (subOptions.size() - 1) / 2 * 100);
+        int offsetX = 30;
+        int offsetY = 665;
+
+        option.setPosition(offsetX + (subOptions.size() - 1) % 2 * 475, offsetY + (subOptions.size() - 1) / 2 * 105);
         option.hide();
         battle.addEntity(option);
     }

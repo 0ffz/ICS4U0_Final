@@ -1,8 +1,12 @@
 package com.almostcreativegames.adversity.Entity.Characters;
 
 import com.almostcreativegames.adversity.Battle.Battle;
-import com.almostcreativegames.adversity.Entity.*;
+import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Behaviours.Battleable;
+import com.almostcreativegames.adversity.Entity.Button.Button;
+import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Entity.EntityAnimated;
+import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,26 +18,27 @@ public class Wire extends EntityAnimated implements Battleable {
     @Override
     public Entity getBattleSprite() {
         EntityAnimated sprite = new EntityAnimated();
-        String playerSprite = "Entities/Player/Player-spritesheet.png";
-        sprite.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 20, 20, 1));
+        sprite.addAnimation("idle", new SpriteAnimation("Entities/Wire-spritesheet.png", 0, 0, 32, 16, 2, 1, 20, 20, 1));
         sprite.setCurrentAnimation("idle");
         return sprite;
     }
 
     @Override
     public List<Button> getActOptions(Battle battle) {
-        Button cut = new Button();
-        cut.setText("Cut wire");
-        cut.setImage("DialogBox.png");
+        Button cut = new Button("Cut wire");
+        Button inspect = new Button("Inspect") {
+            @Override
+            public void onInteract() {
+                startDialog(new Dialog(Arrays.asList(
+                        "The wire seems to have electrical sparks coming off of it",
+                        "You probably shouldn't touch it bare handed")));
+            }
+        };
+        Button more = new Button("Talk to wire");
+        Button options = new Button("Talk to wire");
+        Button talk = new Button("Talk to wire");
 
-        Button inspect = new Button();
-        inspect.setText("Inspect");
-        inspect.setImage("DialogBox.png");
-
-        Button talk = new Button();
-        talk.setText("Talk to wire");
-        talk.setImage("DialogBox.png");
-        return Arrays.asList(cut, inspect, talk);
+        return Arrays.asList(cut, inspect, talk, more, options);
     }
 
     @Override
