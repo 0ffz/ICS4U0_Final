@@ -37,6 +37,7 @@ public class Entity {
     private boolean hidden;
     private int layer;
     private boolean removed = false;
+    private String dialog;
 
     public Entity(int layer) {
         this.layer = layer;
@@ -158,6 +159,14 @@ public class Entity {
     public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void setDialog (String dialog){
+        this.dialog = dialog;
+    }
+
+    public String getDialog(){
+        return dialog;
     }
 
     /**

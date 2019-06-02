@@ -3,9 +3,6 @@ package com.almostcreativegames.adversity.Dialog;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Rooms.Room;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A class for determining the output of the dialog
  *
@@ -20,37 +17,12 @@ import java.util.List;
  */
 
 public class Dialog {
-    private List<String> responses = new ArrayList<>();
-    private int index = 0;
-
-    public List<String> getResponses() {
-        return responses;
-    }
-
-    public Dialog setResponses(List<String> responses) {
-        this.responses = responses;
-        return this;
-    }
-
-    public void nextMessage() {
-        index++;
-    }
-
-    public void onExit() {
-
-    }
 
     public String getMessage(Room room, Entity player) {
-        for (Entity collider : room.getEntities()) {
-            if (collider.intersects(player))
-                break;
-            else {
-                if (index < responses.size() - 1)
-                    this.nextMessage();
-                else
-                    break;
-            }
+        for (Entity entities : room.getEntities()) {
+            if (entities.intersects(player) && entities.getDialog() != null)
+                return entities.getDialog();
         }
-        return responses.get(index);
+        return "I should be doing something.";
     }
 }

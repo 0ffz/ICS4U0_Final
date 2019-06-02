@@ -44,11 +44,12 @@ import javafx.stage.Stage;
  */
 public class GameRunner extends Application {
     private Player player = new Player();
-    private DialogBox dialogBox = new DialogBox(6);
+    private Entity mom = new Entity();
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private Renderer renderer = new Renderer(gc);
     private RoomManager rooms = new RoomManager(renderer);
+    private DialogBox dialogBox = new DialogBox(5);
 
     public static void main(String[] args) {
         launch(args);
@@ -103,13 +104,6 @@ public class GameRunner extends Application {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        //setup dialog box
-        dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
-        dialogBox.setPosition(250, 700);
-        renderer.register(dialogBox, dialogBox.getLayer());
-        rooms.getCurrentRoom().addEntity(dialogBox);
-        dialogBox.hide();
-
         //setup player
         String playerSprite = "Entities/Player/Player-spritesheet.png";
         player.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 1));
@@ -120,8 +114,23 @@ public class GameRunner extends Application {
         player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
         Player.setCurrentPlayer(player);
-        dialogBox.setPlayer(player);
         rooms.getCurrentRoom().addEntity(player); //we are using rooms' getCurrentRoom because we haven't actually loaded any room yet, so the renderer would give a NPE
+
+        //setup dialog box
+        dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
+        dialogBox.setPosition(250, 700);
+        renderer.register(dialogBox);
+        dialogBox.setPlayer(player);
+        rooms.getCurrentRoom().addEntity(dialogBox);
+        dialogBox.hide();
+
+        //setup other entities
+        mom.setImage(new Image("Mom.jpg", 90, 0, true, true));
+        mom.setPosition(300, 715);
+        mom.setDialog("You should be going to work honey.");
+        renderer.register(mom);
+        rooms.getCurrentRoom().addEntity(mom);
+        mom.hide();
 
         //load starting room
         rooms.loadRoom(renderer, 0, 0);
@@ -138,13 +147,15 @@ public class GameRunner extends Application {
                 lastNanoTime[0] = currentNanoTime;
 
                 if (InputListener.isKeyPressed("M", 100)) {
-                    Battle battle = new Battle("Rooms/Factory Entrance", player, currentRoom);
+                    Wire wire = new Wire();
+                    //TODO create battle background and colliders
+                    Battle battle = new Battle("Rooms/Factory Entrance", wire, currentRoom, renderer);
                     renderer.loadRoom(battle);
                 }
 
                 if (InputListener.isKeyPressed("N", 100)) {
                     if (currentRoom instanceof Battle)
-                        ((Battle) currentRoom).endBattle(renderer);
+                        ((Battle) currentRoom).endBattle();
                 }
 
                 if (InputListener.isKeyPressed("F11", 200)) {
@@ -159,6 +170,15 @@ public class GameRunner extends Application {
                         dialogBox.show();
                         currentPlayer.setCanMove(false);
                     }
+                }
+
+                if (currentRoom.equals(rooms.getRoom(3, 1))) {
+                    currentRoom.addEntity(mom);
+                    mom.show();
+                }
+                else {
+                    currentRoom.removeEntity(mom);
+                    mom.hide();
                 }
 
                 currentPlayer.update(elapsedTime, 1.3);

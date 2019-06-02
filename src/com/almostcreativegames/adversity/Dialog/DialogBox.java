@@ -2,6 +2,8 @@ package com.almostcreativegames.adversity.Dialog;
 
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
+import com.almostcreativegames.adversity.Rooms.Room;
+import com.almostcreativegames.adversity.Rooms.RoomManager;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Arrays;
@@ -14,7 +16,6 @@ public class DialogBox extends Entity {
     public DialogBox(int layer) {
         super(layer);
         dialog = new Dialog();
-        dialog.setResponses(Arrays.asList("Hello", "Goodbye", "I should do something else"));
     }
 
     public void setPlayer(Player player) {
