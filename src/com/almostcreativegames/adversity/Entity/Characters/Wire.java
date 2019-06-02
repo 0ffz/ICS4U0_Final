@@ -30,8 +30,8 @@ public class Wire extends EntityAnimated implements Battleable {
             @Override
             public void onInteract() {
                 startDialog(new Dialog(Arrays.asList(
-                        "The wire seems to have electrical sparks coming off of it",
-                        "You probably shouldn't touch it bare handed")));
+                        "The wire seems to have electrical\nsparks coming off of it",
+                        "You probably shouldn't touch it\nbare handed")));
             }
         };
         Button more = new Button("Talk to wire");

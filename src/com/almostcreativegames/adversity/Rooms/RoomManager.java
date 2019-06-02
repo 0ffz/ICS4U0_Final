@@ -1,7 +1,12 @@
 package com.almostcreativegames.adversity.Rooms;
 
+import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Drawing.Renderer;
+import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.GameRunner;
+import javafx.scene.image.Image;
+
+import java.util.Arrays;
 
 /**
  * Manages the different rooms in our game.
@@ -28,6 +33,17 @@ public class RoomManager {
         currentY = 3;
         rooms[3][0] = new Room("Rooms/Home");
         rooms[3][1] = new Room("Rooms/Living Room");
+
+        Entity mom = new Entity() {
+            @Override
+            public void onInteract() {
+                startDialog(new Dialog(Arrays.asList("You should be going to work honey.", "And another message!")));
+            }
+        };
+        mom.setImage(new Image("player.png", 90, 0, true, true));
+        mom.setPosition(300, 715);
+        rooms[3][1].addEntity(mom);
+
         rooms[3][2] = new Room("Rooms/Road 1");
         rooms[3][3] = new Room("Rooms/Road 2");
         rooms[3][4] = new Room("Rooms/Outside Factory");

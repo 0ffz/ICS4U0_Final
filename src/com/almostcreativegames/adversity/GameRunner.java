@@ -43,7 +43,9 @@ import java.util.Arrays;
  * <p>0.0.1 - Basic game setup</p>
  * <p>0.1.2 - Added has proper room transition and an animated player. Moved many important objects to be instance
  * variables</p>
- * <p>0.2.3 - Moved player collision and input detection into separate class. Added entity interaction system (pressing "E")</p>
+ * <p>0.2.3 -
+ * Daniel: Moved player collision and input detection into separate class. Added entity interaction system (pressing "E")
+ * Enfei: Added dialogBox</p>
  */
 public class GameRunner extends Application {
     private Player player = new Player();
@@ -52,12 +54,6 @@ public class GameRunner extends Application {
     private Renderer renderer = new Renderer(gc);
     private RoomManager rooms = new RoomManager(this);
     private DialogBox dialogBox;
-    private Entity mom = new Entity() {
-        @Override
-        public void onInteract() {
-            startDialog(new Dialog(Arrays.asList("You should be going to work honey.", "And another message!")));
-        }
-    };
 
     public static void main(String[] args) {
         launch(args);
@@ -136,13 +132,6 @@ public class GameRunner extends Application {
         rooms.getCurrentRoom().addEntity(dialogBox);
         dialogBox.hide();
 
-        //setup other entities
-        mom.setImage(new Image("player.png", 90, 0, true, true));
-        mom.setPosition(300, 715);
-        renderer.register(mom);
-        rooms.getCurrentRoom().addEntity(mom);
-        mom.hide();
-
         //load starting room
         rooms.loadRoom(renderer, 0, 0);
 
@@ -181,14 +170,6 @@ public class GameRunner extends Application {
                                 entity.onInteract();
                             }
                         }
-                }
-
-                if (currentRoom.equals(rooms.getRoom(3, 1))) {
-                    currentRoom.addEntity(mom);
-                    mom.show();
-                } else {
-                    currentRoom.removeEntity(mom);
-                    mom.hide();
                 }
 
                 currentPlayer.update(elapsedTime, 1.3);

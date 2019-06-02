@@ -37,7 +37,6 @@ public class DialogBox extends Entity {
             dialog = null;
             return;
         }
-        //TODO make text wrap here. Check the text's length and separate it into multiple strings drawn at different Y values.
         gc.fillText(message, getX() + 20, getY() + 40);
         gc.strokeText(message, getX() + 20, getY() + 40);
     }

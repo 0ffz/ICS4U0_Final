@@ -118,6 +118,8 @@ public class Room {
     public void addEntity(Entity e) {
         e.setRoom(this);
         entities.add(e);
+        if (renderer == null)
+            return;
         Room renderedRoom = renderer.getCurrentRoom();
         if (renderedRoom != null && renderedRoom.equals(this))
             renderer.register(e);
