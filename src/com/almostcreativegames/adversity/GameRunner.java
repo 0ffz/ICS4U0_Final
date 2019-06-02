@@ -165,13 +165,17 @@ public class GameRunner extends Application {
                     if (dialogBox.hasDialog())
                         dialogBox.nextMessage();
                     else
-                        for (Entity entity : currentRoom.getEntities())
-                            if (entity.intersects(player) && entity instanceof Talkable) {
-                                dialogBox.setDialog(((Talkable) entity).getDialog());
-                                dialogBox.show();
-                                currentPlayer.setCanMove(false);
-                                break;
+                        for (Entity entity : currentRoom.getEntities()) {
+                            if (entity.intersects(currentPlayer) && !entity.isHidden()) {
+                                if(entity instanceof Talkable) {
+                                    dialogBox.setDialog(((Talkable) entity).getDialog());
+                                    dialogBox.show();
+                                    currentPlayer.setCanMove(false);
+                                    break;
+                                }
+                                entity.onInteract();
                             }
+                        }
                 }
 
                 if (currentRoom.equals(rooms.getRoom(3, 1))) {
