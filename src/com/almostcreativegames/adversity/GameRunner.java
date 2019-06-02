@@ -125,7 +125,7 @@ public class GameRunner extends Application {
         dialogBox.hide();
 
         //setup other entities
-        mom.setImage(new Image("Mom.jpg", 90, 0, true, true));
+        mom.setImage(new Image("Mom.png", 90, 0, true, true));
         mom.setPosition(300, 715);
         mom.setDialog("You should be going to work honey.");
         renderer.register(mom);
