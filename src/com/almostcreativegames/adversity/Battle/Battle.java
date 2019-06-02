@@ -27,15 +27,15 @@ public class Battle extends Room {
     private BattleButton act;
     private boolean playerTurn = true;
 
-    public Battle(String imageURL, Entity fighting, Room fromRoom, Renderer renderer) {
+    public Battle(String imageURL, Battleable fighting, Room fromRoom, Renderer renderer) {
         super(imageURL);
         this.renderer = renderer;
         this.fromRoom = fromRoom;
 
-        if (!(fighting instanceof Battleable)) { //if entity is not battleable, end the battle
+        /*if (!(fighting instanceof Battleable)) { //if entity is not battleable, end the battle
             endBattle();
             return;
-        }
+        }*/
 
         fightingSprite = ((Battleable) fighting).getBattleSprite();
 
@@ -68,22 +68,23 @@ public class Battle extends Room {
         act.setText("ACT");
         act.setBattle(this);
         act.setImage("DialogBox.png");
-        act.setPosition(100, 600);
+        act.setPosition(100, 800);
 
-        Button option1 = new BattleButton();
-        option1.setText("1");
-        option1.setImage("DialogBox.png");
-        act.addSubOption(option1);
+        //register all the act options stored in the battleable entity
+        for(Button button: fighting.getActOptions(this))
+            act.addSubOption(button);
 
-        Button option2 = new BattleButton();
-        option2.setText("2");
-        option2.setImage("DialogBox.png");
-        act.addSubOption(option2);
+        //Adding a back button to all menus
+        Button back = new Button(){
+            @Override
+            public void onInteract() {
+                act.closeMenu();
+            }
+        };
+        back.setText("Back");
+        back.setImage("DialogBox.png");
 
-        Button option3 = new BattleButton();
-        option3.setText("3");
-        option3.setImage("DialogBox.png");
-        act.addSubOption(option3);
+        act.addSubOption(back);
 
         addEntity(act);
     }

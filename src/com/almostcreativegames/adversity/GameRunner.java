@@ -3,6 +3,8 @@ package com.almostcreativegames.adversity;
 import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
+import com.almostcreativegames.adversity.Entity.Behaviours.Talkable;
+import com.almostcreativegames.adversity.Entity.Characters.Mom;
 import com.almostcreativegames.adversity.Entity.Characters.Wire;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
@@ -44,7 +46,7 @@ import javafx.stage.Stage;
  */
 public class GameRunner extends Application {
     private Player player = new Player();
-    private Entity mom = new Entity();
+    private Mom mom = new Mom();
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private Renderer renderer = new Renderer(gc);
@@ -89,7 +91,7 @@ public class GameRunner extends Application {
 
         //create the scene
         Pane root = new Pane();
-        Scene scene = new Scene(new Group(root));
+        Scene scene = new Scene(new Group(root), 1000, 1000);
         stage.setScene(scene);
         stage.setResizable(true);
         InputListener.registerScene(scene);
@@ -100,7 +102,7 @@ public class GameRunner extends Application {
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
         gc.setFont(theFont);
-        gc.setFill(Color.GREEN);
+        gc.setFill(Color.WHITE);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
@@ -109,8 +111,8 @@ public class GameRunner extends Application {
         player.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 1));
         player.addAnimation("left", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
         player.addAnimation("right", new SpriteAnimation(playerSprite, 0, 30, 11, 15, 2, 2, 5, 5, 5));
-        player.addAnimation("up", new SpriteAnimation(playerSprite, 0, 15, 11, 15, 2, 2, 5, 5, 5));
-        player.addAnimation("down", new SpriteAnimation(playerSprite, 0, 0, 11, 15, 2, 1, 5, 5, 5));
+        player.addAnimation("down", new SpriteAnimation(playerSprite, 0, 45, 11, 15, 2, 2, 5, 5, 5));
+        player.addAnimation("up", new SpriteAnimation(playerSprite, 0, 60, 11, 15, 2, 2, 5, 5, 5));
         player.setCurrentAnimation("idle");
         player.setPosition(600, 600);
         Player.setCurrentPlayer(player);
@@ -120,14 +122,12 @@ public class GameRunner extends Application {
         dialogBox.setImage(new Image("DialogBox.png", 500, 0, true, true));
         dialogBox.setPosition(250, 700);
         renderer.register(dialogBox);
-        dialogBox.setPlayer(player);
         rooms.getCurrentRoom().addEntity(dialogBox);
         dialogBox.hide();
 
         //setup other entities
-        mom.setImage(new Image("Mom.png", 90, 0, true, true));
+        mom.setImage(new Image("player.png", 90, 0, true, true));
         mom.setPosition(300, 715);
-        mom.setDialog("You should be going to work honey.");
         renderer.register(mom);
         rooms.getCurrentRoom().addEntity(mom);
         mom.hide();
@@ -162,20 +162,22 @@ public class GameRunner extends Application {
                     stage.setFullScreen(!stage.isFullScreen());
 
                 if (InputListener.isKeyPressed("E", 200)) {
-                    if (!dialogBox.isHidden()) {
-                        dialogBox.hide();
-                        currentPlayer.setCanMove(true);
-                    } else {
-                        dialogBox.show();
-                        currentPlayer.setCanMove(false);
-                    }
+                    if (dialogBox.hasDialog())
+                        dialogBox.nextMessage();
+                    else
+                        for (Entity entity : currentRoom.getEntities())
+                            if (entity.intersects(player) && entity instanceof Talkable) {
+                                dialogBox.setDialog(((Talkable) entity).getDialog());
+                                dialogBox.show();
+                                currentPlayer.setCanMove(false);
+                                break;
+                            }
                 }
 
                 if (currentRoom.equals(rooms.getRoom(3, 1))) {
                     currentRoom.addEntity(mom);
                     mom.show();
-                }
-                else {
+                } else {
                     currentRoom.removeEntity(mom);
                     mom.hide();
                 }
@@ -249,8 +251,6 @@ public class GameRunner extends Application {
         SceneSizeChangeListener sizeListener = new SceneSizeChangeListener(scene);
         scene.widthProperty().addListener(sizeListener);
         scene.heightProperty().addListener(sizeListener);
-
-        resize(scene, scene.getWidth(), scene.getHeight());
     }
 
     private static class SceneSizeChangeListener implements ChangeListener<Number> {
@@ -265,6 +265,7 @@ public class GameRunner extends Application {
         public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
             final double newWidth = scene.getWidth();
             final double newHeight = scene.getHeight();
+            System.out.println(newWidth + " " + newHeight);
             resize(scene, newWidth, newHeight);
         }
     }

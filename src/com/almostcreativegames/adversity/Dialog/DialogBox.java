@@ -2,29 +2,38 @@ package com.almostcreativegames.adversity.Dialog;
 
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Player;
-import com.almostcreativegames.adversity.Rooms.Room;
-import com.almostcreativegames.adversity.Rooms.RoomManager;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.Arrays;
-
 public class DialogBox extends Entity {
-
     private Dialog dialog;
-    private Player player;
+    private String message;
 
     public DialogBox(int layer) {
         super(layer);
-        dialog = new Dialog();
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setDialog(Dialog dialog) {
+        this.dialog = dialog;
+        nextMessage();
+    }
+
+    public boolean hasDialog(){
+        return dialog != null;
+    }
+
+    public void nextMessage() {
+        message = dialog.nextMessage();
     }
 
     @Override
     public void render(GraphicsContext gc, double time) {
         super.render(gc, time);
-        gc.strokeText(dialog.getMessage(getRoom(), player), getX() + 20, getY() + 40);
+        if (message == null) {
+            hide();
+            Player.getCurrentPlayer().setCanMove(true);
+            dialog = null;
+            return;
+        }
+        gc.strokeText(message, getX() + 20, getY() + 40);
     }
 }

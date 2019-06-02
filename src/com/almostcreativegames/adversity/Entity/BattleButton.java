@@ -21,9 +21,9 @@ public class BattleButton extends Button {
 
     @Override
     public void onInteract() {
-//        hide();
+        hide();
         for (Entity option : subOptions) {
-            battle.addEntity(option);
+            option.show();
         }
     }
 
@@ -33,5 +33,13 @@ public class BattleButton extends Button {
         int offsetY = 700;
         //TODO I'm calculating something wrong here right now, fix it
         option.setPosition(offsetX + (subOptions.size() - 1) % 2 * 100, offsetY + (subOptions.size() - 1) / 2 * 100);
+        option.hide();
+        battle.addEntity(option);
+    }
+
+    public void closeMenu(){
+        for (Entity option : subOptions)
+            option.hide();
+        show();
     }
 }
