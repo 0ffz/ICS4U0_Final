@@ -13,12 +13,12 @@ import java.util.ArrayList;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.1.1
+ * @version 1.2.2
  *
  * <h2>Changelog</h2>
  * <p>0.1.1 - Image can be resized, on creation. The getFrame() method is assumed to be called every frame with the
  * amount of time that has passed</p>
- * <p>0.2.2 - Reduced number of parameters needed to be passed in constructor</p>
+ * <p>1.2.2 - Reduced number of parameters needed to be passed in constructor</p>
  */
 public class SpriteAnimation {
     private ArrayList<Image> frames;

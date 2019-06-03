@@ -3,24 +3,25 @@ package com.almostcreativegames.adversity.Entity.Characters;
 import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Behaviours.Battleable;
-import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
+import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 
 import java.util.Arrays;
 import java.util.List;
 
-/**A class for the wire entity that can be battleable
+/**
+ * A class for the wire entity that can be battleable
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.3
+ * @version 0.2.1
  *
  * <h2>Changelog</h2>
- * <p>0.2.3 - Wire class created with necessary animation a interactions implemented</p>
+ * <p>0.2.1 - Wire class created with necessary animation a interactions implemented</p>
  */
 public class Wire extends EntityAnimated implements Battleable {
     {

@@ -16,12 +16,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.3
+ * @version 1.2.3
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Basic map with layer functionality</p>
  * <p>0.1.2 - Added background and changed to TreeMap to preserve layer order</p>
- * <p>0.2.3 - No longer checks if the image is null, since some entities render only text or shapes</p>
+ * <p>1.2.3 - No longer checks if the image is null, since some entities render only text or shapes</p>
  */
 public class Renderer {
     private GraphicsContext gc;

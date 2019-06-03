@@ -1,6 +1,5 @@
 package com.almostcreativegames.adversity.Rooms;
 
-import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Characters.Wire;
@@ -16,14 +15,16 @@ import java.util.Arrays;
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
- * @author Daniel Voznyy
- * @version 0.3.4
+ * @author Daniel Voznyy & Enfei Zhang
+ * @version 0.2.3
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Map containing two Rooms</p>
  * <p>0.1.2 - Now contains proper Rooms for the game. Added methods for getting and moving between rooms</p>
- * <p>0.2.3 - Now contains a reference to the GameRunner, which can then be used to access something like
- * the renderer and creates the necessary entities per room and completed the factory</p>
+ * <p>0.2.3 -
+ * Daniel: Now contains a reference to the GameRunner, which can then be used to access something like
+ * the renderer and creates the necessary entities per room and completed the factory. Added wire to starting room.
+ * Enfei: Added Mom and Boss entities to be created in rooms</p>
  */
 
 public class RoomManager {
@@ -65,16 +66,16 @@ public class RoomManager {
         };
         boss.setImage(new Image("Boss.png", 80, 0, true, true));
         boss.setPosition(600, 715);
-        rooms [2][4].addEntity(boss);
+        rooms[2][4].addEntity(boss);
 
-        rooms [2][5] = new Room("Rooms/Factory Floor");
-        rooms [2][6] = new Room("Rooms/Factory Floor 3");
-        rooms [1][2] = new Room ("Rooms/Factory Floor 5");
-        rooms [1][3] = new Room ("Rooms/Factory Floor 4");
-        rooms [1][4] = new Room("Rooms/Outside Game Room");
-        rooms [1][5] = new Room ("Rooms/Factory Floor 4");
-        rooms [1][6] = new Room("Rooms/Factory Floor 6");
-        rooms [0][4] = new Room("Rooms/Game Room");
+        rooms[2][5] = new Room("Rooms/Factory Floor");
+        rooms[2][6] = new Room("Rooms/Factory Floor 3");
+        rooms[1][2] = new Room("Rooms/Factory Floor 5");
+        rooms[1][3] = new Room("Rooms/Factory Floor 4");
+        rooms[1][4] = new Room("Rooms/Outside Game Room");
+        rooms[1][5] = new Room("Rooms/Factory Floor 4");
+        rooms[1][6] = new Room("Rooms/Factory Floor 6");
+        rooms[0][4] = new Room("Rooms/Game Room");
         for (Room[] row : rooms)
             for (Room room : row)
                 if (room != null)

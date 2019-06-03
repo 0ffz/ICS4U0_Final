@@ -4,15 +4,12 @@ import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Entity.Behaviours.Battleable;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Menu.*;
-import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
 import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
-
-import java.awt.*;
 
 /**
  * A class for creating turn based battle sequences
@@ -21,11 +18,12 @@ import java.awt.*;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.3
+ * @version 0.2.1
  *
  * <h2>Changelog</h2>
- * <p>0.2.3 - Created basis for class, almost identical to Room, with a fighting entity held inside and a method to end
- * the battle and return to the room from which the battle occurred.</p>
+ * <p>0.2.1 - Created basis for class, almost identical to Room, with a fighting entity held inside and a method to end
+ * the battle and return to the room from which the battle occurred. The room contains health bars, a player, fighting
+ * entity sprite, an ACT and EQUIP button which both open submenus, with back buttons</p>
  */
 public class Battle extends Room {
     private Room fromRoom; //the room from which the Battle Menu was opened (we use it to return to that room later)

@@ -28,8 +28,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
-
 /**
  * The main class for running the game.
  *

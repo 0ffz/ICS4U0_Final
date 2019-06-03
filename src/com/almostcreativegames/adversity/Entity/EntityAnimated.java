@@ -14,10 +14,10 @@ import java.util.Map;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.1.1
+ * @version 1.1.1
  *
  * <h2>Changelog</h2>
- * <p>0.1.1 - Holds multiple animations in a hashmap and sets the current image to the frame from the current animation
+ * <p>1.1.1 - Holds multiple animations in a hashmap and sets the current image to the frame from the current animation
  * and renders it</p>
  */
 public class EntityAnimated extends Entity {
