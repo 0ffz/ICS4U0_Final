@@ -1,15 +1,18 @@
 package com.almostcreativegames.adversity.Battle;
 
 import com.almostcreativegames.adversity.Drawing.Fonts;
-import com.almostcreativegames.adversity.Entity.*;
 import com.almostcreativegames.adversity.Entity.Behaviours.Battleable;
-import com.almostcreativegames.adversity.Entity.Button.BackButton;
-import com.almostcreativegames.adversity.Entity.Button.BattleButton;
-import com.almostcreativegames.adversity.Entity.Button.Button;
+import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Entity.Menu.*;
+import com.almostcreativegames.adversity.Entity.Menu.Button;
+import com.almostcreativegames.adversity.Entity.Player;
+import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
 import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+
+import java.awt.*;
 
 /**
  * A class for creating turn based battle sequences
@@ -31,12 +34,19 @@ public class Battle extends Room {
     private Player previousPlayer = Player.getCurrentPlayer();
     private BattleButton act;
     private BattleButton item;
+    //TODO add a class that stores player health and displays it on screen
     private boolean playerTurn = true;
 
     public Battle(String imageURL, Battleable fighting, Room fromRoom, GameRunner game) {
         super(imageURL);
         setGame(game);
         this.fromRoom = fromRoom;
+
+        //if the entity being fought is not actually an entity, end the battle
+        if (!(fighting instanceof Entity)) {
+            endBattle();
+            return;
+        }
 
         fightingSprite = fighting.getBattleSprite();
 
@@ -45,9 +55,11 @@ public class Battle extends Room {
         addEntity(fightingSprite);
 
         //battle title
-        Button name = new Button(((Entity) fighting).getName());
-        name.setPosition(20, 20);
-        name.setImage(new Image("Menu/LongButton.png", 0, 50, true, true));
+        String enemyName = ((Entity) fighting).getName() + ":";
+        Text name = new Text(enemyName);
+
+        System.out.println(name.getTextWidth());
+        name.setPosition(290 - name.getTextWidth(), 41);
         addEntity(name);
 
         //hide overworld player
@@ -57,6 +69,7 @@ public class Battle extends Room {
         //creating soul
         soul = new Player();
         soul.setLayer(5);
+
         String playerSprite = "Entities/Player/Soul-spritesheet.png";
         soul.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 11, 2, 1, 5, 5, 1));
         soul.addAnimation("left", new SpriteAnimation(playerSprite, 0, 12, 11, 11, 5, 5, 5, 5, 5, 1, 0));
@@ -99,6 +112,31 @@ public class Battle extends Room {
         act.addSubOption(actBack);
         item.addSubOption(itemBack);
 
+        Text you = new Text("You:");
+        you.setPosition(290 - you.getTextWidth(), 620);
+        addEntity(you);
+        //create player's health meter
+        HealthDisplay playerHealth = new HealthDisplay(7, 10);
+        playerHealth.setLayer(10);
+        playerHealth.setPosition(300, 600);
+        playerHealth.setDimensions(400, 25);
+        addEntity(playerHealth);
+
+        //create enemy's health meter
+        HealthDisplay enemyHealth = new HealthDisplay(7, 10);
+        enemyHealth.setLayer(10);
+        enemyHealth.setPosition(300, 20);
+        enemyHealth.setDimensions(400, 25);
+        addEntity(enemyHealth);
+    }
+
+    //TODO implement the actual turn based system
+    public void startEnemyTurn() {
+        hideMenuButtons();
+    }
+
+    public void startPlayerTurn() {
+        closeMenus();
     }
 
     public void hideMenuButtons() {

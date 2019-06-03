@@ -22,7 +22,7 @@ import java.util.Arrays;
  * <h2>Changelog</h2>
  * <p>0.0.1 - Map containing two Rooms</p>
  * <p>0.1.2 - Now contains proper Rooms for the game. Added methods for getting and moving between rooms</p>
- * <p>0.2.3 - Now contains a reference to the GameRunner, which can then be used to access something like the renderer.</p>
+ * <p>0.2.3 - Now contains a reference to the GameRunner, which can then be used to access something like the renderer</p>
  */
 
 public class RoomManager {
