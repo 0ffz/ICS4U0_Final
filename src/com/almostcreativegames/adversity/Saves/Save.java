@@ -13,6 +13,9 @@ import java.io.PrintWriter;
  *
  * @author Daniel Voznyy
  * @version 0.0.1
+ *
+ * <h2>Changelog</h2>
+ * <p>0.0.1 - Save class created with the premise of saving implemented.</p>
  */
 
 public class Save {

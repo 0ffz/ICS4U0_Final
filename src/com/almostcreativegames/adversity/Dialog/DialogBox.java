@@ -5,9 +5,18 @@ import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Player;
 import javafx.scene.canvas.GraphicsContext;
 
-/**
+/**A class for the dialog box entities
  *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Enfei Zhang
+ * @version 0.2.3
+ *
+ * <h2>Changelog</h2>
+ * <p>0.2.3 - DialogBox class created and dialog system added</p>
  */
+
 public class DialogBox extends Button {
     private Dialog dialog;
 
