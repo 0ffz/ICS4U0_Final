@@ -23,7 +23,6 @@ import java.util.Arrays;
  * <p>0.0.1 - Map containing two Rooms</p>
  * <p>0.1.2 - Now contains proper Rooms for the game. Added methods for getting and moving between rooms</p>
  * <p>0.2.3 - Now contains a reference to the GameRunner, which can then be used to access something like the renderer</p>
- * <p>0.2.3 - Now contains a reference to the GameRunner, which can then be used to access something like the renderer.</p>
  * <p>0.3.4 - Now creates the necessary entities per room and completed the factory</p>
  */
 
