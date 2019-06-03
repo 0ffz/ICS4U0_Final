@@ -1,7 +1,7 @@
 package com.almostcreativegames.adversity.Entity.Behaviours;
 
 import com.almostcreativegames.adversity.Battle.Battle;
-import com.almostcreativegames.adversity.Entity.Button.Button;
+import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Entity;
 
 import java.util.List;

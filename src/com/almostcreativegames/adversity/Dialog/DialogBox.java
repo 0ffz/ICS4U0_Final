@@ -1,7 +1,7 @@
 package com.almostcreativegames.adversity.Dialog;
 
 import com.almostcreativegames.adversity.Drawing.Fonts;
-import com.almostcreativegames.adversity.Entity.Button.Button;
+import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Player;
 import javafx.scene.canvas.GraphicsContext;
 

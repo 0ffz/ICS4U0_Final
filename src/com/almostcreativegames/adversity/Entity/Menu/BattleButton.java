@@ -1,4 +1,4 @@
-package com.almostcreativegames.adversity.Entity.Button;
+package com.almostcreativegames.adversity.Entity.Menu;
 
 import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Entity.Entity;

@@ -27,14 +27,14 @@ import javafx.scene.image.Image;
  */
 public class Entity {
     protected Room room;
-    private Image image;
+    protected Image image;
     private String name;
-    private double x;
-    private double y;
+    protected double x;
+    protected double y;
     private double velocityX;
     private double velocityY;
-    private double width;
-    private double height;
+    protected double width;
+    protected double height;
     private boolean hidden;
     private int layer;
     private boolean removed = false;

@@ -3,7 +3,7 @@ package com.almostcreativegames.adversity.Entity.Characters;
 import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Behaviours.Battleable;
-import com.almostcreativegames.adversity.Entity.Button.Button;
+import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
@@ -53,7 +53,6 @@ public class Wire extends EntityAnimated implements Battleable {
 
     @Override
     protected void registerAnimations() {
-        String playerSprite = "Entities/Player/Player-spritesheet.png";
         addAnimation("idle", new SpriteAnimation("Entities/Wire-spritesheet.png", 0, 0, 32, 16, 2, 1, 5, 5, 1));
         setCurrentAnimation("idle");
     }
