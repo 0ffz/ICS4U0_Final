@@ -69,7 +69,6 @@ public class RoomManager {
         };
         EntityAnimated eButton = new EntityAnimated();
         eButton.addAnimation("appear", new SpriteAnimation("Entities/E.png", 0, 0, 50, 50, 2, 2, 1, 1, 1));
-
         eButton.setCurrentAnimation("appear");
         eButton.setPosition(370, 700);
 

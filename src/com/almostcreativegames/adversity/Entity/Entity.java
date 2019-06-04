@@ -35,7 +35,7 @@ public class Entity {
     protected double height;
     protected double friction = 1.3;
     private double lifetime;
-    private String name;
+    private String name = "unnamed";
     private double velocityX;
     private double velocityY;
     private boolean hidden;
