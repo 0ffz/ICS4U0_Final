@@ -30,5 +30,5 @@ public interface BattleBehaviour {
 
     void startTurn(Battle battle);
 
-    double turnLength();
+    void onWin(Battle battle);
 }

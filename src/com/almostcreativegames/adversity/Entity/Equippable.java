@@ -7,6 +7,13 @@ public class Equippable implements Comparable<Equippable>{
         return name;
     }
 
+    public String getDisplayName() {
+        if (isEquipped())
+            return name + "[x]";
+        else
+            return name + "[ ]";
+    }
+
     public void setName(String name) {
         this.name = name;
     }

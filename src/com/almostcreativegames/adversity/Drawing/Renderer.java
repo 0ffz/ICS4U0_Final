@@ -28,11 +28,15 @@ public class Renderer {
     private Room currentRoom;
     //TODO Instead of containing a list of Sprites, have a layer object which would render in order
     // based on an object's y coordinate.
-    private Map<Integer, CopyOnWriteArrayList<Entity>> layers; //Concurrent version of ArrayList solves concurrency problems https://stackoverflow.com/questions/6916385/is-there-a-concurrent-list-in-javas-jdk
+    private Map<Integer, CopyOnWriteArrayList<Entity>> layers = new TreeMap<>(); //Concurrent version of ArrayList solves concurrency problems https://stackoverflow.com/questions/6916385/is-there-a-concurrent-list-in-javas-jdk
 
+    /**
+     * An object for rendering Entities onto a GraphicsContext
+     *
+     * @param gc used to draw the entities
+     */
     public Renderer(GraphicsContext gc) {
         this.gc = gc;
-        layers = new TreeMap<Integer, CopyOnWriteArrayList<Entity>>();
     }
 
     /**
@@ -59,10 +63,18 @@ public class Renderer {
             layers.get(layer).add(entity);
     }
 
+    /**
+     * Clears the registered entities in the TreeMap
+     */
     public void unregisterAll() {
-        layers = new TreeMap<Integer, CopyOnWriteArrayList<Entity>>();
+        layers = new TreeMap<>();
     }
 
+    /**
+     * Render all registered entities
+     *
+     * @param time the amount of time passed between frames (used by EntityAnimated)
+     */
     public void render(double time) {
         gc.drawImage(currentRoom.getBackground(), 0, 0); //draw the background first, then every other entity in order by layer
 

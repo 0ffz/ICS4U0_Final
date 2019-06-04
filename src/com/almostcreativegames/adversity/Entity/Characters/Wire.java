@@ -28,6 +28,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
     private Timer timer;
 
     private double health = 10;
+    private ArrayList<Entity> sparks = new ArrayList<>();
 
     {
         setName("Sparking wire");
@@ -67,7 +68,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
                             "It felt pretty painful")) {
                         @Override
                         public void onEnd() {
-                            Player.getCurrentPlayer().addHealth(-10);
+                            Player.getCurrentPlayer().addHealth(-5);
                             battle.nextTurn();
                         }
                     });
@@ -93,15 +94,20 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
     @Override
     public void onBattleEnd(Battle battle) {
         remove();
-        System.out.println(getName());
     }
 
-    private ArrayList<Entity> sparks = new ArrayList<>();
+    @Override
+    public void onWin(Battle battle) {
+        battle.getGame().work();
+        startDialog(new Dialog(Arrays.asList(
+                "The wire finally got cut!",
+                "You should talk to the boss\nnow")));
+    }
 
     private void createSpark(Battle battle) {
         Entity spark = new Entity() {
             {
-                setImage("Boss.png");
+                setImage("Entities/Boss.png");
                 setPosition(Math.random() * 1000, Math.random() * 300 + 100);
                 setLayer(10);
                 addVelocity(0, Math.random() * 400 + 200);
@@ -112,7 +118,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
             public void onIntersect() {
                 Player.getCurrentPlayer().addHealth(-1);
                 remove();
-                if(battle.checkDead())
+                if (battle.checkDead())
                     timer.cancel();
             }
         };
@@ -120,9 +126,16 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
         battle.addEntity(spark);
     }
 
+    /**
+     * Starts this entity's turn
+     *
+     * @param battle the battle we are currently in
+     */
     @Override
     public void startTurn(Battle battle) {
-        timer  = new Timer();
+        timer = new Timer();
+
+        //delayed and repeating tasks from http://mrbool.com/how-to-schedule-recurring-tasks-in-java-applications/28909
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -135,15 +148,10 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
             public void run() {
                 timer.cancel();
                 battle.nextTurn();
-                for(Entity spark: sparks)
+                for (Entity spark : sparks)
                     spark.remove();
             }
         }, 10000);
-    }
-
-    @Override
-    public double turnLength() {
-        return 100;
     }
 
     @Override

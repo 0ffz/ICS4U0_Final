@@ -29,8 +29,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -98,6 +96,7 @@ public class GameRunner extends Application {
         day++;
     }
 
+    //TODO make these not static and also, should this be replaced with something like setJobDone()?
     public static void work() {
         jobDone = !jobDone;
     }
@@ -134,8 +133,20 @@ public class GameRunner extends Application {
         return equipment;
     }
 
-    public boolean isEquipped(String name){
-        return equipment.contains(new Equippable(name));
+    public void toggleEquipped(String name) {
+        for (Equippable equippable : equipment)
+            if (equippable.compareTo((new Equippable(name))) == 0) {
+                equippable.setEquipped(!equippable.isEquipped());
+                return;
+            }
+    }
+
+
+    public boolean isEquipped(String name) {
+        for (Equippable equippable : equipment)
+            if (equippable.compareTo((new Equippable(name))) == 0)
+                return equippable.isEquipped();
+        return false;
     }
 
     public Renderer getRenderer() {
@@ -232,6 +243,7 @@ public class GameRunner extends Application {
                         }
                 }
 
+                //check for entities intersecting with the player
                 for (Entity entity : currentRoom.getEntities())
                     if (entity.intersects(currentPlayer) && !entity.isHidden())
                         entity.onIntersect();

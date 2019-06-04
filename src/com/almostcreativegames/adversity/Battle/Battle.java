@@ -112,11 +112,15 @@ public class Battle extends Room {
         addEntity(item);
 
         //register all the menu options stored in the battleable entity
-        for (Equippable equippable: game.getEquipment()) {
-            String name = equippable.getName();
-            if(equippable.isEquipped())
-                name += "*";
-            item.addSubOption(new Button(name));
+        for (Equippable equippable : game.getEquipment()) {
+            String name = equippable.getDisplayName();
+            item.addSubOption(new Button(name){
+                @Override
+                public void onInteract() {
+                    game.toggleEquipped(equippable.getName());
+                    setText(equippable.getDisplayName());
+                }
+            });
         }
 
 
@@ -151,6 +155,11 @@ public class Battle extends Room {
         addEntity(enemyHealth);
     }
 
+    /**
+     * Checks if the player or enemy have died
+     *
+     * @return whether either is dead and the battle is now over
+     */
     public boolean checkDead() {
         if (playerHealth.isDead()) {
             endBattle();
@@ -159,6 +168,7 @@ public class Battle extends Room {
         }
         if (enemyHealth.isDead()) {
             endBattle();
+            enemy.onWin(this);
             return true;
         }
         return false;
@@ -168,7 +178,7 @@ public class Battle extends Room {
      * Begins the next turn, and does health checks
      */
     public void nextTurn() {
-        if(checkDead())
+        if (checkDead())
             return;
 
         if (playerTurn)
@@ -216,12 +226,12 @@ public class Battle extends Room {
      * Ends the battle and returns to the overworld
      */
     public void endBattle() {
-        enemy.onBattleEnd(this);
         renderer.loadRoom(fromRoom);
 
         //return previous player to be playable again
         previousPlayer.setCanMove(true);
         previousPlayer.show();
         Player.setCurrentPlayer(previousPlayer);
+        enemy.onBattleEnd(this);
     }
 }
