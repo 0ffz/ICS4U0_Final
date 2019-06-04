@@ -28,6 +28,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The main class for running the game.
  *
@@ -52,6 +55,9 @@ public class GameRunner extends Application {
     private Renderer renderer = new Renderer(gc);
     private RoomManager rooms = new RoomManager(this);
     private DialogBox dialogBox;
+    private List<String> equipment = new ArrayList<>();
+    private double playerHealth = 10;
+    private double maxPlayerHealth = 10;
     private static int day = 0;
     private static boolean jobDone = false;
 
@@ -79,6 +85,34 @@ public class GameRunner extends Application {
         scale.setPivotY(0);
         scene.getRoot().getTransforms().setAll(scale);
 
+    }
+
+    public double getMaxPlayerHealth() {
+        return maxPlayerHealth;
+    }
+
+    public void setMaxPlayerHealth(double maxPlayerHealth) {
+        this.maxPlayerHealth = maxPlayerHealth;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public double getPlayerHealth() {
+        return playerHealth;
+    }
+
+    public void setPlayerHealth(double playerHealth) {
+        this.playerHealth = playerHealth;
+    }
+
+    public List<String> getEquipment() {
+        return equipment;
     }
 
     public Renderer getRenderer() {
@@ -272,7 +306,6 @@ public class GameRunner extends Application {
         public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
             final double newWidth = scene.getWidth();
             final double newHeight = scene.getHeight();
-            System.out.println(newWidth + " " + newHeight);
             resize(scene, newWidth, newHeight);
         }
     }

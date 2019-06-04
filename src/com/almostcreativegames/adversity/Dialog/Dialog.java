@@ -29,9 +29,15 @@ public class Dialog {
         this.messages = messages;
     }
 
+    public void onEnd() {
+
+    }
+
     public String nextMessage() {
-        if (index == messages.size())
+        if (index == messages.size()) {
+            onEnd();
             return null;
+        }
         return messages.get(index++);
     }
 }

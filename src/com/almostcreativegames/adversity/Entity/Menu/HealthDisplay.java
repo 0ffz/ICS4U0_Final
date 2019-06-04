@@ -1,5 +1,6 @@
 package com.almostcreativegames.adversity.Entity.Menu;
 
+import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
 import com.almostcreativegames.adversity.Entity.Entity;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -8,12 +9,10 @@ import javafx.scene.paint.Color;
  *
  */
 public class HealthDisplay extends Entity {
-    private double health;
-    private double maxHealth;
+    private HealthBehaviour parent;
 
-    public HealthDisplay(double health, double maxHealth) {
-        this.health = health;
-        this.maxHealth = maxHealth;
+    public HealthDisplay(HealthBehaviour parent) {
+        this.parent = parent;
         setDimensions(100, 20);
     }
 
@@ -22,11 +21,15 @@ public class HealthDisplay extends Entity {
         this.height = height;
     }
 
+    public boolean isDead(){
+        return parent.getHealth() <= 0;
+    }
+
     @Override
     public void render(GraphicsContext gc, double time) {
         gc.setFill(Color.ORANGERED);
         gc.fillRect(x, y, width, height);
         gc.setFill(Color.LIGHTGREEN);
-        gc.fillRect(x, y, width * (health / maxHealth), height);
+        gc.fillRect(x, y, width * (parent.getHealth() / parent.getMaxHealth()), height);
     }
 }

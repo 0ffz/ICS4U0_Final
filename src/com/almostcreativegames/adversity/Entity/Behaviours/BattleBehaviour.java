@@ -13,15 +13,20 @@ import java.util.List;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.1
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.2.1 - Battleable interface created with method to get battle sprite and get act options</p>
+ * <p>1.3.2 - Added onBattleEnd and startTurn</p>
  */
 
-public interface Battleable {
+public interface BattleBehaviour {
     Entity getBattleSprite();
 
     List<Button> getActOptions(Battle battle);
     //TODO add getEquipOptions and whatever other menu options there are
+
+    void onBattleEnd(Battle battle);
+
+    void startTurn(Battle battle);
 }

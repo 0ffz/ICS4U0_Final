@@ -1,5 +1,6 @@
 package com.almostcreativegames.adversity.Entity;
 
+import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
 import com.almostcreativegames.adversity.Input.InputListener;
 
 /**
@@ -14,7 +15,7 @@ import com.almostcreativegames.adversity.Input.InputListener;
  * <h2>Changelog</h2>
  * <p>0.2.1 - Moved most of GameRunner's manipulation of the player into its own class</p>
  */
-public class Player extends EntityAnimated {
+public class Player extends EntityAnimated implements HealthBehaviour {
     private static Player currentPlayer;
     private boolean canMove = true;
 
@@ -76,5 +77,20 @@ public class Player extends EntityAnimated {
             setCurrentAnimation("up");
         else if (getVelocityY() > 50)
             setCurrentAnimation("down");
+    }
+
+    @Override
+    public void addHealth(double amount) {
+        room.getGame().setPlayerHealth(room.getGame().getPlayerHealth() + amount);
+    }
+
+    @Override
+    public double getHealth() {
+        return room.getGame().getPlayerHealth();
+    }
+
+    @Override
+    public double getMaxHealth() {
+        return room.getGame().getMaxPlayerHealth();
     }
 }

@@ -1,7 +1,8 @@
 package com.almostcreativegames.adversity.Battle;
 
 import com.almostcreativegames.adversity.Drawing.Fonts;
-import com.almostcreativegames.adversity.Entity.Behaviours.Battleable;
+import com.almostcreativegames.adversity.Entity.Behaviours.BattleBehaviour;
+import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Menu.*;
 import com.almostcreativegames.adversity.Entity.Player;
@@ -28,37 +29,34 @@ import javafx.scene.image.Image;
 public class Battle extends Room {
     private Room fromRoom; //the room from which the Battle Menu was opened (we use it to return to that room later)
     private Entity fightingSprite;
+    private BattleBehaviour enemy;
     private Player soul;
     private Player previousPlayer = Player.getCurrentPlayer();
     private BattleButton act;
     private BattleButton item;
-    //TODO add a class that stores player health and displays it on screen
+    private HealthDisplay playerHealth;
+    private HealthDisplay enemyHealth;
+
     private boolean playerTurn = true;
 
-    public Battle(String imageURL, Battleable fighting, Room fromRoom, GameRunner game) {
+    public Battle(String imageURL, Entity enemy, Room fromRoom, GameRunner game) {
         super(imageURL);
-        setGame(game);
-        this.fromRoom = fromRoom;
 
-        //if the entity being fought is not actually an entity, end the battle
-        if (!(fighting instanceof Entity)) {
+        //if the entity being fought does not have the right behaviours, end the battle
+        if (!(enemy instanceof BattleBehaviour && enemy instanceof HealthBehaviour)) {
             endBattle();
             return;
         }
 
-        fightingSprite = fighting.getBattleSprite();
+        setGame(game);
+        this.fromRoom = fromRoom;
+        this.enemy = ((BattleBehaviour) enemy);
+
+        fightingSprite = ((BattleBehaviour) enemy).getBattleSprite();
 
         Rectangle2D boundary = fightingSprite.getBoundary();
         fightingSprite.setPosition(500 - boundary.getWidth() / 2, 200); //center the sprite
         addEntity(fightingSprite);
-
-        //battle title
-        String enemyName = ((Entity) fighting).getName() + ":";
-        Text name = new Text(enemyName);
-
-        System.out.println(name.getTextWidth());
-        name.setPosition(290 - name.getTextWidth(), 41);
-        addEntity(name);
 
         //hide overworld player
         previousPlayer.setCanMove(false);
@@ -100,7 +98,7 @@ public class Battle extends Room {
 
 
         //register all the menu options stored in the battleable entity
-        for (Button button : fighting.getActOptions(this))
+        for (Button button : ((BattleBehaviour) enemy).getActOptions(this))
             act.addSubOption(button);
 
         //Adding a back button to all menus
@@ -110,30 +108,56 @@ public class Battle extends Room {
         act.addSubOption(actBack);
         item.addSubOption(itemBack);
 
+        //create player's health meter and label
         Text you = new Text("You:");
         you.setPosition(290 - you.getTextWidth(), 620);
         addEntity(you);
-        //create player's health meter
-        HealthDisplay playerHealth = new HealthDisplay(7, 10);
+
+        playerHealth = new HealthDisplay(soul);
         playerHealth.setLayer(10);
         playerHealth.setPosition(300, 600);
         playerHealth.setDimensions(400, 25);
         addEntity(playerHealth);
 
-        //create enemy's health meter
-        HealthDisplay enemyHealth = new HealthDisplay(7, 10);
+        //create enemy's health meter and name label
+        String enemyName = enemy.getName() + ":";
+        Text name = new Text(enemyName);
+        name.setPosition(290 - name.getTextWidth(), 41);
+        addEntity(name);
+
+        enemyHealth = new HealthDisplay(((HealthBehaviour) enemy));
         enemyHealth.setLayer(10);
         enemyHealth.setPosition(300, 20);
         enemyHealth.setDimensions(400, 25);
         addEntity(enemyHealth);
     }
 
-    //TODO implement the actual turn based system
-    public void startEnemyTurn() {
-        hideMenuButtons();
+    public void nextTurn() {
+        if (playerHealth.isDead()) {
+            endBattle();
+            //TODO call game end method in GameRunner
+        }
+        if (enemyHealth.isDead()) {
+            enemy.onBattleEnd(this);
+            endBattle();
+        }
+
+        if (playerTurn)
+            startEnemyTurn();
+        else
+            startPlayerTurn();
+
+        playerTurn = !playerTurn;
     }
 
-    public void startPlayerTurn() {
+    //TODO implement the actual turn based system
+    private void startEnemyTurn() {
+        closeMenus();
+        hideMenuButtons();
+        enemy.startTurn(this);
+    }
+
+    private void startPlayerTurn() {
         closeMenus();
     }
 
