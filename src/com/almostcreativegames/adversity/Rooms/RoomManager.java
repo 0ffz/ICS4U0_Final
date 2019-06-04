@@ -44,6 +44,8 @@ public class RoomManager {
                 if (GameRunner.isJobDone()){
                     GameRunner.nextDay();
                     GameRunner.work();
+                    //if (GameRunner.getDay() == 6)
+                      //  endScene();
                 }
             }
         };
@@ -58,6 +60,8 @@ public class RoomManager {
             public void onInteract() {
                 if (GameRunner.getDay() == 0)
                     startDialog(new Dialog(Arrays.asList("You should be going to work honey.", "Don't wanna be late on your first day!", "Oh and remember honey to always stay safe!")));
+                else
+                    startDialog(new Dialog(Arrays.asList("See you later honey.", "Remember not to get hurt!")));
             }
         };
         mom.setImage(new Image("Mom.png", 80, 0, true, true));
@@ -70,8 +74,24 @@ public class RoomManager {
         rooms[3][3] = new Room("Rooms/Road 2");
         rooms[3][4] = new Room("Rooms/Outside Factory");
         rooms[2][2] = new Room("Rooms/Factory Floor 2");
+
         rooms[2][3] = new Room("Rooms/Factory Floor");
+
+        Entity electricalEmployee = new Entity(){
+            @Override
+            public void onInteract() {
+                if (GameRunner.getDay() == 0)
+                startDialog(new Dialog(Arrays.asList("Hey there you seem new.", "I remember my first day here.", "I was excited to start my job and get working.", "But then I had suddenly gotten an injury from the electrical box.", "We should get back to work.", "Anyways nice meeting you always make sure that you have the proper equipment!")));
+                else
+                    startDialog(new Dialog(Arrays.asList("Hey there again.", "I hope you remember to always use the right equipment!")));
+            }
+        };
+
+
+        rooms[2][3].addEntity(electricalEmployee);
+
         rooms[2][4] = new Room("Rooms/Factory Entrance");
+
         Entity boss = new Entity() {
             @Override
             public void onInteract() {
@@ -85,7 +105,7 @@ public class RoomManager {
                     startDialog(new Dialog(Arrays.asList("You know the drill by now.", "I need you to clean some chemicals from one of our machines in the room")));
                 else if (GameRunner.getDay() == 4)
                     startDialog(new Dialog(Arrays.asList("How are you doing?", "Stop right there, it doesn't matter", "I need you to fix one of our conveyor belts.")));
-                else
+                else if (GameRunner.getDay() == 5)
                     startDialog(new Dialog(Arrays.asList("How you doing?", "Don't matter how you doing", "I need you to clean out the mixing bin!")));
             }
         };
