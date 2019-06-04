@@ -2,10 +2,12 @@ package com.almostcreativegames.adversity.Entity.Characters;
 
 import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Dialog.Dialog;
-import com.almostcreativegames.adversity.Entity.Behaviours.Battleable;
+import com.almostcreativegames.adversity.Entity.Behaviours.BattleBehaviour;
+import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
 import com.almostcreativegames.adversity.Entity.Menu.Button;
+import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 
 import java.util.Arrays;
@@ -23,7 +25,9 @@ import java.util.List;
  * <h2>Changelog</h2>
  * <p>0.2.1 - Wire class created with necessary animation a interactions implemented</p>
  */
-public class Wire extends EntityAnimated implements Battleable {
+public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
+    private double health = 10;
+
     {
         setName("Sparking wire");
     }
@@ -44,13 +48,41 @@ public class Wire extends EntityAnimated implements Battleable {
 
     @Override
     public List<Button> getActOptions(Battle battle) {
-        Button cut = new Button("Cut wire");
+        Button cut = new Button("Cut wire") {
+            @Override
+            public void onInteract() {
+                if (room.getGame().getEquipment().contains("Gloves"))
+                    startDialog(new Dialog(Arrays.asList(
+                            "You managed to cut part of the wire!")) {
+                        @Override
+                        public void onEnd() {
+                            addHealth(-1);
+                            battle.nextTurn();
+                        }
+                    });
+                else
+                    startDialog(new Dialog(Arrays.asList(
+                            "You try cutting the wire but\nsparks fly off it",
+                            "It felt pretty painful")) {
+                        @Override
+                        public void onEnd() {
+                            Player.getCurrentPlayer().addHealth(-4);
+                            battle.nextTurn();
+                        }
+                    });
+            }
+        };
         Button inspect = new Button("Inspect") {
             @Override
             public void onInteract() {
                 startDialog(new Dialog(Arrays.asList(
                         "The wire seems to have electrical\nsparks coming off of it",
-                        "You probably shouldn't touch it\nbare handed")));
+                        "You probably shouldn't touch it\nbare handed")) {
+                    @Override
+                    public void onEnd() {
+                        battle.nextTurn();
+                    }
+                });
             }
         };
         Button more = new Button("Talk to wire");
@@ -58,6 +90,34 @@ public class Wire extends EntityAnimated implements Battleable {
         Button talk = new Button("Talk to wire");
 
         return Arrays.asList(cut, inspect, talk, more, options);
+    }
+
+    @Override
+    public void onBattleEnd(Battle battle) {
+        battle.closeMenus();
+        remove();
+        //TODO I think the entity isn't properly getting removed, you can still click on it once the battle is over.
+        // Could be caused by the room reference in the entity actually being to the battle and not its original room?
+    }
+
+    @Override
+    public void startTurn(Battle battle) {
+        onBattleEnd(battle);
+    }
+
+    @Override
+    public void addHealth(double amount) {
+        health += amount;
+    }
+
+    @Override
+    public double getHealth() {
+        return health;
+    }
+
+    @Override
+    public double getMaxHealth() {
+        return 10;
     }
 
     @Override

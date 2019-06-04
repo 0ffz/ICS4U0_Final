@@ -57,10 +57,6 @@ public class Entity {
     public void onInteract() {
     }
 
-    //TODO make this run after dialog complete
-    public void onDialogComplete() {
-    }
-
     public String getName() {
         return name;
     }
