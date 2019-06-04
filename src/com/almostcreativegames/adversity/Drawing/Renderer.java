@@ -89,7 +89,10 @@ public class Renderer {
         if (room != null) {
             for (Entity entity : room.getEntities())
                 register(entity);
-            System.out.println(room.getEntities());
+            for (Entity e : room.getEntities()) {
+                System.out.print(e.getName() + ", ");
+            }
+            System.out.println();
         } else
             System.out.println("Room is null");
     }

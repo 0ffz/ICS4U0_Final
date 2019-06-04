@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 1.2.3
+ * @version 1.3.4
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Simple sprite with position, size and movement capabilities</p>
@@ -24,6 +24,7 @@ import javafx.scene.image.Image;
  * <p>1.2.3 - Now holds a room object to remove itself from it when remove() is called.
  * Now holds a name that can be used as an identifier.
  * Added functionality to hide and show the entity</p>
+ * <p>1.3.4 - Added NPE fix in remove()</p>
  */
 public class Entity {
     protected Room room;
@@ -151,6 +152,8 @@ public class Entity {
      */
     public void remove() {
         removed = true;
+        if(room == null)
+            return;
         room.removeEntity(this);
     }
 

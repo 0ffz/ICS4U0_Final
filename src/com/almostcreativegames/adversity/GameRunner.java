@@ -195,9 +195,9 @@ public class GameRunner extends Application {
                     stage.setFullScreen(!stage.isFullScreen());
 
                 if (InputListener.isKeyPressed("E", 200)) {
-                    if (dialogBox.hasDialog())
+                    if (dialogBox.hasDialog()) {
                         dialogBox.nextMessage();
-                    else
+                    }else
                         for (Entity entity : currentRoom.getEntities()) {
                             if (entity.intersects(currentPlayer) && !entity.isHidden()) {
                                 entity.onInteract();

@@ -19,12 +19,14 @@ import javafx.scene.image.Image;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.1
+ * @version 0.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.2.1 - Created basis for class, almost identical to Room, with a fighting entity held inside and a method to end
  * the battle and return to the room from which the battle occurred. The room contains health bars, a player, fighting
  * entity sprite, an ACT and EQUIP button which both open submenus, with back buttons</p>
+ * <p>0.3.2 - Added turn based mechanics to the battle. The player gets to choose actions, and enemy plays their own
+ * appropriate minigame. Now also does death checks</p>
  */
 public class Battle extends Room {
     private Room fromRoom; //the room from which the Battle Menu was opened (we use it to return to that room later)
@@ -39,6 +41,14 @@ public class Battle extends Room {
 
     private boolean playerTurn = true;
 
+    /**
+     * Defines a new battle object, in which a new room is created and entered.
+     *
+     * @param imageURL the background of the battle TODO could probably remove this if we know for sure we're loading the same background each time
+     * @param enemy    the enemy Entity being fought
+     * @param fromRoom the room to return to after the battle is over
+     * @param game     a reference to the GameRunner
+     */
     public Battle(String imageURL, Entity enemy, Room fromRoom, GameRunner game) {
         super(imageURL);
 
@@ -132,13 +142,15 @@ public class Battle extends Room {
         addEntity(enemyHealth);
     }
 
+    /**
+     * Begins the next turn, and does health checks
+     */
     public void nextTurn() {
         if (playerHealth.isDead()) {
             endBattle();
             //TODO call game end method in GameRunner
         }
         if (enemyHealth.isDead()) {
-            enemy.onBattleEnd(this);
             endBattle();
         }
 
@@ -150,6 +162,9 @@ public class Battle extends Room {
         playerTurn = !playerTurn;
     }
 
+    /**
+     * Begins the enemy turn by playing their associated minigame
+     */
     //TODO implement the actual turn based system
     private void startEnemyTurn() {
         closeMenus();
@@ -157,21 +172,34 @@ public class Battle extends Room {
         enemy.startTurn(this);
     }
 
+    /**
+     * Begins the player's turn, by showing them their menu options
+     */
     private void startPlayerTurn() {
         closeMenus();
     }
 
+    /**
+     * Hides all menu buttons (called by the menu buttons to open the submenus)
+     */
     public void hideMenuButtons() {
         act.hide();
         item.hide();
     }
 
+    /**
+     * Closes all menus, which also shows their main buttons
+     */
     public void closeMenus() {
         act.closeMenu();
         item.closeMenu();
     }
 
+    /**
+     * Ends the battle and returns to the overworld
+     */
     public void endBattle() {
+        enemy.onBattleEnd(this);
         renderer.loadRoom(fromRoom);
 
         //return previous player to be playable again

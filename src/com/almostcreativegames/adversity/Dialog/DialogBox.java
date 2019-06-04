@@ -12,12 +12,14 @@ import javafx.scene.canvas.GraphicsContext;
  * ICS4U0 with Krasteva V.
  *
  * @author Enfei Zhang & Daniel Voznyy
- * @version 0.2.1
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.2.1 -
  * Enfei: DialogBox class created and dialog system added
  * Daniel: nextMessage() added</p>
+ * <p>1.3.2 -
+ * Daniel: Fixed error with dialog calling next message one time after it had already run out of messages</p>
  */
 
 public class DialogBox extends Button {
@@ -40,6 +42,8 @@ public class DialogBox extends Button {
 
     public void nextMessage() {
         text = dialog.nextMessage();
+        if (text == null)
+            dialog = null;
     }
 
     @Override

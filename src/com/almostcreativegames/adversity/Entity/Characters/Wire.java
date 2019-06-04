@@ -66,7 +66,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
                             "It felt pretty painful")) {
                         @Override
                         public void onEnd() {
-                            Player.getCurrentPlayer().addHealth(-4);
+                            Player.getCurrentPlayer().addHealth(-10);
                             battle.nextTurn();
                         }
                     });
@@ -94,15 +94,13 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
 
     @Override
     public void onBattleEnd(Battle battle) {
-        battle.closeMenus();
         remove();
-        //TODO I think the entity isn't properly getting removed, you can still click on it once the battle is over.
-        // Could be caused by the room reference in the entity actually being to the battle and not its original room?
+        System.out.println(getName());
     }
 
     @Override
     public void startTurn(Battle battle) {
-        onBattleEnd(battle);
+        battle.closeMenus();
     }
 
     @Override
