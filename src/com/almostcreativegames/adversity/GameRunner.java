@@ -52,6 +52,8 @@ public class GameRunner extends Application {
     private Renderer renderer = new Renderer(gc);
     private RoomManager rooms = new RoomManager(this);
     private DialogBox dialogBox;
+    private static int day = 0;
+    private static boolean jobDone = false;
 
     public static void main(String[] args) {
         launch(args);
@@ -118,7 +120,7 @@ public class GameRunner extends Application {
         player.addAnimation("down", new SpriteAnimation(playerSprite, 0, 45, 11, 15, 2, 2, 5, 5, 5));
         player.addAnimation("up", new SpriteAnimation(playerSprite, 0, 60, 11, 15, 2, 2, 5, 5, 5));
         player.setCurrentAnimation("idle");
-        player.setPosition(600, 600);
+        player.setPosition(145, 820);
         Player.setCurrentPlayer(player);
         rooms.getCurrentRoom().addEntity(player); //we are using rooms' getCurrentRoom because we haven't actually loaded any room yet, so the renderer would give a NPE
 
@@ -229,6 +231,22 @@ public class GameRunner extends Application {
             renderer.getCurrentRoom().moveEntity(rooms.getRoomAtOffset(offsetX, offsetY), entity);
             rooms.loadRoom(renderer, offsetX, offsetY);
         }
+    }
+
+    public static int getDay(){
+        return day;
+    }
+
+    public static void nextDay(){
+        day++;
+    }
+
+    public static void work(){
+        jobDone = !jobDone;
+    }
+
+    public static boolean isJobDone(){
+        return jobDone;
     }
 
     /**
