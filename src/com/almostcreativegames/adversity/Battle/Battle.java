@@ -4,6 +4,7 @@ import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Entity.Behaviours.BattleBehaviour;
 import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
 import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Entity.Equippable;
 import com.almostcreativegames.adversity.Entity.Menu.*;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
@@ -98,7 +99,11 @@ public class Battle extends Room {
         act.setPosition(40, 875);
         addEntity(act);
 
+        //register all the menu options stored in the battleable entity
+        for (Button button : ((BattleBehaviour) enemy).getActOptions(this))
+            act.addSubOption(button);
 
+        //item button
         item = new BattleButton("ITEM");
         item.setFont(Fonts.BATTLE_BUTTON);
         item.setBattle(this);
@@ -106,10 +111,14 @@ public class Battle extends Room {
         item.setPosition(250, 875);
         addEntity(item);
 
-
         //register all the menu options stored in the battleable entity
-        for (Button button : ((BattleBehaviour) enemy).getActOptions(this))
-            act.addSubOption(button);
+        for (Equippable equippable: game.getEquipment()) {
+            String name = equippable.getName();
+            if(equippable.isEquipped())
+                name += "*";
+            item.addSubOption(new Button(name));
+        }
+
 
         //Adding a back button to all menus
         BackButton actBack = new BackButton(this);
@@ -142,17 +151,25 @@ public class Battle extends Room {
         addEntity(enemyHealth);
     }
 
+    public boolean checkDead() {
+        if (playerHealth.isDead()) {
+            endBattle();
+            //TODO call game end method in GameRunner
+            return true;
+        }
+        if (enemyHealth.isDead()) {
+            endBattle();
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Begins the next turn, and does health checks
      */
     public void nextTurn() {
-        if (playerHealth.isDead()) {
-            endBattle();
-            //TODO call game end method in GameRunner
-        }
-        if (enemyHealth.isDead()) {
-            endBattle();
-        }
+        if(checkDead())
+            return;
 
         if (playerTurn)
             startEnemyTurn();

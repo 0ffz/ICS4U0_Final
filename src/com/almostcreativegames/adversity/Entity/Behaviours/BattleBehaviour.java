@@ -29,4 +29,6 @@ public interface BattleBehaviour {
     void onBattleEnd(Battle battle);
 
     void startTurn(Battle battle);
+
+    double turnLength();
 }

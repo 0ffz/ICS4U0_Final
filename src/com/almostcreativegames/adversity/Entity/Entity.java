@@ -33,13 +33,14 @@ public class Entity {
     protected double y;
     protected double width;
     protected double height;
+    protected double friction = 1.3;
+    private double lifetime;
     private String name;
     private double velocityX;
     private double velocityY;
     private boolean hidden;
     private int layer;
     private boolean removed = false;
-
     public Entity(int layer) {
         this.layer = layer;
     }
@@ -51,11 +52,24 @@ public class Entity {
         velocityY = 0;
     }
 
+    public double getLifetime() {
+        return lifetime;
+    }
+
     public void startDialog(Dialog dialog) {
         room.getGame().startDialog(dialog, room);
     }
 
+    /**
+     * Called when the player overlaps and presses "E" on the entity
+     */
     public void onInteract() {
+    }
+
+    /**
+     * Called when the player intersects with the entity
+     */
+    public void onIntersect() {
     }
 
     public String getName() {
@@ -152,7 +166,7 @@ public class Entity {
      */
     public void remove() {
         removed = true;
-        if(room == null)
+        if (room == null)
             return;
         room.removeEntity(this);
     }
@@ -222,6 +236,8 @@ public class Entity {
      */
     public void render(GraphicsContext gc, double time) {
         gc.drawImage(image, x, y);
+        update(time, friction);
+        lifetime += time;
     }
 
     /**

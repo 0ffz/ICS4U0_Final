@@ -6,6 +6,7 @@ import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Characters.Wire;
 import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Entity.Equippable;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Input.InputListener;
@@ -30,6 +31,8 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * The main class for running the game.
@@ -49,17 +52,17 @@ import java.util.List;
  * Enfei: Added dialogBox</p>
  */
 public class GameRunner extends Application {
+    private static int day = 0;
+    private static boolean jobDone = false;
     private Player player = new Player();
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
     private Renderer renderer = new Renderer(gc);
     private RoomManager rooms = new RoomManager(this);
     private DialogBox dialogBox;
-    private List<String> equipment = new ArrayList<>();
+    private Set<Equippable> equipment = new TreeSet<>();
     private double playerHealth = 10;
     private double maxPlayerHealth = 10;
-    private static int day = 0;
-    private static boolean jobDone = false;
 
     public static void main(String[] args) {
         launch(args);
@@ -87,6 +90,22 @@ public class GameRunner extends Application {
 
     }
 
+    public static int getDay() {
+        return day;
+    }
+
+    public static void nextDay() {
+        day++;
+    }
+
+    public static void work() {
+        jobDone = !jobDone;
+    }
+
+    public static boolean isJobDone() {
+        return jobDone;
+    }
+
     public double getMaxPlayerHealth() {
         return maxPlayerHealth;
     }
@@ -111,8 +130,12 @@ public class GameRunner extends Application {
         this.playerHealth = playerHealth;
     }
 
-    public List<String> getEquipment() {
+    public Set<Equippable> getEquipment() {
         return equipment;
+    }
+
+    public boolean isEquipped(String name){
+        return equipment.contains(new Equippable(name));
     }
 
     public Renderer getRenderer() {
@@ -127,6 +150,10 @@ public class GameRunner extends Application {
      */
     @Override
     public void start(Stage stage) {
+        Equippable gloves = new Equippable("Gloves");
+        gloves.setEquipped(true);
+        equipment.add(gloves);
+
         stage.setTitle("Don't get hurt, stay at work!");
 
         //create the scene
@@ -197,7 +224,7 @@ public class GameRunner extends Application {
                 if (InputListener.isKeyPressed("E", 200)) {
                     if (dialogBox.hasDialog()) {
                         dialogBox.nextMessage();
-                    }else
+                    } else
                         for (Entity entity : currentRoom.getEntities()) {
                             if (entity.intersects(currentPlayer) && !entity.isHidden()) {
                                 entity.onInteract();
@@ -205,7 +232,9 @@ public class GameRunner extends Application {
                         }
                 }
 
-                currentPlayer.update(elapsedTime, 1.3);
+                for (Entity entity : currentRoom.getEntities())
+                    if (entity.intersects(currentPlayer) && !entity.isHidden())
+                        entity.onIntersect();
 
                 //render
                 gc.clearRect(0, 0, 1000, 1000);
@@ -267,22 +296,6 @@ public class GameRunner extends Application {
         }
     }
 
-    public static int getDay(){
-        return day;
-    }
-
-    public static void nextDay(){
-        day++;
-    }
-
-    public static void work(){
-        jobDone = !jobDone;
-    }
-
-    public static boolean isJobDone(){
-        return jobDone;
-    }
-
     /**
      * Code to resize and letterbox the scene adapted from https://gist.github.com/jewelsea/5603471
      *
@@ -297,7 +310,7 @@ public class GameRunner extends Application {
     private static class SceneSizeChangeListener implements ChangeListener<Number> {
         private final Scene scene;
 
-        public SceneSizeChangeListener(Scene scene) {
+        SceneSizeChangeListener(Scene scene) {
             this.scene = scene;
         }
 

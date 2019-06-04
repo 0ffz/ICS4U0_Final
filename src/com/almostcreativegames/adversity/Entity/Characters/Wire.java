@@ -10,8 +10,7 @@ import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * A class for the wire entity that can be battleable
@@ -26,6 +25,8 @@ import java.util.List;
  * <p>0.2.1 - Wire class created with necessary animation a interactions implemented</p>
  */
 public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
+    private Timer timer;
+
     private double health = 10;
 
     {
@@ -51,7 +52,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
         Button cut = new Button("Cut wire") {
             @Override
             public void onInteract() {
-                if (room.getGame().getEquipment().contains("Gloves"))
+                if (room.getGame().isEquipped("Gloves"))
                     startDialog(new Dialog(Arrays.asList(
                             "You managed to cut part of the wire!")) {
                         @Override
@@ -85,11 +86,8 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
                 });
             }
         };
-        Button more = new Button("Talk to wire");
-        Button options = new Button("Talk to wire");
-        Button talk = new Button("Talk to wire");
 
-        return Arrays.asList(cut, inspect, talk, more, options);
+        return Arrays.asList(cut, inspect);
     }
 
     @Override
@@ -98,9 +96,54 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
         System.out.println(getName());
     }
 
+    private ArrayList<Entity> sparks = new ArrayList<>();
+
+    private void createSpark(Battle battle) {
+        Entity spark = new Entity() {
+            {
+                setImage("Boss.png");
+                setPosition(Math.random() * 1000, Math.random() * 300 + 100);
+                setLayer(10);
+                addVelocity(0, Math.random() * 400 + 200);
+                friction = 1;
+            }
+
+            @Override
+            public void onIntersect() {
+                Player.getCurrentPlayer().addHealth(-1);
+                remove();
+                if(battle.checkDead())
+                    timer.cancel();
+            }
+        };
+        sparks.add(spark);
+        battle.addEntity(spark);
+    }
+
     @Override
     public void startTurn(Battle battle) {
-        battle.closeMenus();
+        timer  = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                createSpark(battle);
+            }
+        }, 100, 100);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timer.cancel();
+                battle.nextTurn();
+                for(Entity spark: sparks)
+                    spark.remove();
+            }
+        }, 10000);
+    }
+
+    @Override
+    public double turnLength() {
+        return 100;
     }
 
     @Override
