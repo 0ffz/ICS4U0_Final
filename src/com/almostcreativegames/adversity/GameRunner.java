@@ -237,7 +237,7 @@ public class GameRunner extends Application {
                         dialogBox.nextMessage();
                     } else
                         for (Entity entity : currentRoom.getEntities()) {
-                            if (entity.intersects(currentPlayer) && !entity.isHidden()) {
+                            if (entity.intersects(currentPlayer) && entity.isVisible()) {
                                 entity.onInteract();
                             }
                         }
@@ -245,7 +245,7 @@ public class GameRunner extends Application {
 
                 //check for entities intersecting with the player
                 for (Entity entity : currentRoom.getEntities())
-                    if (entity.intersects(currentPlayer) && !entity.isHidden())
+                    if (entity.intersects(currentPlayer) && entity.isVisible())
                         entity.onIntersect();
 
                 //render

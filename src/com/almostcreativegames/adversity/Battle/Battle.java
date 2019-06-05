@@ -1,6 +1,5 @@
 package com.almostcreativegames.adversity.Battle;
 
-import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Entity.Behaviours.BattleBehaviour;
 import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
@@ -31,26 +30,26 @@ import javafx.scene.image.Image;
  * appropriate minigame. Now also does death checks</p>
  */
 public class Battle extends Room {
-    private Room fromRoom; //the room from which the Battle Menu was opened (we use it to return to that room later)
-    private Entity fightingSprite;
-    private BattleBehaviour enemy;
-    private Player soul;
-    private Player previousPlayer = Player.getCurrentPlayer();
-    private BattleButton act;
-    private BattleButton item;
-    private HealthDisplay playerHealth;
-    private HealthDisplay enemyHealth;
-
-    private boolean playerTurn = true;
+    protected Room fromRoom; //the room from which the Battle Menu was opened (we use it to return to that room later)
+    protected Entity fightingSprite;
+    protected BattleBehaviour enemy;
+    protected Player soul;
+    protected Player previousPlayer = Player.getCurrentPlayer();
+    protected BattleButton act;
+    protected BattleButton item;
+    protected HealthDisplay playerHealth;
+    protected HealthDisplay enemyHealth;
+    protected boolean playerTurn = true;
 
     /**
      * Defines a new battle object, in which a new room is created and entered.
      *
-     * @param imageURL the background of the battle TODO could probably remove this if we know for sure we're loading the same background each time
+     * @param imageURL the background of the battle
      * @param enemy    the enemy Entity being fought
      * @param fromRoom the room to return to after the battle is over
      * @param game     a reference to the GameRunner
      */
+    //TODO could probably remove this if we know for sure we're loading the same background each time
     public Battle(String imageURL, Entity enemy, Room fromRoom, GameRunner game) {
         super(imageURL);
 
@@ -194,7 +193,6 @@ public class Battle extends Room {
     /**
      * Begins the enemy turn by playing their associated minigame
      */
-    //TODO implement the actual turn based system
     private void startEnemyTurn() {
         closeMenus();
         hideMenuButtons();

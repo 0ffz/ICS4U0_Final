@@ -1,5 +1,6 @@
 package com.almostcreativegames.adversity.Dialog;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,19 +22,24 @@ public class Dialog {
     private List<String> messages;
     private int index = 0;
 
+    /**
+     * Looked at what Arrays.asList() does and realized we can avoid having to call that method every time by
+     * replicating how it works and accepting a list of Strings
+     *
+     * @param messages a list of messages
+     */
+    public Dialog(String... messages) {
+        this.messages = Arrays.asList(messages);
+    }
+
     public Dialog(List<String> messages) {
         this.messages = messages;
     }
 
-    public void setMessages(List<String> messages) {
-        this.messages = messages;
-    }
-
     public void onEnd() {
-
     }
 
-    public String getCurrentMessage(){
+    public String getCurrentMessage() {
         return messages.get(index - 1);
     }
 

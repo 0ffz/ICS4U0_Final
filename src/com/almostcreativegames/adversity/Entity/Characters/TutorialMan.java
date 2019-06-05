@@ -1,6 +1,7 @@
 package com.almostcreativegames.adversity.Entity.Characters;
 
 import com.almostcreativegames.adversity.Battle.Battle;
+import com.almostcreativegames.adversity.Battle.TutorialBattle;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Behaviours.BattleBehaviour;
 import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
@@ -25,14 +26,15 @@ import java.util.*;
  * <h2>Changelog</h2>
  * <p>0.2.1 - Wire class created with necessary animation a interactions implemented</p>
  */
-public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
+public class TutorialMan extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
     private Timer timer;
+    private boolean notFought = true;
 
     private double health = 10;
     private ArrayList<Entity> sparks = new ArrayList<>();
 
     {
-        setName("Sparking wire");
+        setName("Mr. Tutorial");
     }
 
     @Override
@@ -45,8 +47,13 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
 
     @Override
     public void onInteract() {
-        Battle battle = new Battle("Battle/Battle", this, room, room.getGame());
-        room.getGame().getRenderer().loadRoom(battle);
+        if(notFought) {
+            TutorialBattle battle = new TutorialBattle("Battle/Battle", this, room, room.getGame());
+            room.getGame().getRenderer().loadRoom(battle);
+        } else
+            startDialog(new Dialog(
+                    "Go on home, I'll\nhandle your stuff today"
+            ));
     }
 
     @Override
@@ -55,8 +62,17 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
             @Override
             public void onInteract() {
                 startDialog(new Dialog(
-                        "The wire seems to have electrical\nsparks coming off of it",
-                        "You probably shouldn't touch it\nbare handed") {
+                        "The man is rather tall",
+                        "He has a weird scent coming\noff him",
+                        "He seems to be trying to say\nsomething",
+                        "Well then, looks like you've\npressed the button already!",
+                        "Many of the jobs you'll\nencounter will have an\n\"Inspect\" button",
+                        "This button tells you a little\nbit about the task you're\nworking with!",
+                        "Beware though, pressing it\nstill uses up your turn!",
+                        "Normally, the task you're\ndoing would battle you\nback, but I'm nice so I\nwon't hit you or anything",
+                        "Although, you do seem in\ndesperate need of training...",
+                        "Alright, tell you what,\nI'll throw some fake punches\nat you",
+                        "Get ready!") {
                     @Override
                     public void onEnd() {
                         battle.nextTurn();
@@ -64,46 +80,23 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
                 });
             }
         };
-
-        Button cut = new Button("Cut wire") {
-            @Override
-            public void onInteract() {
-                if (room.getGame().isEquipped("Gloves"))
-                    startDialog(new Dialog(
-                            "You managed to cut part of the wire!") {
-                        @Override
-                        public void onEnd() {
-                            addHealth(-5);
-                            battle.nextTurn();
-                        }
-                    });
-                else
-                    startDialog(new Dialog(
-                            "You try cutting the wire but\nsparks fly off it",
-                            "It felt pretty painful") {
-                        @Override
-                        public void onEnd() {
-                            Player.getCurrentPlayer().addHealth(-5);
-                            battle.nextTurn();
-                        }
-                    });
-            }
-        };
-
-        return Arrays.asList(inspect, cut);
+        return Arrays.asList(inspect);
     }
 
     @Override
     public void onBattleEnd(Battle battle) {
-        remove();
     }
 
     @Override
     public void onWin(Battle battle) {
         battle.getGame().work();
-        startDialog(new Dialog(Arrays.asList(
-                "The wire finally got cut!",
-                "You should talk to the boss\nnow")));
+        startDialog(new Dialog(
+                "The weird guy says:",
+                "Congrats, you won your\nfirst battle!",
+                "Get ready to battle many\nmore challenging tasks...",
+                "I think you'll be good\nat this job",
+                "Oh, seems like the day\n is over now!",
+                "Go home and rest a bit,\n alright?"));
     }
 
     /**
@@ -111,6 +104,8 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
      *
      * @param battle the current battle
      */
+    //TODO this guy's attack will be just two big entities shaped like fists flying from both sides
+    // they'll guarantee to hit you, so that afterwards he can apologize for it.
     private void createSpark(Battle battle) {
         Entity spark = new Entity() {
             {
@@ -157,6 +152,21 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
                 battle.nextTurn();
                 for (Entity spark : sparks)
                     spark.remove();
+                startDialog(new Dialog(
+                        "Oh gosh, sorry I didn't mean\nto hit you that bad...",
+                        "You know what, you can take some\ntime off today...",
+                        "I'll handle your shift for you",
+                        "Don't get used to it though,\nI'm just feeling extra nice\ntoday"){
+                    @Override
+                    public void onEnd() {
+                        battle.endBattle();
+                        notFought = false;
+                        startDialog(new Dialog(
+                                "Well then, I'll see you\ntomorrow",
+                                "Have fun at home!"
+                        ));
+                    }
+                });
             }
         }, 10000);
     }

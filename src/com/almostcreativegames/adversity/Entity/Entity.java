@@ -140,8 +140,8 @@ public class Entity {
         return removed;
     }
 
-    public boolean isHidden() {
-        return hidden;
+    public boolean isVisible() {
+        return !hidden;
     }
 
     /**

@@ -2,6 +2,7 @@ package com.almostcreativegames.adversity.Rooms;
 
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Drawing.Renderer;
+import com.almostcreativegames.adversity.Entity.Characters.TutorialMan;
 import com.almostcreativegames.adversity.Entity.Characters.Wire;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
@@ -40,6 +41,12 @@ public class RoomManager {
         rooms[3][0] = new Room("Rooms/Home");
         Wire wire = new Wire();
         wire.setPosition(600, 600);
+        rooms[3][0].addEntity(wire);
+
+        TutorialMan tutorialMan = new TutorialMan();
+        tutorialMan.setPosition(100, 800);
+        rooms[3][0].addEntity(tutorialMan);
+
         Entity bed = new Entity() {
             @Override
             public void onInteract() {
@@ -53,7 +60,6 @@ public class RoomManager {
         };
         bed.setImage(new Image("Entities/Bed.png", 150, 0, true, true));
         bed.setPosition(100, 725);
-        rooms[3][0].addEntity(wire);
         rooms[3][0].addEntity(bed);
 
         rooms[3][1] = new Room("Rooms/Living Room");
@@ -61,6 +67,7 @@ public class RoomManager {
         Entity mom = new Entity() {
             @Override
             public void onInteract() {
+                //TODO remove all the Arrays.asList()
                 if (GameRunner.getDay() == 0)
                     startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your first \nday!", "Oh and remember honey to \nalways stay safe!")));
                 else

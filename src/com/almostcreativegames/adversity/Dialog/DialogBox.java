@@ -22,7 +22,6 @@ import javafx.scene.paint.Color;
  * <p>1.3.2 -
  * Daniel: Fixed error with dialog calling next message one time after it had already run out of messages</p>
  */
-
 public class DialogBox extends Button {
     private Dialog dialog;
 

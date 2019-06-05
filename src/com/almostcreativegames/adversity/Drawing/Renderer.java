@@ -84,7 +84,7 @@ public class Renderer {
                     layer.remove(entity);
                     continue;
                 }
-                if (!entity.isHidden()) //if the entity is hidden, don't render it
+                if (entity.isVisible()) //if the entity is hidden, don't render it
                     entity.render(gc, time);
             }
         }
