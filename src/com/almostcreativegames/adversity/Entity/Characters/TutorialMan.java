@@ -28,7 +28,6 @@ import java.util.*;
  */
 public class TutorialMan extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
     private Timer timer;
-    private boolean notFought = true;
 
     private double health = 10;
     private ArrayList<Entity> sparks = new ArrayList<>();
@@ -47,12 +46,19 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
     @Override
     public void onInteract() {
-        if(notFought) {
+        if(!room.getGame().hasAttribute("Talked to tutorial")) { //if not talked to him yet, begin dialog
             TutorialBattle battle = new TutorialBattle("Battle/Battle", this, room, room.getGame());
             room.getGame().getRenderer().loadRoom(battle);
-        } else
+        } else if(room.getGame().getDay() == 0)
             startDialog(new Dialog(
                     "Go on home, I'll\nhandle your stuff today"
+            ));
+        else
+            startDialog(new Dialog(
+                    "Hello again buddy",
+                    "We're buddies, right?",
+                    "Of course we are, I covered your\nshift after all!",
+                    "Well, good luck on your job!"
             ));
     }
 
@@ -89,7 +95,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
     @Override
     public void onWin(Battle battle) {
-        battle.getGame().setJobDone(true);
+        battle.getGame().addAttribute("Job done");
         startDialog(new Dialog(
                 "The weird guy says:",
                 "Congrats, you won your\nfirst battle!",
@@ -160,7 +166,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                     @Override
                     public void onEnd() {
                         battle.endBattle();
-                        notFought = false;
+                        room.getGame().addAttribute("Talked to tutorial");
                         startDialog(new Dialog(
                                 "Well then, I'll see you\ntomorrow",
                                 "Have fun at home!"

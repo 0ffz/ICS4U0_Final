@@ -45,8 +45,10 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
 
     @Override
     public void onInteract() {
-        Battle battle = new Battle("Battle/Battle", this, room, room.getGame());
-        room.getGame().getRenderer().loadRoom(battle);
+        if(room.getGame().hasAttribute("Talked to tutorial")) {
+            Battle battle = new Battle("Battle/Battle", this, room, room.getGame());
+            room.getGame().getRenderer().loadRoom(battle);
+        }
     }
 
     @Override
@@ -100,7 +102,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
 
     @Override
     public void onWin(Battle battle) {
-        battle.getGame().setJobDone(true);
+        battle.getGame().addAttribute("Job done");
         startDialog(new Dialog(Arrays.asList(
                 "The wire finally got cut!",
                 "You should talk to the boss\nnow")));
