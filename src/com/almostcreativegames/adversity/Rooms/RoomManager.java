@@ -69,7 +69,7 @@ public class RoomManager {
             public void onInteract() {
                 //TODO remove all the Arrays.asList()
                 if (GameRunner.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your first \nday!", "Oh and remember honey to \nalways stay safe!")));
+                    startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!")));
                 else
                     startDialog(new Dialog(Arrays.asList("See you later honey.", "Remember not to get hurt!")));
             }
@@ -94,9 +94,14 @@ public class RoomManager {
         Entity electricalGloves = new Entity(){
             @Override
             public void onInteract() {
-                super.onInteract();
+                room.getGame().toggleEquipped("Electrical Gloves");
+      //          electricalGloves.remove();
             }
         };
+        electricalGloves.setImage(new Image("Entities/Electrical Gloves.png", 50, 50, true, true));
+        electricalGloves.setPosition(200, 715);
+
+        rooms[2][2].addEntity(electricalGloves);
 
         rooms[2][3] = new Room("Rooms/Factory Floor");
 
@@ -104,7 +109,7 @@ public class RoomManager {
             @Override
             public void onInteract() {
                 if (GameRunner.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("Hey there you seem new.", "I remember my first day here.", "I was excited to start my job and \nget working.", "But then I had suddenly gotten an \ninjury from the electrical box.", "Oh shoot I'm starting to ramble.", "We should get back to work.", "Anyways nice meeting you always \nmake sure that you have the \nproper equipment!")));
+                    startDialog(new Dialog(Arrays.asList("Hey there you seem new.", "I remember my first day here.", "I was excited to start my job \nand get working.", "But then I had suddenly \ngotten an injury from the \nelectrical box.", "Oh shoot I'm starting to \nramble.", "We should get back to work.", "Anyways nice meeting you \nalways make sure that you \nhave the proper equipment!")));
                 else
                     startDialog(new Dialog(Arrays.asList("Hey there again.", "I hope you remember to always \nuse the right equipment!")));
             }
@@ -120,7 +125,7 @@ public class RoomManager {
             @Override
             public void onInteract() {
                 if (GameRunner.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("Hello!", "Welcome to your first day of your \njob.", "Today you can spend the day \nlooking around and learning \nabout the workplace.")));
+                    startDialog(new Dialog(Arrays.asList("Hello!", "Welcome to your first day of \nyour job.", "Today you can spend the day \nlooking around and learning \nabout the workplace.")));
                 else if (GameRunner.getDay() == 1)
                     startDialog(new Dialog(Arrays.asList("Today is your first official day at \nwork!", "I'll start you off lightly by giving \nyou a simple task.", "Please proceed straight up to fix \nthe electrical panel, it seems to be \nmalfunctioning today")));
                 else
@@ -137,11 +142,17 @@ public class RoomManager {
             @Override
             public void onInteract() {
                 if (GameRunner.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("Ow", "Oof", "Ow", "Oh hi there.", "Don't mind me, I'm just kinda hurt from my last job.", "My boss gave me a task that was too dangerous, and I didn't say no until it was too late.", "You should know that you can refuse work if it is deemed too dangerous", "Ow")));
+                    startDialog(new Dialog(Arrays.asList("Ow", "Oof", "Ow", "Oh hi there.", "Don't mind me, I'm just kinda \nhurt from my last job.", "My boss gave me a task that \nwas too dangerous, and I \ndidn't say no until it was too \nlate.", "You should know that you can \nrefuse work if it is deemed \ntoo dangerous", "Ow")));
                 else
                     startDialog(new Dialog(Arrays.asList("Ow", "Remember you can refuse work that is dangerous!", "Ow")));
             }
         };
+
+        workerTwo.setImage(new Image("Entities/Worker 2.png", 80, 0, true, true));
+        workerTwo.setPosition(790, 800);
+
+        rooms[2][5].addEntity(workerTwo);
+
         rooms[2][6] = new Room("Rooms/Factory Floor 3");
         rooms[1][2] = new Room("Rooms/Factory Floor 5");
         rooms[1][3] = new Room("Rooms/Factory Floor 4");
