@@ -261,13 +261,13 @@ public class GameRunner extends Application {
 
         stage.setOnCloseRequest((e) -> {
             //TODO temporarily turned off while debugging
-            /*Stage mainStage = new Stage();
+            Stage mainStage = new Stage();
             Main main = new Main();
             try {
                 main.start(mainStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
-            }*/
+            }
         });
 
     }

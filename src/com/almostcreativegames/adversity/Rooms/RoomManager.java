@@ -84,6 +84,13 @@ public class RoomManager {
         rooms[3][4] = new Room("Rooms/Outside Factory");
         rooms[2][2] = new Room("Rooms/Factory Floor 2");
 
+        Entity electricalGloves = new Entity(){
+            @Override
+            public void onInteract() {
+                super.onInteract();
+            }
+        };
+
         rooms[2][3] = new Room("Rooms/Factory Floor");
 
         Entity electricalEmployee = new Entity() {
