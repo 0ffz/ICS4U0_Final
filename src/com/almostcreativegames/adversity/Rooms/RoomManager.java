@@ -76,7 +76,8 @@ public class RoomManager {
         mom.setPosition(300, 715);
 
         rooms[3][1].addEntity(mom);
-        rooms[3][1].addEntity(eButton);
+        if (GameRunner.getDay() == 0)
+            rooms[3][1].addEntity(eButton);
 
         rooms[3][2] = new Room("Rooms/Road 1");
         rooms[3][3] = new Room("Rooms/Road 2");
@@ -113,10 +114,20 @@ public class RoomManager {
             }
         };
         boss.setImage(new Image("Entities/Boss.png", 80, 0, true, true));
-        boss.setPosition(600, 715);
+        boss.setPosition(590, 715);
         rooms[2][4].addEntity(boss);
 
         rooms[2][5] = new Room("Rooms/Factory Floor");
+
+        Entity workerTwo = new Entity() {
+            @Override
+            public void onInteract() {
+                if (GameRunner.getDay() == 0)
+                    startDialog(new Dialog(Arrays.asList("Ow", "Oof", "Ow", "Oh hi there.", "Don't mind me, I'm just kinda hurt from my last job.", "My boss gave me a task that was too dangerous, and I didn't say no until it was too late.", "You should know that you can refuse work if it is deemed too dangerous", "Ow")));
+                else
+                    startDialog(new Dialog(Arrays.asList("Ow", "Remember you can refuse work that is dangerous!", "Ow")));
+            }
+        };
         rooms[2][6] = new Room("Rooms/Factory Floor 3");
         rooms[1][2] = new Room("Rooms/Factory Floor 5");
         rooms[1][3] = new Room("Rooms/Factory Floor 4");
