@@ -39,7 +39,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
     @Override
     public Entity getBattleSprite() {
         EntityAnimated sprite = new EntityAnimated();
-        sprite.addAnimation("idle", new SpriteAnimation("Entities/Wire-spritesheet.png", 0, 0, 32, 16, 2, 1, 20, 20, 1));
+        sprite.addAnimation("idle", new SpriteAnimation("Entities/Tutorial Man.png", 0, 0, 20, 50, 2, 1, 7, 7, 1));
         sprite.setCurrentAnimation("idle");
         return sprite;
     }
@@ -194,7 +194,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
     @Override
     protected void registerAnimations() {
-        addAnimation("idle", new SpriteAnimation("Entities/Wire-spritesheet.png", 0, 0, 32, 16, 2, 1, 5, 5, 1));
+        addAnimation("idle", new SpriteAnimation("Entities/Tutorial Man.png", 0, 0, 20, 50, 2, 1, 5, 5, 1));
         setCurrentAnimation("idle");
     }
 }

@@ -6,6 +6,7 @@ import com.almostcreativegames.adversity.Entity.Characters.TutorialMan;
 import com.almostcreativegames.adversity.Entity.Characters.Wire;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
+import com.almostcreativegames.adversity.Entity.Equippable;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
 import javafx.scene.image.Image;
@@ -70,7 +71,7 @@ public class RoomManager {
             }
         };
         EntityAnimated eButton = new EntityAnimated();
-        eButton.addAnimation("appear", new SpriteAnimation("Entities/E.png", 0, 0, 50, 50, 2, 2, 1, 1, 3));
+        eButton.addAnimation("appear", new SpriteAnimation("Entities/E.png", 0, 0, 50, 50, 2, 2, 1, 1, 2));
         eButton.setCurrentAnimation("appear");
         eButton.setPosition(370, 700);
 
@@ -89,8 +90,11 @@ public class RoomManager {
         Entity electricalGloves = new Entity(){
             @Override
             public void onInteract() {
-                room.getGame().toggleEquipped("Electrical Gloves");
-      //          electricalGloves.remove();
+                Equippable gloves = new Equippable("Electrical Gloves");
+                game.getEquipment().add(gloves);
+                startDialog(new Dialog("You picked up some Electrical \ngloves",
+                        "Be sure to equip them when \nneeded while working!"));
+                remove();
             }
         };
         electricalGloves.setImage(new Image("Entities/Electrical Gloves.png", 50, 50, true, true));
@@ -127,6 +131,7 @@ public class RoomManager {
                     startDialog(new Dialog(Arrays.asList("Welcome back to work!", "How are you doing?", "Stop right there, it doesn't matter.", "I need you to clean out the mixing \nbin!")));
             }
         };
+
         boss.setImage(new Image("Entities/Boss.png", 80, 0, true, true));
         boss.setPosition(590, 715);
         rooms[2][4].addEntity(boss);

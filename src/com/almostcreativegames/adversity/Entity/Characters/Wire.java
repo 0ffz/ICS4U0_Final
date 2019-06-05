@@ -70,7 +70,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
         Button cut = new Button("Cut wire") {
             @Override
             public void onInteract() {
-                if (room.getGame().isEquipped("Gloves"))
+                if (room.getGame().isEquipped("Electrical Gloves"))
                     startDialog(new Dialog(
                             "You managed to cut part of the wire!") {
                         @Override
