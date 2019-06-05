@@ -40,14 +40,14 @@ public class RoomManager {
         rooms[3][0] = new Room("Rooms/Home");
         Wire wire = new Wire();
         wire.setPosition(600, 600);
-        Entity bed = new Entity(){
+        Entity bed = new Entity() {
             @Override
-            public void onInteract(){
-                if (GameRunner.isJobDone()){
+            public void onInteract() {
+                if (GameRunner.isJobDone()) {
                     GameRunner.nextDay();
                     GameRunner.work();
                     //if (GameRunner.getDay() == 6)
-                      //  endScene();
+                    //  endScene();
                 }
             }
         };
@@ -62,13 +62,13 @@ public class RoomManager {
             @Override
             public void onInteract() {
                 if (GameRunner.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("You should be going to work honey.", "Don't wanna be late on your first day!", "Oh and remember honey to always stay safe!")));
+                    startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your first \nday!", "Oh and remember honey to \nalways stay safe!")));
                 else
                     startDialog(new Dialog(Arrays.asList("See you later honey.", "Remember not to get hurt!")));
             }
         };
         EntityAnimated eButton = new EntityAnimated();
-        eButton.addAnimation("appear", new SpriteAnimation("Entities/E.png", 0, 0, 50, 50, 2, 2, 1, 1, 1));
+        eButton.addAnimation("appear", new SpriteAnimation("Entities/E.png", 0, 0, 50, 50, 2, 2, 1, 1, 3));
         eButton.setCurrentAnimation("appear");
         eButton.setPosition(370, 700);
 
@@ -85,17 +85,18 @@ public class RoomManager {
 
         rooms[2][3] = new Room("Rooms/Factory Floor");
 
-        Entity electricalEmployee = new Entity(){
+        Entity electricalEmployee = new Entity() {
             @Override
             public void onInteract() {
                 if (GameRunner.getDay() == 0)
-                startDialog(new Dialog(Arrays.asList("Hey there you seem new.", "I remember my first day here.", "I was excited to start my job and get working.", "But then I had suddenly gotten an injury from the electrical box.", "We should get back to work.", "Anyways nice meeting you always make sure that you have the proper equipment!")));
+                    startDialog(new Dialog(Arrays.asList("Hey there you seem new.", "I remember my first day here.", "I was excited to start my job and \nget working.", "But then I had suddenly gotten an \ninjury from the electrical box.", "Oh shoot I'm starting to ramble.", "We should get back to work.", "Anyways nice meeting you always \nmake sure that you have the \nproper equipment!")));
                 else
-                    startDialog(new Dialog(Arrays.asList("Hey there again.", "I hope you remember to always use the right equipment!")));
+                    startDialog(new Dialog(Arrays.asList("Hey there again.", "I hope you remember to always \nuse the right equipment!")));
             }
         };
 
-
+        electricalEmployee.setImage(new Image("Entities/Electrician.png", 80, 0, true, true));
+        electricalEmployee.setPosition(300, 390);
         rooms[2][3].addEntity(electricalEmployee);
 
         rooms[2][4] = new Room("Rooms/Factory Entrance");
@@ -104,11 +105,11 @@ public class RoomManager {
             @Override
             public void onInteract() {
                 if (GameRunner.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("Hello", "Welcome to your first day of your job.", "Today you can spend the day looking around and learning about the workplace.")));
+                    startDialog(new Dialog(Arrays.asList("Hello!", "Welcome to your first day of your \njob.", "Today you can spend the day \nlooking around and learning \nabout the workplace.")));
                 else if (GameRunner.getDay() == 1)
-                    startDialog(new Dialog(Arrays.asList("Today is your first official day at work!", "I'll start you off lightly by giving you a simple task.", "Please proceed straight up to fix the electrical panel, it seems to be malfunctioning today")));
+                    startDialog(new Dialog(Arrays.asList("Today is your first official day at \nwork!", "I'll start you off lightly by giving \nyou a simple task.", "Please proceed straight up to fix \nthe electrical panel, it seems to be \nmalfunctioning today")));
                 else
-                    startDialog(new Dialog(Arrays.asList("Welcome back to work!", "How are you doing?", "Stop right there, it doesn't matter", "I need you to clean out the mixing bin!")));
+                    startDialog(new Dialog(Arrays.asList("Welcome back to work!", "How are you doing?", "Stop right there, it doesn't matter.", "I need you to clean out the mixing \nbin!")));
             }
         };
         boss.setImage(new Image("Entities/Boss.png", 80, 0, true, true));
