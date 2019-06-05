@@ -100,7 +100,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
 
     @Override
     public void onWin(Battle battle) {
-        battle.getGame().work();
+        battle.getGame().setJobDone(true);
         startDialog(new Dialog(Arrays.asList(
                 "The wire finally got cut!",
                 "You should talk to the boss\nnow")));

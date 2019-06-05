@@ -50,8 +50,8 @@ import java.util.TreeSet;
  * Enfei: Added dialogBox</p>
  */
 public class GameRunner extends Application {
-    private static int day = 0;
-    private static boolean jobDone = false;
+    private int day = 0;
+    private boolean jobDone = false;
     private Player player = new Player();
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -88,21 +88,23 @@ public class GameRunner extends Application {
 
     }
 
-    public static int getDay() {
+    public int getDay() {
         return day;
     }
 
-    public static void nextDay() {
-        day++;
+    public void nextDayIfJobDone() {
+        if (jobDone) {
+            day++;
+            jobDone = false;
+        }
     }
 
-    //TODO make these not static and also, should this be replaced with something like setJobDone()?
-    public static void work() {
-        jobDone = !jobDone;
-    }
-
-    public static boolean isJobDone() {
+    public boolean isJobDone() {
         return jobDone;
+    }
+
+    public void setJobDone(boolean jobDone) {
+        this.jobDone = jobDone;
     }
 
     public double getMaxPlayerHealth() {
@@ -140,7 +142,6 @@ public class GameRunner extends Application {
                 return;
             }
     }
-
 
     public boolean isEquipped(String name) {
         for (Equippable equippable : equipment)

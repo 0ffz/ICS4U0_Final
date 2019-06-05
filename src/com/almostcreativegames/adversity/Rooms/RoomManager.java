@@ -50,12 +50,7 @@ public class RoomManager {
         Entity bed = new Entity() {
             @Override
             public void onInteract() {
-                if (GameRunner.isJobDone()) {
-                    GameRunner.nextDay();
-                    GameRunner.work();
-                    //if (GameRunner.getDay() == 6)
-                    //  endScene();
-                }
+                game.nextDayIfJobDone();
             }
         };
         bed.setImage(new Image("Entities/Bed.png", 150, 0, true, true));
@@ -68,7 +63,7 @@ public class RoomManager {
             @Override
             public void onInteract() {
                 //TODO remove all the Arrays.asList()
-                if (GameRunner.getDay() == 0)
+                if (game.getDay() == 0)
                     startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!")));
                 else
                     startDialog(new Dialog(Arrays.asList("See you later honey.", "Remember not to get hurt!")));
@@ -83,7 +78,7 @@ public class RoomManager {
         mom.setPosition(300, 715);
 
         rooms[3][1].addEntity(mom);
-        if (GameRunner.getDay() == 0)
+        if (game.getDay() == 0)
             rooms[3][1].addEntity(eButton);
 
         rooms[3][2] = new Room("Rooms/Road 1");
@@ -108,7 +103,7 @@ public class RoomManager {
         Entity electricalEmployee = new Entity() {
             @Override
             public void onInteract() {
-                if (GameRunner.getDay() == 0)
+                if (game.getDay() == 0)
                     startDialog(new Dialog(Arrays.asList("Hey there you seem new.", "I remember my first day here.", "I was excited to start my job \nand get working.", "But then I had suddenly \ngotten an injury from the \nelectrical box.", "Oh shoot I'm starting to \nramble.", "We should get back to work.", "Anyways nice meeting you \nalways make sure that you \nhave the proper equipment!")));
                 else
                     startDialog(new Dialog(Arrays.asList("Hey there again.", "I hope you remember to always \nuse the right equipment!")));
@@ -124,9 +119,9 @@ public class RoomManager {
         Entity boss = new Entity() {
             @Override
             public void onInteract() {
-                if (GameRunner.getDay() == 0)
+                if (game.getDay() == 0)
                     startDialog(new Dialog(Arrays.asList("Hello!", "Welcome to your first day of \nyour job.", "Today you can spend the day \nlooking around and learning \nabout the workplace.")));
-                else if (GameRunner.getDay() == 1)
+                else if (game.getDay() == 1)
                     startDialog(new Dialog(Arrays.asList("Today is your first official day at \nwork!", "I'll start you off lightly by giving \nyou a simple task.", "Please proceed straight up to fix \nthe electrical panel, it seems to be \nmalfunctioning today")));
                 else
                     startDialog(new Dialog(Arrays.asList("Welcome back to work!", "How are you doing?", "Stop right there, it doesn't matter.", "I need you to clean out the mixing \nbin!")));
@@ -141,7 +136,7 @@ public class RoomManager {
         Entity workerTwo = new Entity() {
             @Override
             public void onInteract() {
-                if (GameRunner.getDay() == 0)
+                if (game.getDay() == 0)
                     startDialog(new Dialog(Arrays.asList("Ow", "Oof", "Ow", "Oh hi there.", "Don't mind me, I'm just kinda \nhurt from my last job.", "My boss gave me a task that \nwas too dangerous, and I \ndidn't say no until it was too \nlate.", "You should know that you can \nrefuse work if it is deemed \ntoo dangerous", "Ow")));
                 else
                     startDialog(new Dialog(Arrays.asList("Ow", "Remember you can refuse work that is dangerous!", "Ow")));

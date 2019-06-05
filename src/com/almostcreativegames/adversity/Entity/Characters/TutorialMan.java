@@ -89,7 +89,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
     @Override
     public void onWin(Battle battle) {
-        battle.getGame().work();
+        battle.getGame().setJobDone(true);
         startDialog(new Dialog(
                 "The weird guy says:",
                 "Congrats, you won your\nfirst battle!",
