@@ -33,6 +33,10 @@ public class Dialog {
 
     }
 
+    public String getCurrentMessage(){
+        return messages.get(index - 1);
+    }
+
     public String nextMessage() {
         if (index == messages.size()) {
             onEnd();

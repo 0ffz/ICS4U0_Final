@@ -180,8 +180,8 @@ public class GameRunner extends Application {
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
         gc.setFont(theFont);
-        gc.setFill(Color.WHITE);
-        gc.setStroke(Color.BLACK);
+//        gc.setFill(Color.WHITE);
+//        gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
         //setup player

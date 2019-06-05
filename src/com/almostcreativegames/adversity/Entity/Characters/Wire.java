@@ -9,6 +9,7 @@ import com.almostcreativegames.adversity.Entity.EntityAnimated;
 import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
+import javafx.scene.image.Image;
 
 import java.util.*;
 
@@ -58,7 +59,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
                             "You managed to cut part of the wire!")) {
                         @Override
                         public void onEnd() {
-                            addHealth(-1);
+                            addHealth(-10);
                             battle.nextTurn();
                         }
                     });
@@ -107,7 +108,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
     private void createSpark(Battle battle) {
         Entity spark = new Entity() {
             {
-                setImage("Entities/Boss.png");
+                setImage(new Image("Battle/Wire/Electric spark.png", Math.random() * 20 + 20, 0, true, true));
                 setPosition(Math.random() * 1000, Math.random() * 300 + 100);
                 setLayer(10);
                 addVelocity(0, Math.random() * 400 + 200);

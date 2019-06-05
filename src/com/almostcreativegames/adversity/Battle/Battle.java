@@ -1,5 +1,6 @@
 package com.almostcreativegames.adversity.Battle;
 
+import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Entity.Behaviours.BattleBehaviour;
 import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
@@ -76,6 +77,7 @@ public class Battle extends Room {
         //creating soul
         soul = new Player();
         soul.setLayer(5);
+        soul.setName("Soul");
 
         String playerSprite = "Entities/Player/Soul-spritesheet.png";
         soul.addAnimation("idle", new SpriteAnimation(playerSprite, 0, 0, 11, 11, 2, 1, 5, 5, 1));
@@ -114,7 +116,7 @@ public class Battle extends Room {
         //register all the menu options stored in the battleable entity
         for (Equippable equippable : game.getEquipment()) {
             String name = equippable.getDisplayName();
-            item.addSubOption(new Button(name){
+            item.addSubOption(new Button(name) {
                 @Override
                 public void onInteract() {
                     game.toggleEquipped(equippable.getName());

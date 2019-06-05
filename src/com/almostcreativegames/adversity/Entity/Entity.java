@@ -41,9 +41,6 @@ public class Entity {
     private boolean hidden;
     private int layer;
     private boolean removed = false;
-    public Entity(int layer) {
-        this.layer = layer;
-    }
 
     public Entity() {
         x = 0;

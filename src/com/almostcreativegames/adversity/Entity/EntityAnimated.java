@@ -29,15 +29,21 @@ public class EntityAnimated extends Entity {
         registerAnimations();
     }
 
-    public EntityAnimated(int layer) {
-        super(layer);
-        registerAnimations();
-    }
-
+    /**
+     * Adds an animation with a name assigned to it
+     *
+     * @param name      the name assigned to the animation
+     * @param animation the animation to be added
+     */
     public void addAnimation(String name, SpriteAnimation animation) {
         animations.put(name, animation);
     }
 
+    /**
+     * Sets the current animation given its name
+     *
+     * @param name the name of the animation
+     */
     public void setCurrentAnimation(String name) {
         currentAnimation = animations.get(name);
         setImage(currentAnimation.getFrame(0));
@@ -49,6 +55,12 @@ public class EntityAnimated extends Entity {
     protected void registerAnimations() {
     }
 
+    /**
+     * Gets the current frame from the current animation and renders it
+     *
+     * @param gc   the GraphicsContext with which to render
+     * @param time the amount of time that has passed between the last frame being drawn
+     */
     @Override
     public void render(GraphicsContext gc, double time) {
         setImage(currentAnimation.getFrame(time));

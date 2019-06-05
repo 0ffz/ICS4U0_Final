@@ -4,6 +4,7 @@ import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Player;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  * A class for the dialog box entities
@@ -29,6 +30,7 @@ public class DialogBox extends Button {
         super("");
         setLayer(10);
         setFont(Fonts.NORMAL);
+        fillColor = Color.BLACK;
     }
 
     public void setDialog(Dialog dialog) {
@@ -41,9 +43,15 @@ public class DialogBox extends Button {
     }
 
     public void nextMessage() {
+        Dialog previousDialog = dialog;
         text = dialog.nextMessage();
-        if (text == null)
-            dialog = null;
+        if (text == null) {
+            //if the dialogs were changed while we were getting the next message (i.e. a dialog interaction has launched another dialog)
+            if (!previousDialog.equals(dialog))
+                text = dialog.getCurrentMessage(); //switch over text to that dialog so it's not null
+            else
+                dialog = null;
+        }
     }
 
     @Override

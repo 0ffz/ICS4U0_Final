@@ -14,7 +14,7 @@ import java.util.List;
 public class Text extends Entity {
     protected String text;
     protected Color fillColor = Color.WHITE;
-    protected Color strokeColor = Color.BLACK;
+    protected Color strokeColor = null;
     protected Font font = Fonts.NORMAL;
     private List<Entity> subOptions = new ArrayList<>();
     private Battle battle;
@@ -54,9 +54,11 @@ public class Text extends Entity {
 
         gc.setFont(font);
         gc.setFill(fillColor);
-        gc.setStroke(strokeColor);
         gc.fillText(text, x, y);
-        gc.strokeText(text, x, y);
+        if(strokeColor != null) {
+            gc.setStroke(strokeColor);
+            gc.strokeText(text, x, y);
+        }
     }
 
     /**

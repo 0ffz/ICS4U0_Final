@@ -44,7 +44,6 @@ public class SpriteAnimation {
 
         PixelReader reader = spriteSheet.getPixelReader();
         int rows = ((numFrames - (numFrames % columns)) / columns) + 1; //TODO make sure this is correct
-        System.out.println(numFrames + " " + (numFrames % columns));
         for (int row = 0; row < rows; row++)
             for (int col = 0; col < columns; col++) {
                 if (row * columns + col == numFrames) //if on last frame
