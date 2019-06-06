@@ -1,6 +1,6 @@
 package com.almostcreativegames.adversity;
 
-import com.almostcreativegames.adversity.Intro.SplashScreen;
+import com.almostcreativegames.adversity.Intro.Transitions;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,8 +22,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        SplashScreen intro = new SplashScreen();
-        intro.introScene();
+        Transitions.introScene(primaryStage);
         Parent root = FXMLLoader.load(getClass().getResource("main menu.fxml"));
         primaryStage.setTitle("DGHSAW launcher");
         primaryStage.setScene(new Scene(root, 1000, 750));

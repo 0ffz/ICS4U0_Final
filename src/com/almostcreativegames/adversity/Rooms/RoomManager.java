@@ -9,6 +9,7 @@ import com.almostcreativegames.adversity.Entity.EntityAnimated;
 import com.almostcreativegames.adversity.Entity.Equippable;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
+import com.almostcreativegames.adversity.Intro.Transitions;
 import javafx.scene.image.Image;
 
 import java.util.Arrays;
@@ -52,6 +53,7 @@ public class RoomManager {
             @Override
             public void onInteract() {
                 game.nextDayIfJobDone();
+   //             Transitions.sleepScene();
             }
         };
         bed.setImage(new Image("Entities/Bed.png", 150, 0, true, true));
