@@ -1,6 +1,7 @@
 package com.almostcreativegames.adversity.Intro;
 
 
+import com.almostcreativegames.adversity.GameRunner;
 import javafx.animation.*;
 import javafx.geometry.*;
 import javafx.scene.*;
@@ -10,9 +11,8 @@ import javafx.util.*;
 
 public class SplashScreen {
 
-    /**
-     * {@inheritDoc}
-     */
+    private GameRunner game;
+
     public void introScene() {
         VBox body = new VBox(10);
         body.setAlignment(Pos.CENTER);
@@ -21,7 +21,7 @@ public class SplashScreen {
 
         body.getChildren().add(imageView);
 
-        KeyFrame frame1 = new KeyFrame(Duration.seconds(0), new KeyValue(imageView.imageProperty(), new Image("Entities/Boss.png")), new KeyValue(imageView.opacityProperty(), 0.0));
+        KeyFrame frame1 = new KeyFrame(Duration.seconds(0), new KeyValue(imageView.imageProperty(), new Image("Logo.png")), new KeyValue(imageView.opacityProperty(), 0.0));
         KeyFrame fadein1 = new KeyFrame(Duration.seconds(1), new KeyValue(imageView.opacityProperty(), 1.0));
         KeyFrame fadeout1 = new KeyFrame(Duration.seconds(1.5), new KeyValue(imageView.opacityProperty(), 0.0));
         KeyFrame frame2 = new KeyFrame(Duration.seconds(1.5), new KeyValue(imageView.imageProperty(), new Image("Entities/Mom.png")));
@@ -33,5 +33,10 @@ public class SplashScreen {
         timeline.setAutoReverse(true);
 
         timeline.play();
+
+
+        BorderPane root = new BorderPane();
+        root.setCenter(body);
+    //    this.stage.setScene(new Scene(root));
     }
 }
