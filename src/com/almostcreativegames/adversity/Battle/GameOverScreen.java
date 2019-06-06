@@ -62,7 +62,11 @@ public class GameOverScreen extends Room {
         retry = new Button("RETRY"){
             @Override
             public void onInteract() {
-                super.onInteract();
+                game.close();
+                remove();
+                Stage stage = new Stage();
+                GameRunner game = new GameRunner(true);
+                game.start(stage);
             }
         };
         retry.setFont(Fonts.BATTLE_BUTTON);
@@ -77,6 +81,7 @@ public class GameOverScreen extends Room {
                 try {
                     remove();
                     game.close();
+                    game.openMainMenu();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

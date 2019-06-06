@@ -324,7 +324,8 @@ public class GameRunner extends Application {
 
     }
 
-    private void openMainMenu() {
+    public void openMainMenu() {
+        saveGame();
         Stage mainStage = new Stage();
         Main main = new Main();
         try {
@@ -332,7 +333,6 @@ public class GameRunner extends Application {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        saveGame();
     }
 
     private void saveGame() {
@@ -353,7 +353,6 @@ public class GameRunner extends Application {
 
     public void close() {
         stage.close();
-        openMainMenu();
     }
 
     private void wrapScreen(Entity entity) {

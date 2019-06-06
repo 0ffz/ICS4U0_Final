@@ -93,7 +93,7 @@ public class Battle extends Room {
 
         //TODO create all the other buttons with textures
         //creating buttons with options
-        //retry button
+        //act button
         act = new BattleButton("ACT");
         act.setFont(Fonts.BATTLE_BUTTON);
         act.setBattle(this);
@@ -105,7 +105,7 @@ public class Battle extends Room {
         for (Button button : ((BattleBehaviour) enemy).getActOptions(this))
             act.addSubOption(button);
 
-        //quit button
+        //item button
         item = new BattleButton("ITEM");
         item.setFont(Fonts.BATTLE_BUTTON);
         item.setBattle(this);
