@@ -29,6 +29,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -51,7 +53,6 @@ import java.util.TreeSet;
  */
 public class GameRunner extends Application {
     private int day = 0;
-    private boolean jobDone = false;
     private Player player = new Player();
     private Canvas canvas = new Canvas(1000, 1000);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -61,6 +62,7 @@ public class GameRunner extends Application {
     private Set<Equippable> equipment = new TreeSet<>();
     private double playerHealth = 10;
     private double maxPlayerHealth = 10;
+    private List<String> gameAttributes = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -88,23 +90,27 @@ public class GameRunner extends Application {
 
     }
 
+    public boolean hasAttribute(String attribute) {
+        return gameAttributes.contains(attribute);
+    }
+
+    public boolean addAttribute(String attribute) {
+        return gameAttributes.contains(attribute);
+    }
+
+    public void removeAttribute(String attribute) {
+        gameAttributes.remove(attribute);
+    }
+
     public int getDay() {
         return day;
     }
 
     public void nextDayIfJobDone() {
-        if (jobDone) {
+        if (hasAttribute("Job done")) {
             day++;
-            jobDone = false;
+            removeAttribute("Job done");
         }
-    }
-
-    public boolean isJobDone() {
-        return jobDone;
-    }
-
-    public void setJobDone(boolean jobDone) {
-        this.jobDone = jobDone;
     }
 
     public double getMaxPlayerHealth() {
