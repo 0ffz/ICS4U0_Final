@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Transitions.introScene(primaryStage);
+      //  Transitions.introScene(primaryStage);
         Parent root = FXMLLoader.load(getClass().getResource("main menu.fxml"));
         primaryStage.setTitle("DGHSAW launcher");
         primaryStage.setScene(new Scene(root, 1000, 750));

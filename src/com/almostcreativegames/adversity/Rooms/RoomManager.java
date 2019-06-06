@@ -49,13 +49,14 @@ public class RoomManager {
 
         TutorialMan tutorialMan = new TutorialMan();
         tutorialMan.setPosition(300, 800);
-        rooms[3][0].addEntity(tutorialMan);
+        if (game.getDay() == 0)
+            rooms[3][0].addEntity(tutorialMan);
 
         Entity bed = new Entity() {
             @Override
             public void onInteract() {
                 game.nextDayIfJobDone();
-                //             Transitions.sleepScene();
+                //Transitions.sleepScene();
             }
         };
         bed.setImage(new Image("Entities/Bed.png", 150, 0, true, true));
@@ -64,16 +65,6 @@ public class RoomManager {
 
         rooms[3][1] = new Room("Rooms/Living Room");
 
-        Entity mom = new Entity() {
-            @Override
-            public void onInteract() {
-                //TODO remove all the Arrays.asList()
-                if (game.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!")));
-                else
-                    startDialog(new Dialog(Arrays.asList("See you later honey.", "Remember not to get hurt!")));
-            }
-        };
         EntityAnimated eButton = new EntityAnimated(){
             @Override
             public void onRoomLoad() {
@@ -81,9 +72,27 @@ public class RoomManager {
                     remove();
             }
         };
+
         eButton.addAnimation("appear", new SpriteAnimation("Entities/E.png", 0, 0, 50, 50, 2, 2, 1, 1, 2));
         eButton.setCurrentAnimation("appear");
         eButton.setPosition(370, 700);
+
+        Entity mom = new Entity() {
+            @Override
+            public void onInteract() {
+                //TODO remove all the Arrays.asList()
+                if (game.getDay() == 0)
+                    startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!")){
+                        @Override
+                        public void onEnd() {
+                            eButton.remove();
+                        }
+                    });
+                else
+                    startDialog(new Dialog(Arrays.asList("See you later honey.", "Remember not to get hurt!")));
+            }
+        };
+
 
         mom.setImage(new Image("Entities/Mom.png", 80, 0, true, true));
         mom.setPosition(300, 715);
@@ -173,6 +182,14 @@ public class RoomManager {
         rooms[1][2] = new Room("Rooms/Factory Floor 5");
         rooms[1][3] = new Room("Rooms/Factory Floor 4");
         rooms[1][4] = new Room("Rooms/Outside Game Room");
+
+        Entity statisticsMan = new Entity(){
+            @Override
+            public void onInteract() {
+                if (game.getDay() == 0)
+                    startDialog(new Dialog(Arrays.asList("Hello there I'm just getting some research done for workplace safety statistics!", "Oh, you're new?", "Well let me tell you that in 2015 110.5 per 10000 full time workers between the ages of 16-19 suffered a non fatal injury.", "Take care of yourself in there!")));
+            }
+        };
         rooms[1][5] = new Room("Rooms/Factory Floor 4");
         rooms[1][6] = new Room("Rooms/Factory Floor 6");
         rooms[0][4] = new Room("Rooms/Game Room");
