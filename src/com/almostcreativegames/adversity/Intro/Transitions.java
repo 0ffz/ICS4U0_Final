@@ -1,16 +1,17 @@
 package com.almostcreativegames.adversity.Intro;
 
 
-import com.almostcreativegames.adversity.GameRunner;
-import javafx.animation.*;
-import javafx.geometry.*;
-import javafx.scene.*;
-import javafx.scene.image.*;
-import javafx.scene.layout.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.*;
-
-public class SplashScreen {
+import javafx.util.Duration;
 
 public class Transitions {
 
@@ -24,12 +25,12 @@ public class Transitions {
 
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().addAll(
-            new KeyFrame(Duration.seconds(10), new KeyValue(imageView.imageProperty(), new Image("Logo.png")), new KeyValue(imageView.opacityProperty(), 0.0)),
-            new KeyFrame(Duration.seconds(10), new KeyValue(imageView.opacityProperty(), 1.0)),
-            new KeyFrame(Duration.seconds(10), new KeyValue(imageView.opacityProperty(), 0.0)),
-            new KeyFrame(Duration.seconds(10), new KeyValue(imageView.imageProperty(), new Image("Entities/Mom.png"))),
-            new KeyFrame(Duration.seconds(10), new KeyValue(imageView.opacityProperty(), 1.0)),
-            new KeyFrame(Duration.seconds(10), new KeyValue(imageView.opacityProperty(), 0.0)));
+                new KeyFrame(Duration.seconds(10), new KeyValue(imageView.imageProperty(), new Image("Logo.png")), new KeyValue(imageView.opacityProperty(), 0.0)),
+                new KeyFrame(Duration.seconds(10), new KeyValue(imageView.opacityProperty(), 1.0)),
+                new KeyFrame(Duration.seconds(10), new KeyValue(imageView.opacityProperty(), 0.0)),
+                new KeyFrame(Duration.seconds(10), new KeyValue(imageView.imageProperty(), new Image("Entities/Mom.png"))),
+                new KeyFrame(Duration.seconds(10), new KeyValue(imageView.opacityProperty(), 1.0)),
+                new KeyFrame(Duration.seconds(10), new KeyValue(imageView.opacityProperty(), 0.0)));
 
         timeline.play();
         idk.show();
@@ -39,7 +40,7 @@ public class Transitions {
         idk.setScene(new Scene(root));
     }
 
-    public static void sleepScene(Stage idk){
+    public static void sleepScene(Stage idk) {
         VBox body = new VBox(10);
         body.setAlignment(Pos.CENTER);
 
@@ -52,7 +53,6 @@ public class Transitions {
 
 
         timeline.play();
-
 
 
         BorderPane root = new BorderPane();
