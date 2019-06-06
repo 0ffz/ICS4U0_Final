@@ -149,7 +149,7 @@ public class GameRunner extends Application {
     }
 
     private void playSleepingScene() {
-        SleepScreen sleepScreen = new SleepScreen("Battle/Empty", rooms.getCurrentRoom(), this);
+        SleepScreen sleepScreen = new SleepScreen("Battle/Empty.png", rooms.getCurrentRoom(), this);
         renderer.loadRoom(sleepScreen);
     }
 
@@ -313,7 +313,7 @@ public class GameRunner extends Application {
                 //TODO remove these test keys
                 if (inputListener.isKeyPressed("M", 100)) {
                     Wire wire = new Wire();
-                    Battle battle = new Battle("Battle/Battle", wire, currentRoom, GameRunner.this);
+                    Battle battle = new Battle("Battle/Battle.png", wire, currentRoom, GameRunner.this);
                     renderer.loadRoom(battle);
                 }
 
@@ -378,7 +378,7 @@ public class GameRunner extends Application {
     }
 
     public void gameOver() {
-        GameOverScreen gameOverScreen = new GameOverScreen("Battle/Empty", this);
+        GameOverScreen gameOverScreen = new GameOverScreen("Battle/Empty.png", this);
         renderer.loadRoom(gameOverScreen);
     }
 

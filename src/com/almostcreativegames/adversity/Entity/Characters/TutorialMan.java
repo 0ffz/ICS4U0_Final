@@ -47,7 +47,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
     @Override
     public void onInteract() {
         if(!room.getGame().hasAttribute("Talked to tutorial")) { //if not talked to him yet, begin dialog
-            TutorialBattle battle = new TutorialBattle("Battle/Battle", this, room, room.getGame());
+            TutorialBattle battle = new TutorialBattle("Battle/Battle.png", this, room, room.getGame());
             room.getGame().getRenderer().loadRoom(battle);
         } else if(room.getGame().getDay() == 0)
             startDialog(new Dialog(

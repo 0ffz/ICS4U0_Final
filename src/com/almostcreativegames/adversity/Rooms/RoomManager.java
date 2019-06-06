@@ -11,9 +11,7 @@ import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Manages the different rooms in our game.
@@ -41,7 +39,7 @@ public class RoomManager {
     public RoomManager(GameRunner game) {
         currentX = 0;
         currentY = 3;
-        rooms[3][0] = new Room("Rooms/Home");
+        rooms[3][0] = new Room("Rooms/Home/Home.png");
         Wire wire = new Wire();
         wire.setPosition(600, 600);
 
@@ -63,7 +61,7 @@ public class RoomManager {
         bed.setPosition(100, 725);
         rooms[3][0].addEntity(bed);
 
-        rooms[3][1] = new Room("Rooms/Living Room");
+        rooms[3][1] = new Room("Rooms/Home/Living Room.png");
 
         EntityAnimated eButton = new EntityAnimated(){
             @Override
@@ -101,10 +99,10 @@ public class RoomManager {
         if (game.getDay() == 0)
             rooms[3][1].addEntity(eButton);
 
-        rooms[3][2] = new Room("Rooms/Road 1");
-        rooms[3][3] = new Room("Rooms/Road 2");
-        rooms[3][4] = new Room("Rooms/Outside Factory");
-        rooms[2][2] = new Room("Rooms/Factory Floor 2");
+        rooms[3][2] = new Room("Rooms/Outside/Road 1.png");
+        rooms[3][3] = new Room("Rooms/Outside/Road 2.png");
+        rooms[3][4] = new Room("Rooms/Outside/Outside Factory.png");
+        rooms[2][2] = new Room("Rooms/Factory/Factory Floor 2.png");
 
         Entity electricalGloves = new Entity() {
             @Override
@@ -127,7 +125,7 @@ public class RoomManager {
 
         rooms[2][2].addEntity(electricalGloves);
 
-        rooms[2][3] = new Room("Rooms/Factory Floor");
+        rooms[2][3] = new Room("Rooms/Factory/Factory Floor.png");
 
         Entity electricalEmployee = new Entity() {
             @Override
@@ -143,7 +141,7 @@ public class RoomManager {
         electricalEmployee.setPosition(300, 390);
         rooms[2][3].addEntity(electricalEmployee);
 
-        rooms[2][4] = new Room("Rooms/Factory Entrance");
+        rooms[2][4] = new Room("Rooms/Factory/Factory Entrance.png");
 
         Entity boss = new Entity() {
             @Override
@@ -161,7 +159,7 @@ public class RoomManager {
         boss.setPosition(590, 715);
         rooms[2][4].addEntity(boss);
 
-        rooms[2][5] = new Room("Rooms/Factory Floor");
+        rooms[2][5] = new Room("Rooms/Factory/Factory Floor.png");
 
         Entity workerTwo = new Entity() {
             @Override
@@ -178,10 +176,10 @@ public class RoomManager {
 
         rooms[2][5].addEntity(workerTwo);
 
-        rooms[2][6] = new Room("Rooms/Factory Floor 3");
-        rooms[1][2] = new Room("Rooms/Factory Floor 5");
-        rooms[1][3] = new Room("Rooms/Factory Floor 4");
-        rooms[1][4] = new Room("Rooms/Outside Game Room");
+        rooms[2][6] = new Room("Rooms/Factory/Factory Floor 3.png");
+        rooms[1][2] = new Room("Rooms/Factory/Factory Floor 5.png");
+        rooms[1][3] = new Room("Rooms/Factory/Factory Floor 4.png");
+        rooms[1][4] = new Room("Rooms/Outside/Outside Game Room.png");
 
         Entity statisticsMan = new Entity(){
             @Override
@@ -190,9 +188,9 @@ public class RoomManager {
                     startDialog(new Dialog(Arrays.asList("Hello there I'm just getting some research done for workplace safety statistics!", "Oh, you're new?", "Well let me tell you that in 2015 110.5 per 10000 full time workers between the ages of 16-19 suffered a non fatal injury.", "Take care of yourself in there!")));
             }
         };
-        rooms[1][5] = new Room("Rooms/Factory Floor 4");
-        rooms[1][6] = new Room("Rooms/Factory Floor 6");
-        rooms[0][4] = new Room("Rooms/Game Room");
+        rooms[1][5] = new Room("Rooms/Factory/Factory Floor 4.png");
+        rooms[1][6] = new Room("Rooms/Factory/Factory Floor 6.png");
+        rooms[0][4] = new Room("Rooms/Factory/Game Room.png");
         for (Room[] row : rooms)
             for (Room room : row)
                 if (room != null)

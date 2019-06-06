@@ -56,7 +56,6 @@ public class SleepScreen extends Room {
         sleepZZZ.setPosition(500 - sleepZZZ.getImage().getWidth() / 2, 500 - sleepZZZ.getImage().getHeight() / 2);
         addEntity(sleepZZZ);
 
-
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

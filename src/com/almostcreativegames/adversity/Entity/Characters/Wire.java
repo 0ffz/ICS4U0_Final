@@ -55,7 +55,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
             startDialog(new Dialog("You probably shouldn't touch\nthat"));
         }
         if(room.getGame().hasAttribute("Talked to tutorial")) {
-            Battle battle = new Battle("Battle/Battle", this, room, room.getGame());
+            Battle battle = new Battle("Battle/Battle.png", this, room, room.getGame());
             room.getGame().getRenderer().loadRoom(battle);
         }
     }

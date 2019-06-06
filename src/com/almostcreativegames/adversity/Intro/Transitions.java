@@ -48,7 +48,7 @@ public class Transitions {
 
         body.getChildren().add(imageView);
 
-        KeyFrame sleepScene = new KeyFrame(Duration.seconds(3), new KeyValue(imageView.imageProperty(), new Image("Rooms/Game Room.png")));
+        KeyFrame sleepScene = new KeyFrame(Duration.seconds(3), new KeyValue(imageView.imageProperty(), new Image("Rooms/Factory/Game Room.png")));
         Timeline timeline = new Timeline(sleepScene);
 
 

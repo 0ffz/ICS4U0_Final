@@ -37,8 +37,9 @@ public class Room {
     private List<Entity> entities = new CopyOnWriteArrayList<>(); //fix concurrency issues when going through entities
 
     public Room(String imageURL) {
-        background = new Image(imageURL + ".png", 1000, 1000, false, true);
-        Image backgroundCollision = new Image(imageURL + " col.png");
+        String fileExtension = imageURL.substring(imageURL.indexOf("."));
+        background = new Image(imageURL, 1000, 1000, false, true);
+        Image backgroundCollision = new Image(imageURL.substring(0, imageURL.indexOf(".")) + " col" + fileExtension);
         collision = convertToCollisionMap(backgroundCollision);
     }
 
