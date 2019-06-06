@@ -8,6 +8,7 @@ import java.util.List;
 
 public class BattleButton extends Button {
     private List<Button> subOptions = new ArrayList<>();
+    //TODO I don't think we need this?
     private Battle battle;
 
     public BattleButton(String text) {

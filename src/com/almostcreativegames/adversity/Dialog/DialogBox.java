@@ -57,7 +57,7 @@ public class DialogBox extends Button {
     public void render(GraphicsContext gc, double time) {
         if (text == null) {
             hide();
-            Player.getCurrentPlayer().setCanMove(true);
+            room.getGame().getCurrentPlayer().setCanMove(true);
             dialog = null;
             return;
         }

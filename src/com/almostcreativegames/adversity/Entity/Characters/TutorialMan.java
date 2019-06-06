@@ -124,7 +124,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
             @Override
             public void onIntersect() {
-                Player.getCurrentPlayer().addHealth(-1);
+                battle.getGame().getCurrentPlayer().addHealth(-1);
                 remove();
                 if (battle.checkDead())
                     timer.cancel();

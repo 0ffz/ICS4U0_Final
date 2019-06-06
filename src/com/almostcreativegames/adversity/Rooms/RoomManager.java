@@ -45,7 +45,7 @@ public class RoomManager {
         rooms[3][0].addEntity(wire);
 
         TutorialMan tutorialMan = new TutorialMan();
-        tutorialMan.setPosition(100, 800);
+        tutorialMan.setPosition(300, 800);
         rooms[3][0].addEntity(tutorialMan);
 
         Entity bed = new Entity() {

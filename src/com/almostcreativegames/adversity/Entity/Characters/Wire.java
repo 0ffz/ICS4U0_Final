@@ -85,7 +85,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
                             "It felt pretty painful") {
                         @Override
                         public void onEnd() {
-                            Player.getCurrentPlayer().addHealth(-5);
+                            battle.getGame().getCurrentPlayer().addHealth(-5);
                             battle.nextTurn();
                         }
                     });
@@ -125,7 +125,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
 
             @Override
             public void onIntersect() {
-                Player.getCurrentPlayer().addHealth(-1);
+                battle.getGame().getCurrentPlayer().addHealth(-1);
                 remove();
                 if (battle.checkDead())
                     timer.cancel();

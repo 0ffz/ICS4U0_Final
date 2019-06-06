@@ -16,18 +16,9 @@ import com.almostcreativegames.adversity.Input.InputListener;
  * <p>0.2.1 - Moved most of GameRunner's manipulation of the player into its own class</p>
  */
 public class Player extends EntityAnimated implements HealthBehaviour {
-    private static Player currentPlayer;
     private boolean canMove = true;
 
     public Player() {
-    }
-
-    public static Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public static void setCurrentPlayer(Player currentPlayer) {
-        Player.currentPlayer = currentPlayer;
     }
 
     public boolean canMove() {
@@ -40,11 +31,12 @@ public class Player extends EntityAnimated implements HealthBehaviour {
 
     @Override
     public void update(double time, double friction) {
+        InputListener input = room.getGame().getInputListener();
         if (canMove) {
-            if (InputListener.isKeyPressed("LEFT") || InputListener.isKeyPressed("A")) addVelocity(-100, 0);
-            if (InputListener.isKeyPressed("RIGHT") || InputListener.isKeyPressed("D")) addVelocity(100, 0);
-            if (InputListener.isKeyPressed("UP") || InputListener.isKeyPressed("W")) addVelocity(0, -100);
-            if (InputListener.isKeyPressed("DOWN") || InputListener.isKeyPressed("S")) addVelocity(0, 100);
+            if (input.isKeyPressed("LEFT") || input.isKeyPressed("A")) addVelocity(-100, 0);
+            if (input.isKeyPressed("RIGHT") || input.isKeyPressed("D")) addVelocity(100, 0);
+            if (input.isKeyPressed("UP") || input.isKeyPressed("W")) addVelocity(0, -100);
+            if (input.isKeyPressed("DOWN") || input.isKeyPressed("S")) addVelocity(0, 100);
 
         }
 

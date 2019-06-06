@@ -1,9 +1,7 @@
 package com.almostcreativegames.adversity.Saves;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.List;
 
 /**
  * The class that will create saves of our game
@@ -22,15 +20,16 @@ public class Save {
     private static String saveDir = System.getProperty("user.home") + "\\almostcreative\\dghsaw";
     private static String fileName = "\\save.dat\\";
 
-    public static void saveGame(int day, int score) {
+    public static void saveGame(int day, List<String> attributes) {
         System.out.println(saveExists());
         try {
             File file = new File(saveDir);
             file.mkdirs();
 
-            PrintWriter output = new PrintWriter((new FileWriter(saveDir+fileName))); //creates a variable to access the file
+            PrintWriter output = new PrintWriter((new FileWriter(saveDir + fileName))); //creates a variable to access the file
             output.println(day);
-            output.println(score);
+            for (String attribute : attributes)
+                output.println(attribute);
             output.flush();
             output.close();
         } catch (IOException e) {
@@ -38,7 +37,19 @@ public class Save {
         }
     }
 
+    public static BufferedReader getSave() {
+        System.out.println(saveExists());
+        try {
+            if(!saveExists())
+                return null;
+            return new BufferedReader((new FileReader(saveDir + fileName)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static boolean saveExists() {
-        return new File(saveDir+fileName).exists();
+        return new File(saveDir + fileName).exists();
     }
 }

@@ -34,7 +34,7 @@ public class Battle extends Room {
     protected Entity fightingSprite;
     protected BattleBehaviour enemy;
     protected Player soul;
-    protected Player previousPlayer = Player.getCurrentPlayer();
+    protected Player previousPlayer;
     protected BattleButton act;
     protected BattleButton item;
     protected HealthDisplay playerHealth;
@@ -52,6 +52,7 @@ public class Battle extends Room {
     //TODO could probably remove this if we know for sure we're loading the same background each time
     public Battle(String imageURL, Entity enemy, Room fromRoom, GameRunner game) {
         super(imageURL);
+         previousPlayer = game.getCurrentPlayer();
 
         //if the entity being fought does not have the right behaviours, end the battle
         if (!(enemy instanceof BattleBehaviour && enemy instanceof HealthBehaviour)) {
@@ -88,11 +89,11 @@ public class Battle extends Room {
 
         soul.setPosition(450, 800);
         addEntity(soul);
-        Player.setCurrentPlayer(soul);
+        game.setCurrentPlayer(soul);
 
         //TODO create all the other buttons with textures
         //creating buttons with options
-        //act button
+        //retry button
         act = new BattleButton("ACT");
         act.setFont(Fonts.BATTLE_BUTTON);
         act.setBattle(this);
@@ -104,7 +105,7 @@ public class Battle extends Room {
         for (Button button : ((BattleBehaviour) enemy).getActOptions(this))
             act.addSubOption(button);
 
-        //item button
+        //quit button
         item = new BattleButton("ITEM");
         item.setFont(Fonts.BATTLE_BUTTON);
         item.setBattle(this);
@@ -164,6 +165,7 @@ public class Battle extends Room {
     public boolean checkDead() {
         if (playerHealth.isDead()) {
             endBattle();
+            game.gameOver();
             //TODO call game end method in GameRunner
             return true;
         }
@@ -231,7 +233,7 @@ public class Battle extends Room {
         //return previous player to be playable again
         previousPlayer.setCanMove(true);
         previousPlayer.show();
-        Player.setCurrentPlayer(previousPlayer);
+        game.setCurrentPlayer(previousPlayer);
         enemy.onBattleEnd(this);
     }
 }

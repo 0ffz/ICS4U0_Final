@@ -1,6 +1,7 @@
 package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Battle.Battle;
+import com.almostcreativegames.adversity.Battle.GameOverScreen;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
@@ -12,6 +13,7 @@ import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Input.InputListener;
 import com.almostcreativegames.adversity.Rooms.Room;
 import com.almostcreativegames.adversity.Rooms.RoomManager;
+import com.almostcreativegames.adversity.Saves.Save;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -29,10 +31,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * The main class for running the game.
@@ -63,6 +64,9 @@ public class GameRunner extends Application {
     private double playerHealth = 10;
     private double maxPlayerHealth = 10;
     private List<String> gameAttributes = new ArrayList<>();
+    private Stage stage;
+    private Player currentPlayer;
+    private InputListener inputListener;
 
     public static void main(String[] args) {
         launch(args);
@@ -90,12 +94,16 @@ public class GameRunner extends Application {
 
     }
 
+    public InputListener getInputListener() {
+        return inputListener;
+    }
+
     public boolean hasAttribute(String attribute) {
         return gameAttributes.contains(attribute);
     }
 
     public boolean addAttribute(String attribute) {
-        return gameAttributes.contains(attribute);
+        return gameAttributes.add(attribute);
     }
 
     public void removeAttribute(String attribute) {
@@ -109,8 +117,19 @@ public class GameRunner extends Application {
     public void nextDayIfJobDone() {
         if (hasAttribute("Job done")) {
             day++;
+            startDialog(new Dialog("Starting next day"), rooms.getCurrentRoom());
             removeAttribute("Job done");
+        } else {
+            startDialog(new Dialog("It is not time to sleep yet"), rooms.getCurrentRoom());
         }
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public double getMaxPlayerHealth() {
@@ -168,6 +187,23 @@ public class GameRunner extends Application {
      */
     @Override
     public void start(Stage stage) {
+        try {
+            BufferedReader reader = Save.getSave();
+            String line;
+            day = Integer.parseInt(reader.readLine());
+            while ((line = reader.readLine()) != null) { //read the save file's lines
+                if (!hasAttribute(line)) //avoid repeating any attributes just in case
+                    addAttribute(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) { //if no save exists, make one
+            Save.saveGame(day, gameAttributes);
+        }
+        //TODO remove all prints
+        System.out.println(Arrays.toString(gameAttributes.toArray()));
+
+        this.stage = stage;
         Equippable gloves = new Equippable("Gloves");
         gloves.setEquipped(true);
         equipment.add(gloves);
@@ -179,17 +215,18 @@ public class GameRunner extends Application {
         Scene scene = new Scene(new Group(root), 1000, 1000);
         stage.setScene(scene);
         stage.setResizable(true);
-        InputListener.registerScene(scene);
+        //TODO make game start fullscreen
 //        stage.setFullScreen(true);
         stage.setFullScreenExitHint("Press 'F11' to toggle fullscreen");
+
+        //Initialize the input listener
+        inputListener = new InputListener(scene);
 
         root.getChildren().add(canvas);
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
         gc.setFont(theFont);
-//        gc.setFill(Color.WHITE);
-//        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(1);
+        gc.setLineWidth(0);
 
         //setup player
         String playerSprite = "Entities/Player/Player-spritesheet.png";
@@ -200,7 +237,7 @@ public class GameRunner extends Application {
         player.addAnimation("up", new SpriteAnimation(playerSprite, 0, 60, 11, 15, 2, 2, 5, 5, 5));
         player.setCurrentAnimation("idle");
         player.setPosition(145, 820);
-        Player.setCurrentPlayer(player);
+        setCurrentPlayer(player);
         rooms.getCurrentRoom().addEntity(player); //we are using rooms' getCurrentRoom because we haven't actually loaded any room yet, so the renderer would give a NPE
 
         //setup dialog box
@@ -220,26 +257,25 @@ public class GameRunner extends Application {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 Room currentRoom = renderer.getCurrentRoom();
-                Player currentPlayer = Player.getCurrentPlayer();
                 // calculate time since last update.
                 double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
                 lastNanoTime[0] = currentNanoTime;
 
-                if (InputListener.isKeyPressed("M", 100)) {
+                if (inputListener.isKeyPressed("M", 100)) {
                     Wire wire = new Wire();
                     Battle battle = new Battle("Battle/Battle", wire, currentRoom, GameRunner.this);
                     renderer.loadRoom(battle);
                 }
 
-                if (InputListener.isKeyPressed("N", 100)) {
+                if (inputListener.isKeyPressed("N", 100)) {
                     if (currentRoom instanceof Battle)
                         ((Battle) currentRoom).endBattle();
                 }
 
-                if (InputListener.isKeyPressed("F11", 200))
+                if (inputListener.isKeyPressed("F11", 200))
                     stage.setFullScreen(!stage.isFullScreen());
 
-                if (InputListener.isKeyPressed("E", 200)) {
+                if (inputListener.isKeyPressed("E", 200)) {
                     if (dialogBox.hasDialog()) {
                         dialogBox.nextMessage();
                     } else
@@ -267,23 +303,41 @@ public class GameRunner extends Application {
         stage.show();
 
         stage.setOnCloseRequest((e) -> {
-            //TODO temporarily turned off while debugging
-            Stage mainStage = new Stage();
-            Main main = new Main();
-            try {
-                main.start(mainStage);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            openMainMenu();
         });
 
+    }
+
+    private void openMainMenu() {
+        Stage mainStage = new Stage();
+        Main main = new Main();
+        try {
+            main.start(mainStage);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        saveGame();
+    }
+
+    private void saveGame() {
+        Save.saveGame(day, gameAttributes);
+    }
+
+    public void gameOver() {
+        GameOverScreen gameOverScreen = new GameOverScreen("Battle/Battle", this);
+        renderer.loadRoom(gameOverScreen);
     }
 
     public void startDialog(Dialog dialog, Room room) {
         dialogBox.getRoom().moveEntity(room, dialogBox); //move dialog box to specified room
         dialogBox.setDialog(dialog);
         dialogBox.show();
-        Player.getCurrentPlayer().setCanMove(false);
+        getCurrentPlayer().setCanMove(false);
+    }
+
+    public void close() {
+        stage.close();
+        openMainMenu();
     }
 
     private void wrapScreen(Entity entity) {
