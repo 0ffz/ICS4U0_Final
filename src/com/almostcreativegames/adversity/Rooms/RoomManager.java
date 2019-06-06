@@ -44,6 +44,7 @@ public class RoomManager {
         rooms[3][0] = new Room("Rooms/Home");
         Wire wire = new Wire();
         wire.setPosition(600, 600);
+
         rooms[3][0].addEntity(wire);
 
         TutorialMan tutorialMan = new TutorialMan();
@@ -73,7 +74,13 @@ public class RoomManager {
                     startDialog(new Dialog(Arrays.asList("See you later honey.", "Remember not to get hurt!")));
             }
         };
-        EntityAnimated eButton = new EntityAnimated();
+        EntityAnimated eButton = new EntityAnimated(){
+            @Override
+            public void onRoomLoad() {
+                if(room.getGame().getDay() > 0)
+                    remove();
+            }
+        };
         eButton.addAnimation("appear", new SpriteAnimation("Entities/E.png", 0, 0, 50, 50, 2, 2, 1, 1, 2));
         eButton.setCurrentAnimation("appear");
         eButton.setPosition(370, 700);
@@ -98,6 +105,12 @@ public class RoomManager {
                 startDialog(new Dialog("You picked up some Electrical \ngloves",
                         "Be sure to equip them when \nneeded while working!"));
                 remove();
+            }
+
+            @Override
+            public void onRoomLoad() {
+                if(room.getGame().hasEquipment("Electrical Gloves"))
+                    remove();
             }
         };
         electricalGloves.setImage(new Image("Entities/Electrical Gloves.png", 50, 50, true, true));
@@ -175,23 +188,6 @@ public class RoomManager {
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
-    }
-
-    public void updateRooms(int day) {
-        if (day > 0) {
-//            for(Entity e: getAllEntitiesInRooms())
-            //TODO add tags to entities
-//                if(e.hasTag().equals("tutorial indicator"))
-        }
-    }
-
-    public List<Entity> getAllEntitiesInRooms() {
-        List<Entity> entities = new ArrayList<>();
-        for (Room[] row : rooms)
-            for (Room room : row)
-                if (room != null)
-                    entities.addAll(room.getEntities());
-        return entities;
     }
 
     public Room getCurrentRoom() {

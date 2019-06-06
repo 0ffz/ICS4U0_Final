@@ -6,6 +6,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A class for managing sprites. Stores position, image, velocity
  * The basis for this code was taken from the Sprite class here:
@@ -41,6 +44,7 @@ public class Entity {
     private boolean hidden;
     private int layer;
     private boolean removed = false;
+    private List<String> tags = new ArrayList<>();
 
     public Entity() {
         x = 0;
@@ -49,12 +53,31 @@ public class Entity {
         velocityY = 0;
     }
 
+    public void addTag(String tag) {
+        tags.add(tag);
+    }
+
+    public void removeTag(String tag) {
+        tags.remove(tag);
+    }
+
+    public boolean hasTag(String tag) {
+        return tags.contains(tag);
+    }
+
     public double getLifetime() {
         return lifetime;
     }
 
     public void startDialog(Dialog dialog) {
         room.getGame().startDialog(dialog, room);
+    }
+
+    /**
+     *
+     */
+    public void onRoomLoad(){
+
     }
 
     /**

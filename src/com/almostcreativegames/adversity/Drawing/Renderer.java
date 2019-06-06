@@ -97,10 +97,13 @@ public class Renderer {
      */
     public void loadRoom(Room room) {
         currentRoom = room;
+
         unregisterAll();
         if (room != null) {
-            for (Entity entity : room.getEntities())
+            for (Entity entity : room.getEntities()) {
                 register(entity);
+                entity.onRoomLoad();
+            }
             for (Entity e : room.getEntities()) {
                 System.out.print(e.getName() + ", ");
             }

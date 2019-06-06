@@ -26,8 +26,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
@@ -67,7 +65,15 @@ public class GameRunner extends Application {
     private Stage stage;
     private Player currentPlayer;
     private InputListener inputListener;
+    private boolean loadSave;
 
+    public GameRunner(){
+        this.loadSave = true;
+    }
+
+    public GameRunner(boolean loadSave){
+        this.loadSave = loadSave;
+    }
     public static void main(String[] args) {
         launch(args);
     }
@@ -118,6 +124,7 @@ public class GameRunner extends Application {
         if (hasAttribute("Job done")) {
             day++;
             startDialog(new Dialog("Starting next day"), rooms.getCurrentRoom());
+            Save.saveGame(day, gameAttributes, equipment);
             removeAttribute("Job done");
         } else {
             startDialog(new Dialog("It is not time to sleep yet"), rooms.getCurrentRoom());
@@ -168,6 +175,10 @@ public class GameRunner extends Application {
             }
     }
 
+    public boolean hasEquipment(String name) {
+        return equipment.contains(new Equippable(name));
+    }
+
     public boolean isEquipped(String name) {
         for (Equippable equippable : equipment)
             if (equippable.compareTo((new Equippable(name))) == 0)
@@ -187,26 +198,34 @@ public class GameRunner extends Application {
      */
     @Override
     public void start(Stage stage) {
-        try {
-            BufferedReader reader = Save.getSave();
-            String line;
-            day = Integer.parseInt(reader.readLine());
-            while ((line = reader.readLine()) != null) { //read the save file's lines
-                if (!hasAttribute(line)) //avoid repeating any attributes just in case
-                    addAttribute(line);
+        //loading save file
+        if(loadSave) {
+            try {
+                BufferedReader reader = Save.getSave();
+                String line;
+
+                day = Integer.parseInt(reader.readLine());
+                //read the save file's lines until "Equipment"
+                while ((line = reader.readLine()) != null && !(line.equals("Equipment")))
+                    if (!hasAttribute(line)) //avoid repeating any attributes just in case
+                        addAttribute(line);
+
+                //adds equipment
+                while ((line = reader.readLine()) != null) { //read the save file's lines
+                    Equippable equippable = new Equippable(line);
+                    equippable.setEquipped(Boolean.parseBoolean(reader.readLine()));
+                    equipment.add(equippable);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) { //if no save exists, make one
+                Save.saveGame(day, gameAttributes, equipment);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) { //if no save exists, make one
-            Save.saveGame(day, gameAttributes);
         }
         //TODO remove all prints
         System.out.println(Arrays.toString(gameAttributes.toArray()));
 
         this.stage = stage;
-        Equippable gloves = new Equippable("Gloves");
-        gloves.setEquipped(true);
-        equipment.add(gloves);
 
         stage.setTitle("Don't get hurt, stay at work!");
 
@@ -224,9 +243,6 @@ public class GameRunner extends Application {
 
         //Initialize canvas
         root.getChildren().add(canvas);
-
-        //Update room to current day
-        rooms.updateRooms(day);
 
         //setup player
         String playerSprite = "Entities/Player/Player-spritesheet.png";
@@ -320,7 +336,7 @@ public class GameRunner extends Application {
     }
 
     private void saveGame() {
-        Save.saveGame(day, gameAttributes);
+        Save.saveGame(day, gameAttributes, equipment);
     }
 
     public void gameOver() {

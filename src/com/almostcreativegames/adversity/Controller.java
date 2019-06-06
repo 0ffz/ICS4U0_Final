@@ -22,6 +22,7 @@ import javafx.stage.Stage;
  */
 
 public class Controller {
+    public Button newGameButton;
     public Button gameButton;
     public Button exit;
 
@@ -38,7 +39,14 @@ public class Controller {
      */
     public void startGame(ActionEvent e){
         Stage stage = new Stage();
-        GameRunner game = new GameRunner();
+        GameRunner game = new GameRunner(true);
+        game.start(stage);
+        ((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
+    }
+
+    public void newGame(ActionEvent e){
+        Stage stage = new Stage();
+        GameRunner game = new GameRunner(false);
         game.start(stage);
         ((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
     }

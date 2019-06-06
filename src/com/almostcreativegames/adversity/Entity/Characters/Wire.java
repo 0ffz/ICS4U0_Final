@@ -44,6 +44,12 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
     }
 
     @Override
+    public void onRoomLoad() {
+        if(room.getGame().getDay() > 0)
+            remove();
+    }
+
+    @Override
     public void onInteract() {
         if(room.getGame().hasAttribute("Talked to tutorial")) {
             Battle battle = new Battle("Battle/Battle", this, room, room.getGame());
@@ -72,7 +78,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
             public void onInteract() {
                 if (room.getGame().isEquipped("Electrical Gloves"))
                     startDialog(new Dialog(
-                            "You managed to cut part of the wire!") {
+                            "You managed to cut\npart of the wire!") {
                         @Override
                         public void onEnd() {
                             addHealth(-5);
