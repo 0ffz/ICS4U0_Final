@@ -24,7 +24,7 @@ public class Save {
     private static String fileName = File.separator + "save.dat" + File.separator;
 
     public static void saveGame(int day, List<String> attributes, Set<Equippable> equipment) {
-        System.out.println(saveExists());
+//        System.out.println("Save exists: " + saveExists());
         try {
             File file = new File(saveDir);
             file.mkdirs();

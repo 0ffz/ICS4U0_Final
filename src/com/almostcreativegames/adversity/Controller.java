@@ -28,9 +28,7 @@ public class Controller {
 
     public void initialize(){
         if(!Save.saveExists())
-            gameButton.setText("New Game");
-
-//        Save.saveGame(1, 10);
+            gameButton.setDisable(true);
     }
 
     /**

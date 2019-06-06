@@ -324,7 +324,7 @@ public class GameRunner extends Application {
 
     }
 
-    private void openMainMenu() {
+    public void openMainMenu() {
         saveGame();
         Stage mainStage = new Stage();
         Main main = new Main();
@@ -353,7 +353,6 @@ public class GameRunner extends Application {
 
     public void close() {
         stage.close();
-        openMainMenu();
     }
 
     private void wrapScreen(Entity entity) {
