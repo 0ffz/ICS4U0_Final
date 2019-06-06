@@ -2,6 +2,7 @@ package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Battle.GameOverScreen;
+import com.almostcreativegames.adversity.Battle.SleepScreen;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
@@ -67,13 +68,14 @@ public class GameRunner extends Application {
     private InputListener inputListener;
     private boolean loadSave;
 
-    public GameRunner(){
+    public GameRunner() {
         this.loadSave = true;
     }
 
-    public GameRunner(boolean loadSave){
+    public GameRunner(boolean loadSave) {
         this.loadSave = loadSave;
     }
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -123,12 +125,32 @@ public class GameRunner extends Application {
     public void nextDayIfJobDone() {
         if (hasAttribute("Job done")) {
             day++;
-            startDialog(new Dialog("Starting next day"), rooms.getCurrentRoom());
-            Save.saveGame(day, gameAttributes, equipment);
             removeAttribute("Job done");
+            Save.saveGame(day, gameAttributes, equipment);
+            playSleepingScene();
+            playMorningMessage();
         } else {
             startDialog(new Dialog("It is not time to sleep yet"), rooms.getCurrentRoom());
         }
+    }
+
+    private void playMorningMessage() {
+        List<String> messages = new ArrayList<>();
+        messages.add("Day " + (day + 1) + " of your job begins!");
+        if (day == 1)
+            messages.add("You seem to still be\nwearing the same clothes...\nMaybe you will change them\ntomorrow.");
+        else if (day == 2)
+            messages.add("After much consideration,\nyou have not decided to\nchange your clothes today.");
+        else if (day == 3)
+            messages.add("You wonder how often your\nboss changes his clothes.");
+        else if (day == 4)
+            messages.add("You tell yourself you will\ndefinitely change clothes\ntomorrow. After all,\nyou're going on vacation.");
+        startDialog(new Dialog(messages), rooms.getCurrentRoom());
+    }
+
+    private void playSleepingScene() {
+        SleepScreen sleepScreen = new SleepScreen("Battle/Empty", rooms.getCurrentRoom(), this);
+        renderer.loadRoom(sleepScreen);
     }
 
     public Player getCurrentPlayer() {
@@ -193,13 +215,14 @@ public class GameRunner extends Application {
     /**
      * Runs when launched. The basis of this code was taken from a money bag collecting game from
      * https://github.com/tutsplus/Introduction-to-JavaFX-for-Game-Development
+     * TODO create references page
      *
      * @param stage the stage that got created
      */
     @Override
     public void start(Stage stage) {
         //loading save file
-        if(loadSave) {
+        if (loadSave) {
             try {
                 BufferedReader reader = Save.getSave();
                 String line;
@@ -252,7 +275,7 @@ public class GameRunner extends Application {
         player.addAnimation("down", new SpriteAnimation(playerSprite, 0, 45, 11, 15, 2, 2, 5, 5, 5));
         player.addAnimation("up", new SpriteAnimation(playerSprite, 0, 60, 11, 15, 2, 2, 5, 5, 5));
         player.setCurrentAnimation("idle");
-        player.setPosition(145, 820);
+        player.setPosition(145, 800);
         setCurrentPlayer(player);
         rooms.getCurrentRoom().addEntity(player); //we are using rooms' getCurrentRoom because we haven't actually loaded any room yet, so the renderer would give a NPE
 
@@ -267,6 +290,16 @@ public class GameRunner extends Application {
         //load starting room
         rooms.loadRoom(renderer, 0, 0);
 
+        //play intro if player started a new game
+        if (!loadSave) {
+            playSleepingScene();
+            startDialog(new Dialog("You just woke up from sleep",
+                    "It seems like today is an\nimportant day, but you can't\nseem to remember why",
+                    "Surprisingly, you are already\ndressed in your clothes",
+                    "You should probably go see\nmom to check what you're\ndoing today"), rooms.getCurrentRoom());
+        } else {
+            playMorningMessage();
+        }
         //what actually runs during the game
         final long[] lastNanoTime = {System.nanoTime()}; //we turn these outside values into singular object arrays to be able to change them within the AnimationTimer
 
@@ -277,10 +310,15 @@ public class GameRunner extends Application {
                 double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
                 lastNanoTime[0] = currentNanoTime;
 
+                //TODO remove these test keys
                 if (inputListener.isKeyPressed("M", 100)) {
                     Wire wire = new Wire();
                     Battle battle = new Battle("Battle/Battle", wire, currentRoom, GameRunner.this);
                     renderer.loadRoom(battle);
+                }
+
+                if (inputListener.isKeyPressed("C", 100)) {
+                    addAttribute("Job done");
                 }
 
                 if (inputListener.isKeyPressed("N", 100)) {
@@ -319,7 +357,7 @@ public class GameRunner extends Application {
         stage.show();
 
         stage.setOnCloseRequest((e) -> {
-            openMainMenu();
+//            openMainMenu();
         });
 
     }
@@ -340,7 +378,7 @@ public class GameRunner extends Application {
     }
 
     public void gameOver() {
-        GameOverScreen gameOverScreen = new GameOverScreen("Battle/Battle", this);
+        GameOverScreen gameOverScreen = new GameOverScreen("Battle/Empty", this);
         renderer.loadRoom(gameOverScreen);
     }
 

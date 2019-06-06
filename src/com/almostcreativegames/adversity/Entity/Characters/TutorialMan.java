@@ -167,6 +167,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                     public void onEnd() {
                         battle.endBattle();
                         room.getGame().addAttribute("Talked to tutorial");
+                        room.getGame().addAttribute("Job done");
                         startDialog(new Dialog(
                                 "Well then, I'll see you\ntomorrow",
                                 "Have fun at home!"

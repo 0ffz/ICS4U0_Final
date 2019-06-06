@@ -72,7 +72,7 @@ public class Battle extends Room {
 
         //hide overworld player
         previousPlayer.setCanMove(false);
-        previousPlayer.hide();
+        previousPlayer.hide(); //TODO might not need this
 
         //creating soul
         soul = new Player();
