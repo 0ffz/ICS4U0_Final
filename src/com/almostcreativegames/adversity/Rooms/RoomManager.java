@@ -9,10 +9,11 @@ import com.almostcreativegames.adversity.Entity.EntityAnimated;
 import com.almostcreativegames.adversity.Entity.Equippable;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
-import com.almostcreativegames.adversity.Intro.Transitions;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Manages the different rooms in our game.
@@ -53,7 +54,7 @@ public class RoomManager {
             @Override
             public void onInteract() {
                 game.nextDayIfJobDone();
-   //             Transitions.sleepScene();
+                //             Transitions.sleepScene();
             }
         };
         bed.setImage(new Image("Entities/Bed.png", 150, 0, true, true));
@@ -89,7 +90,7 @@ public class RoomManager {
         rooms[3][4] = new Room("Rooms/Outside Factory");
         rooms[2][2] = new Room("Rooms/Factory Floor 2");
 
-        Entity electricalGloves = new Entity(){
+        Entity electricalGloves = new Entity() {
             @Override
             public void onInteract() {
                 Equippable gloves = new Equippable("Electrical Gloves");
@@ -174,6 +175,23 @@ public class RoomManager {
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    public void updateRooms(int day) {
+        if (day > 0) {
+//            for(Entity e: getAllEntitiesInRooms())
+            //TODO add tags to entities
+//                if(e.hasTag().equals("tutorial indicator"))
+        }
+    }
+
+    public List<Entity> getAllEntitiesInRooms() {
+        List<Entity> entities = new ArrayList<>();
+        for (Room[] row : rooms)
+            for (Room room : row)
+                if (room != null)
+                    entities.addAll(room.getEntities());
+        return entities;
     }
 
     public Room getCurrentRoom() {

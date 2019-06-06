@@ -222,11 +222,11 @@ public class GameRunner extends Application {
         //Initialize the input listener
         inputListener = new InputListener(scene);
 
+        //Initialize canvas
         root.getChildren().add(canvas);
 
-        Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
-        gc.setFont(theFont);
-        gc.setLineWidth(0);
+        //Update room to current day
+        rooms.updateRooms(day);
 
         //setup player
         String playerSprite = "Entities/Player/Player-spritesheet.png";
