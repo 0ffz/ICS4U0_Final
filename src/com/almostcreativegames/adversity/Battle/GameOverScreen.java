@@ -81,6 +81,7 @@ public class GameOverScreen extends Room {
                 try {
                     remove();
                     game.close();
+                    game.saveGame();
                     game.openMainMenu();
                 } catch (Exception e) {
                     e.printStackTrace();

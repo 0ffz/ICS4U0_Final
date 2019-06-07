@@ -19,6 +19,7 @@ import javafx.scene.text.FontWeight;
 
 public class Fonts {
     private static final String mainFont = Main.class.getResource("uni0553.ttf").toExternalForm();
+    public static final Font TITLE = Font.loadFont(mainFont, 100);
     public static final Font BATTLE_BUTTON = Font.loadFont(mainFont, 40);
     public static final Font NORMAL = Font.loadFont(mainFont, 30);
 }

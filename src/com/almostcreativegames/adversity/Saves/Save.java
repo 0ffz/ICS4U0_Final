@@ -3,6 +3,8 @@ package com.almostcreativegames.adversity.Saves;
 import com.almostcreativegames.adversity.Entity.Equippable;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +26,7 @@ public class Save {
     private static String fileName = File.separator + "save.dat" + File.separator;
 
     public static void saveGame(int day, List<String> attributes, Set<Equippable> equipment) {
+        System.out.println("creating save");
 //        System.out.println("Save exists: " + saveExists());
         try {
             File file = new File(saveDir);
@@ -61,6 +64,17 @@ public class Save {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void delete(){
+        if(saveExists()) {
+            try {
+//                System.out.println(Paths.get(saveDir + fileName));
+                System.out.println(Files.deleteIfExists(Paths.get(saveDir + fileName)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static boolean saveExists() {

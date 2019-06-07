@@ -1,6 +1,7 @@
 package com.almostcreativegames.adversity;
 
 import com.almostcreativegames.adversity.Battle.Battle;
+import com.almostcreativegames.adversity.Battle.EndScreen;
 import com.almostcreativegames.adversity.Battle.GameOverScreen;
 import com.almostcreativegames.adversity.Battle.SleepScreen;
 import com.almostcreativegames.adversity.Dialog.Dialog;
@@ -67,6 +68,7 @@ public class GameRunner extends Application {
     private Player currentPlayer;
     private InputListener inputListener;
     private boolean loadSave;
+    private boolean close;
 
     public GameRunner() {
         this.loadSave = true;
@@ -145,7 +147,16 @@ public class GameRunner extends Application {
             messages.add("You wonder how often your\nboss changes his clothes.");
         else if (day == 4)
             messages.add("You tell yourself you will\ndefinitely change clothes\ntomorrow. After all,\nyou're going on vacation.");
+        else if(day >= 5) {
+            playEndScene();
+            return; //don't play the morning dialog, go to the end scene instead
+        }
         startDialog(new Dialog(messages), rooms.getCurrentRoom());
+    }
+
+    private void playEndScene() {
+        EndScreen endScreen = new EndScreen("Battle/Empty.png", rooms.getCurrentRoom(), this);
+        renderer.loadRoom(endScreen);
     }
 
     private void playSleepingScene() {
@@ -305,6 +316,12 @@ public class GameRunner extends Application {
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
+                if(close) {
+                    close();
+                    openMainMenu();
+                    stop();
+                    return;
+                }
                 Room currentRoom = renderer.getCurrentRoom();
                 // calculate time since last update.
                 double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
@@ -363,7 +380,6 @@ public class GameRunner extends Application {
     }
 
     public void openMainMenu() {
-        saveGame();
         Stage mainStage = new Stage();
         Main main = new Main();
         try {
@@ -373,7 +389,7 @@ public class GameRunner extends Application {
         }
     }
 
-    private void saveGame() {
+    public void saveGame() {
         Save.saveGame(day, gameAttributes, equipment);
     }
 
@@ -390,7 +406,15 @@ public class GameRunner extends Application {
     }
 
     public void close() {
-        stage.close();
+        try {
+            stage.close();
+        }
+        /*some parts of the program run in a timer which runs on a separate thread than the JavaFX application, and thus
+        cannot close it. To bypass this, we store that we want to close the game and close it on the next frame within
+        this class*/
+        catch (IllegalStateException e){
+            close = true;
+        }
     }
 
     private void wrapScreen(Entity entity) {
