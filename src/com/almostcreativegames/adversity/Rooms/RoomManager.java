@@ -113,9 +113,29 @@ public class RoomManager {
             }
         };
         electricalGloves.setImage(new Image("Entities/Electrical Gloves.png", 50, 50, true, true));
-        electricalGloves.setPosition(200, 715);
+        electricalGloves.setPosition(200, 815);
+
+        Entity chemicalGloves = new Entity() {
+            @Override
+            public void onInteract() {
+                Equippable gloves = new Equippable("Chemical Gloves");
+                game.getEquipment().add(gloves);
+                startDialog(new Dialog("You picked up some Chemical \ngloves",
+                        "Be sure to equip them when \nneeded while working!"));
+                remove();
+            }
+
+            @Override
+            public void onRoomLoad() {
+                if (room.getGame().hasEquipment("Electrical Gloves"))
+                    remove();
+            }
+        };
+        chemicalGloves.setImage(new Image("Entities/Chemical Gloves.png", 50, 50, true, true));
+        chemicalGloves.setPosition(200, 715);
 
         rooms[2][2].addEntity(electricalGloves);
+        rooms[2][2].addEntity(chemicalGloves);
 
         rooms[2][3] = new Room("Rooms/Factory/Factory Floor.png");
 
@@ -213,17 +233,47 @@ public class RoomManager {
         electricalHelper.setImage(new Image("Entities/Wire Helper.png", 80, 0, true, true));
         electricalHelper.setPosition(50, 370);
 
-        Entity chemicalHelper = new Entity();
+        Entity chemicalHelper = new Entity() {
+            @Override
+            public void onInteract() {
+                if (game.getDay() == 2)
+                    startDialog(new Dialog(Arrays.asList("Hey you the new guy?", "Well this is the chemical \nbin you gotta clean!")));
+                else
+                    startDialog(new Dialog(Arrays.asList("Hey don't bother me I'm \ndoing my job.", "You should go do your job")));
+            }
+        };
         chemicalHelper.setImage(new Image("Entities/Chemical Helper.png", 80, 0, true, true));
         chemicalHelper.setPosition(60, 640);
 
-        Entity mixerHelper = new Entity();
-        mixerHelper.setImage(new Image("Entities/Mixer Helper.png", 80, 0, true, true));
-        mixerHelper.setPosition(550, 80);
-
-        Entity conveyorHelper = new Entity();
+        Entity conveyorHelper = new Entity() {
+            @Override
+            public void onInteract() {
+                if (game.getDay() == 3) {
+                    if (game.hasAttribute("Spoken to mixerHelper"))
+                        startDialog(new Dialog(Arrays.asList("Oh what's wrong?", "You need me to turn off the \nmixing bowl?", "Sorry bud, but it doesn't \nturn off!")));
+                    else
+                        startDialog(new Dialog(Arrays.asList("Hey you the new guy?", "Well this is the conveyor \nbelt you gotta fix!")));
+                } else
+                    startDialog(new Dialog(Arrays.asList("Hey don't bother me I'm \ndoing my job.", "You should go do your job")));
+            }
+        };
         conveyorHelper.setImage(new Image("Entities/Conveyor Helper.png", 80, 0, true, true));
         conveyorHelper.setPosition(650, 800);
+
+        Entity mixerHelper = new Entity() {
+            @Override
+            public void onInteract() {
+                if (game.getDay() == 4) {
+                    if (game.hasAttribute("Spoken to mixerHelper"))
+                        startDialog(new Dialog(Arrays.asList("Oh what's wrong?", "You need me to turn off the \nconveyor belt?", "No problem buddy I'll do it \nright now!")));
+                    else
+                        startDialog(new Dialog(Arrays.asList("Hey you the new guy?", "Well this is the mixing bin \nyou gotta clean!")));
+                } else
+                    startDialog(new Dialog(Arrays.asList("Hey don't bother me I'm \ndoing my job.", "You should go do your job")));
+            }
+        };
+        mixerHelper.setImage(new Image("Entities/Mixer Helper.png", 80, 0, true, true));
+        mixerHelper.setPosition(550, 80);
 
         rooms[0][4].addEntity(electricalHelper);
         rooms[0][4].addEntity(chemicalHelper);

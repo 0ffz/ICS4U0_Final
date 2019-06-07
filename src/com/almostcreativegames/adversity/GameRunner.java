@@ -367,7 +367,7 @@ public class GameRunner extends Application {
         dialogBox.hide();
 
         //load starting room
-        rooms.loadRoom(renderer, 4, -1);
+        rooms.loadRoom(renderer, 0, 0);
 
         //play intro if player started a new game
         if (!loadSave) {
