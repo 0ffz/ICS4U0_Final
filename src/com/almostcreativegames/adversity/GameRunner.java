@@ -70,10 +70,18 @@ public class GameRunner extends Application {
     private boolean loadSave;
     private boolean close;
 
+    /**
+     * By default, we save the game
+     */
     public GameRunner() {
         this.loadSave = true;
     }
 
+    /**
+     * Allows us to choose whether to load a save when creating a the runner from the main menu
+     *
+     * @param loadSave decides if we should load the save
+     */
     public GameRunner(boolean loadSave) {
         this.loadSave = loadSave;
     }
@@ -104,26 +112,51 @@ public class GameRunner extends Application {
 
     }
 
+    /**
+     * @return the input listener
+     */
     public InputListener getInputListener() {
         return inputListener;
     }
 
+    /**
+     * Check if the game contains an attribute
+     *
+     * @param attribute the attribute's name
+     * @return whether it exists
+     */
     public boolean hasAttribute(String attribute) {
         return gameAttributes.contains(attribute);
     }
 
-    public boolean addAttribute(String attribute) {
-        return gameAttributes.add(attribute);
+    /**
+     * Stores an attribute
+     *
+     * @param attribute the attribute's name
+     */
+    public void addAttribute(String attribute) {
+        gameAttributes.add(attribute);
     }
 
+    /**
+     * Removes an attribute
+     *
+     * @param attribute the attribute's name
+     */
     public void removeAttribute(String attribute) {
         gameAttributes.remove(attribute);
     }
 
+    /**
+     * @return the current day
+     */
     public int getDay() {
         return day;
     }
 
+    /**
+     * If the job has been done for the day, goes to next day, saves, and plays the sleeping scene
+     */
     public void nextDayIfJobDone() {
         if (hasAttribute("Job done")) {
             day++;
@@ -136,6 +169,9 @@ public class GameRunner extends Application {
         }
     }
 
+    /**
+     * Plays a message in the morning, which changes from day to day
+     */
     private void playMorningMessage() {
         List<String> messages = new ArrayList<>();
         messages.add("Day " + (day + 1) + " of your job begins!");
@@ -147,59 +183,76 @@ public class GameRunner extends Application {
             messages.add("You wonder how often your\nboss changes his clothes.");
         else if (day == 4)
             messages.add("You tell yourself you will\ndefinitely change clothes\ntomorrow. After all,\nyou're going on vacation.");
-        else if(day >= 5) {
+        else if (day >= 5) {
             playEndScene();
             return; //don't play the morning dialog, go to the end scene instead
         }
         startDialog(new Dialog(messages), rooms.getCurrentRoom());
     }
 
+    /**
+     * Plays the end scene
+     */
     private void playEndScene() {
         EndScreen endScreen = new EndScreen("Battle/Empty.png", rooms.getCurrentRoom(), this);
         renderer.loadRoom(endScreen);
     }
 
+    /**
+     * Plays the sleeping scene
+     */
     private void playSleepingScene() {
         SleepScreen sleepScreen = new SleepScreen("Battle/Empty.png", rooms.getCurrentRoom(), this);
         renderer.loadRoom(sleepScreen);
     }
 
+    /**
+     * @return the current player
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
+    /**
+     * @param newPlayer a new player to switch to
+     */
+    public void setCurrentPlayer(Player newPlayer) {
+        this.currentPlayer = newPlayer;
     }
 
+    /**
+     * @return the player's maximum health
+     */
     public double getMaxPlayerHealth() {
         return maxPlayerHealth;
     }
 
-    public void setMaxPlayerHealth(double maxPlayerHealth) {
-        this.maxPlayerHealth = maxPlayerHealth;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
+    /**
+     * @return the player's health
+     */
     public double getPlayerHealth() {
         return playerHealth;
     }
 
+    /**
+     * @param playerHealth the new player health to be set
+     */
     public void setPlayerHealth(double playerHealth) {
         this.playerHealth = playerHealth;
     }
 
+    /**
+     * @return the list of equipment on the player
+     */
     public Set<Equippable> getEquipment() {
         return equipment;
     }
 
+    /**
+     * Toggles whether an item is equipped
+     *
+     * @param name the name of the equipment
+     */
     public void toggleEquipped(String name) {
         for (Equippable equippable : equipment)
             if (equippable.compareTo((new Equippable(name))) == 0) {
@@ -208,10 +261,22 @@ public class GameRunner extends Application {
             }
     }
 
+    /**
+     * Checks whether the player has a certain item
+     *
+     * @param name the name of the equipment
+     * @return whether the player has it the item
+     */
     public boolean hasEquipment(String name) {
         return equipment.contains(new Equippable(name));
     }
 
+    /**
+     * Checks whether the player has certain equipment
+     *
+     * @param name the name of the equipment
+     * @return whether the player has it the item
+     */
     public boolean isEquipped(String name) {
         for (Equippable equippable : equipment)
             if (equippable.compareTo((new Equippable(name))) == 0)
@@ -219,6 +284,9 @@ public class GameRunner extends Application {
         return false;
     }
 
+    /**
+     * @return the renderer
+     */
     public Renderer getRenderer() {
         return renderer;
     }
@@ -316,7 +384,7 @@ public class GameRunner extends Application {
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                if(close) {
+                if (close) {
                     close();
                     openMainMenu();
                     stop();
@@ -379,6 +447,9 @@ public class GameRunner extends Application {
 
     }
 
+    /**
+     * Opens the main menu
+     */
     public void openMainMenu() {
         Stage mainStage = new Stage();
         Main main = new Main();
@@ -389,15 +460,27 @@ public class GameRunner extends Application {
         }
     }
 
+    /**
+     * Saves the game
+     */
     public void saveGame() {
         Save.saveGame(day, gameAttributes, equipment);
     }
 
+    /**
+     * Plays the game over screen
+     */
     public void gameOver() {
         GameOverScreen gameOverScreen = new GameOverScreen("Battle/Empty.png", this);
         renderer.loadRoom(gameOverScreen);
     }
 
+    /**
+     * Begins a dialog in a specified room
+     *
+     * @param dialog the dialog message to display
+     * @param room   the room for it to be displayed in
+     */
     public void startDialog(Dialog dialog, Room room) {
         dialogBox.getRoom().moveEntity(room, dialogBox); //move dialog box to specified room
         dialogBox.setDialog(dialog);
@@ -405,18 +488,25 @@ public class GameRunner extends Application {
         getCurrentPlayer().setCanMove(false);
     }
 
+    /**
+     * Closes the window
+     */
     public void close() {
         try {
             stage.close();
         }
         /*some parts of the program run in a timer which runs on a separate thread than the JavaFX application, and thus
         cannot close it. To bypass this, we store that we want to close the game and close it on the next frame within
-        this class*/
-        catch (IllegalStateException e){
+        this class*/ catch (IllegalStateException e) {
             close = true;
         }
     }
 
+    /**
+     * Wraps an entity around if it goes out of bounds of a room (used for moving player between rooms)
+     *
+     * @param entity the entity to wrap
+     */
     private void wrapScreen(Entity entity) {
         double w = canvas.getWidth();
         double h = canvas.getHeight();

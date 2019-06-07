@@ -44,25 +44,12 @@ public class Entity {
     private boolean hidden;
     private int layer;
     private boolean removed = false;
-    private List<String> tags = new ArrayList<>();
 
     public Entity() {
         x = 0;
         y = 0;
         velocityX = 0;
         velocityY = 0;
-    }
-
-    public void addTag(String tag) {
-        tags.add(tag);
-    }
-
-    public void removeTag(String tag) {
-        tags.remove(tag);
-    }
-
-    public boolean hasTag(String tag) {
-        return tags.contains(tag);
     }
 
     public double getLifetime() {
@@ -74,9 +61,9 @@ public class Entity {
     }
 
     /**
-     *
+     * Called when the room is loaded
      */
-    public void onRoomLoad(){
+    public void onRoomLoad() {
 
     }
 
@@ -92,77 +79,125 @@ public class Entity {
     public void onIntersect() {
     }
 
+    /**
+     * @return the name of the entity
+     */
     public String getName() {
         return name;
     }
 
-    public Entity setName(String name) {
+    /**
+     * @param name the name of the entity to be set
+     */
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
+    /**
+     * @return the room the entity is in
+     */
     public Room getRoom() {
         return room;
     }
 
-    public Entity setRoom(Room room) {
+    /**
+     * @param room the room for the entity to be put in
+     */
+    public void setRoom(Room room) {
         this.room = room;
-        return this;
     }
 
+    /**
+     * @return the X velocity
+     */
     public double getVelocityX() {
         return velocityX;
     }
 
+    /**
+     * @return the Y velocity
+     */
     public double getVelocityY() {
         return velocityY;
     }
 
+    /**
+     * @return the entity's sprite
+     */
     public Image getImage() {
         return image;
     }
 
-    public void setImage(Image i) {
-        image = i;
-        width = i.getWidth();
-        height = i.getHeight();
+    /**
+     * Sets the entity image and its width and height based on the sprite
+     *
+     * @param image the image the entity should be set to
+     */
+    public void setImage(Image image) {
+        this.image = image;
+        width = image.getWidth();
+        height = image.getHeight();
     }
 
+    /**
+     * @param filename a path to the entity's sprite
+     */
     public void setImage(String filename) {
-        Image i = new Image(filename);
-        setImage(i);
+        setImage(new Image(filename));
     }
 
+    /**
+     * @return the layer the entity is on
+     */
     public int getLayer() {
         return layer;
     }
 
+    /**
+     * @param layer the layer for the entity to be placed on
+     */
     public void setLayer(int layer) {
         this.layer = layer;
     }
 
+    /**
+     * @return the X coordinate
+     */
     public double getX() {
         return x;
     }
 
-    public Entity setX(double x) {
+    /**
+     * @param x new X coordinate
+     */
+    public void setX(double x) {
         this.x = x;
-        return this;
     }
 
+    /**
+     * @return the Y coordinate
+     */
     public double getY() {
         return y;
     }
 
-    public Entity setY(double y) {
+    /**
+     * @param y new Y coordinate
+     */
+    public void setY(double y) {
         this.y = y;
-        return this;
     }
 
+    /**
+     * @return whether the entity is removed
+     */
     public boolean isRemoved() {
         return removed;
     }
 
+    /**
+     * @return whether the entity is visible
+     */
     public boolean isVisible() {
         return !hidden;
     }
@@ -279,6 +314,7 @@ public class Entity {
         return other.getBoundary().intersects(this.getBoundary());
     }
 
+    @Override
     public String toString() {
         return " Position: [" + x + "," + y + "]"
                 + " Velocity: [" + velocityX + "," + velocityY + "]";

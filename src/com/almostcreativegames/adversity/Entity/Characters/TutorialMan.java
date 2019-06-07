@@ -57,7 +57,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
             startDialog(new Dialog(
                     "Hello again buddy",
                     "We're buddies, right?",
-                    "Of course we are, I covered your\nshift after all!",
+                    "Of course we are, I covered\nyour shift after all!",
                     "Well, good luck on your job!"
             ));
     }

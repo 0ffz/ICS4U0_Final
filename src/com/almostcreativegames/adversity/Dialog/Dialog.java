@@ -39,10 +39,19 @@ public class Dialog {
     public void onEnd() {
     }
 
+    /**
+     * Gets 
+     * @return
+     */
     public String getCurrentMessage() {
         return messages.get(index - 1);
     }
 
+    /**
+     * Goes to the next message
+     *
+     * @return the next message
+     */
     public String nextMessage() {
         if (index == messages.size()) {
             onEnd();

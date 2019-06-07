@@ -15,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * A class for displaying a game over screen with options to retry or close the game
+ * The room that gets loaded when the player completes the game
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
@@ -24,14 +24,15 @@ import java.util.TimerTask;
  * @version 1.3.1
  *
  * <h2>Changelog</h2>
- * <p>1.3.1 - </p>
+ * <p>1.3.1 - Created room</p>
  */
 public class EndScreen extends Room {
-
     /**
-     * Defines a new battle object, in which a new room is created and entered.
+     * Creates a room containing the player in a car, followed by credits
      *
      * @param imageURL the background of the battle
+     * @param previous the previous room
+     * @param game     a reference to the game
      */
     //TODO could probably remove this if we know for sure we're loading the same background each time
     public EndScreen(String imageURL, Room previous, GameRunner game) {

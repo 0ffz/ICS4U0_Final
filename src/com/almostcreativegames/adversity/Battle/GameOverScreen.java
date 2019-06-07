@@ -1,11 +1,7 @@
 package com.almostcreativegames.adversity.Battle;
 
 import com.almostcreativegames.adversity.Drawing.Fonts;
-import com.almostcreativegames.adversity.Entity.Behaviours.BattleBehaviour;
-import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
-import com.almostcreativegames.adversity.Entity.Entity;
-import com.almostcreativegames.adversity.Entity.Equippable;
-import com.almostcreativegames.adversity.Entity.Menu.*;
+import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
@@ -14,7 +10,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- * A class for displaying a game over screen with options to retry or close the game
+ * The room that gets loaded after the player dies
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
@@ -23,17 +19,15 @@ import javafx.stage.Stage;
  * @version 1.3.1
  *
  * <h2>Changelog</h2>
- * <p>1.3.1 - </p>
+ * <p>1.3.1 - Created room</p>
  */
 public class GameOverScreen extends Room {
-    protected Player soul;
-    protected Button retry;
-    protected Button quit;
 
     /**
-     * Defines a new battle object, in which a new room is created and entered.
+     * Creates a room for the game over screen, containing a soul and options to retry or quit the game.
      *
      * @param imageURL the background of the battle
+     * @param game     a reference to the game
      */
     //TODO could probably remove this if we know for sure we're loading the same background each time
     public GameOverScreen(String imageURL, GameRunner game) {
@@ -41,7 +35,7 @@ public class GameOverScreen extends Room {
         setGame(game);
 
         //creating soul
-        soul = new Player();
+        Player soul = new Player();
         soul.setLayer(5);
         soul.setName("Soul");
 
@@ -59,7 +53,7 @@ public class GameOverScreen extends Room {
 
         //creating buttons with options
         //retry button
-        retry = new Button("RETRY"){
+        Button retry = new Button("RETRY") {
             @Override
             public void onInteract() {
                 game.close();
@@ -75,7 +69,7 @@ public class GameOverScreen extends Room {
         addEntity(retry);
 
         //quit button
-        quit = new Button("QUIT"){
+        Button quit = new Button("QUIT") {
             @Override
             public void onInteract() {
                 try {

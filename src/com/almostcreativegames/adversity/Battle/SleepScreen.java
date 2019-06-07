@@ -1,21 +1,16 @@
 package com.almostcreativegames.adversity.Battle;
 
-import com.almostcreativegames.adversity.Drawing.Fonts;
-import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
-import com.almostcreativegames.adversity.Entity.Menu.Button;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
 import com.almostcreativegames.adversity.Rooms.Room;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * A class for displaying a game over screen with options to retry or close the game
+ * The room that gets loaded when the player goes to sleep
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
@@ -24,14 +19,15 @@ import java.util.TimerTask;
  * @version 1.3.1
  *
  * <h2>Changelog</h2>
- * <p>1.3.1 - </p>
+ * <p>1.3.1 - Created room</p>
  */
 public class SleepScreen extends Room {
-
     /**
-     * Defines a new battle object, in which a new room is created and entered.
+     * Creates a room containing the player sleeping in the bed. After some time, returns to the previos room
      *
      * @param imageURL the background of the battle
+     * @param previous the previous room
+     * @param game     a reference to the game
      */
     //TODO could probably remove this if we know for sure we're loading the same background each time
     public SleepScreen(String imageURL, Room previous, GameRunner game) {
@@ -61,7 +57,6 @@ public class SleepScreen extends Room {
             @Override
             public void run() {
                 game.getRenderer().loadRoom(previous);
-                player.setCanMove(true);
                 timer.cancel();
             }
         }, 5000);

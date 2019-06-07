@@ -5,9 +5,21 @@ import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.GameRunner;
 import com.almostcreativegames.adversity.Rooms.Room;
 
+/**
+ * A room that acts as a tutorial for the battle system
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 1.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>1.3.1 - Created room</p>
+ */
 public class TutorialBattle extends Battle {
     /**
-     * Defines a new battle object, in which a new room is created and entered.
+     * Creates a room with a dialog when it loads
      *
      * @param imageURL the background of the battle
      * @param enemy    the enemy Entity being fought

@@ -2,7 +2,6 @@ package com.almostcreativegames.adversity.Dialog;
 
 import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Entity.Menu.Button;
-import com.almostcreativegames.adversity.Entity.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -25,6 +24,9 @@ import javafx.scene.paint.Color;
 public class DialogBox extends Button {
     private Dialog dialog;
 
+    /**
+     * Creates a dialog box with black text using the NORMAL font, on layer 10
+     */
     public DialogBox() {
         super("");
         setLayer(10);
@@ -32,15 +34,24 @@ public class DialogBox extends Button {
         fillColor = Color.BLACK;
     }
 
+    /**
+     * @param dialog the dialog to be displayed in the box
+     */
     public void setDialog(Dialog dialog) {
         this.dialog = dialog;
         nextMessage();
     }
 
+    /**
+     * @return whether the box has a dialog to display
+     */
     public boolean hasDialog() {
         return dialog != null;
     }
 
+    /**
+     * Plays the next message from the current dialog. If the dialog doesn't have a message, sets it to null
+     */
     public void nextMessage() {
         Dialog previousDialog = dialog;
         text = dialog.nextMessage();

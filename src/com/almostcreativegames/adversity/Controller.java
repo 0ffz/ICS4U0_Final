@@ -26,34 +26,44 @@ public class Controller {
     public Button gameButton;
     public Button exit;
 
-    public void initialize(){
-        if(!Save.saveExists())
+    /**
+     * Disables the continue game button if there is no saved game
+     */
+    public void initialize() {
+        if (!Save.saveExists())
             gameButton.setDisable(true);
     }
 
     /**
+     * Gets called when the continue game button is pressed, plays the game and loads a save file
      *
-     * @param e
+     * @param e the button press event
      */
-    public void startGame(ActionEvent e){
+    public void startGame(ActionEvent e) {
         Stage stage = new Stage();
         GameRunner game = new GameRunner(true);
         game.start(stage);
-        ((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
-    }
-
-    public void newGame(ActionEvent e){
-        Stage stage = new Stage();
-        GameRunner game = new GameRunner(false);
-        game.start(stage);
-        ((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Button) e.getSource()).getScene().getWindow())).close();
     }
 
     /**
+     * Gets called when the new game button is pressed, starts a new game, not reading the save file
      *
-     * @param e
+     * @param e the button press event
      */
-    public void exit(ActionEvent e){
-        ((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
+    public void newGame(ActionEvent e) {
+        Stage stage = new Stage();
+        GameRunner game = new GameRunner(false);
+        game.start(stage);
+        ((Stage) (((Button) e.getSource()).getScene().getWindow())).close();
+    }
+
+    /**
+     * The method that gets called when the exit button is pressed
+     *
+     * @param e the button press event
+     */
+    public void exit(ActionEvent e) {
+        ((Stage) (((Button) e.getSource()).getScene().getWindow())).close();
     }
 }

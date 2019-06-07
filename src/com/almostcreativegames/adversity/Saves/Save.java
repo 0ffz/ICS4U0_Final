@@ -25,6 +25,13 @@ public class Save {
     private static String saveDir = System.getProperty("user.home") + File.separator + "almostcreative" + File.separator + "dghsaw";
     private static String fileName = File.separator + "save.dat" + File.separator;
 
+    /**
+     * Saves the game
+     *
+     * @param day        the current day
+     * @param attributes general game attributes
+     * @param equipment  the player's current equipment
+     */
     public static void saveGame(int day, List<String> attributes, Set<Equippable> equipment) {
         System.out.println("creating save");
 //        System.out.println("Save exists: " + saveExists());
@@ -54,6 +61,11 @@ public class Save {
         }
     }
 
+    /**
+     * Loads the save file if it exists
+     *
+     * @return a BufferedReader opened to the save file
+     */
     public static BufferedReader getSave() {
         System.out.println(saveExists());
         try {
@@ -66,8 +78,11 @@ public class Save {
         return null;
     }
 
-    public static void delete(){
-        if(saveExists()) {
+    /**
+     * Deletes the save file
+     */
+    public static void delete() {
+        if (saveExists()) {
             try {
 //                System.out.println(Paths.get(saveDir + fileName));
                 System.out.println(Files.deleteIfExists(Paths.get(saveDir + fileName)));
@@ -77,6 +92,11 @@ public class Save {
         }
     }
 
+    /**
+     * Checks if a save exists
+     *
+     * @return whether it exists
+     */
     public static boolean saveExists() {
         return new File(saveDir + fileName).exists();
     }

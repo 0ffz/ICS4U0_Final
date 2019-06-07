@@ -11,10 +11,11 @@ import javafx.scene.text.FontWeight;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.1
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.2.1 - Fonts class created and 2 initial Fonts added</p>
+ * <p>1.3.2 - Added more fonts</p>
  */
 
 public class Fonts {
