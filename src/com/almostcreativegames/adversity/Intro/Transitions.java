@@ -39,24 +39,4 @@ public class Transitions {
         root.setCenter(body);
         idk.setScene(new Scene(root));
     }
-
-    public static void sleepScene(Stage idk) {
-        VBox body = new VBox(10);
-        body.setAlignment(Pos.CENTER);
-
-        ImageView imageView = new ImageView();
-
-        body.getChildren().add(imageView);
-
-        KeyFrame sleepScene = new KeyFrame(Duration.seconds(3), new KeyValue(imageView.imageProperty(), new Image("Rooms/Factory/Game Room.png")));
-        Timeline timeline = new Timeline(sleepScene);
-
-
-        timeline.play();
-
-
-        BorderPane root = new BorderPane();
-        root.setCenter(body);
-        idk.setScene(new Scene(root));
-    }
 }

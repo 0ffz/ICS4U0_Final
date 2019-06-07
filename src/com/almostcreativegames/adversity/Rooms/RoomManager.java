@@ -35,6 +35,7 @@ public class RoomManager {
     private Room[][] rooms = new Room[4][7];
     private int currentX;
     private int currentY;
+    private String[] stats = {"904 workers died from \nworkplace related injuries \nin 2016 alone.", "13% of the total young \nworkforce is composed of \nyoung workers.", "In 2015 403 young workers \ndied in the workplace."};
 
     public RoomManager(GameRunner game) {
         currentX = 0;
@@ -46,9 +47,8 @@ public class RoomManager {
         rooms[3][0].addEntity(wire);
 
         TutorialMan tutorialMan = new TutorialMan();
-        tutorialMan.setPosition(300, 800);
-        if (game.getDay() == 0)
-            rooms[3][0].addEntity(tutorialMan);
+        tutorialMan.setPosition(300, 600);
+        rooms[3][0].addEntity(tutorialMan);
 
         Entity bed = new Entity() {
             @Override
@@ -63,10 +63,10 @@ public class RoomManager {
 
         rooms[3][1] = new Room("Rooms/Home/Living Room.png");
 
-        EntityAnimated eButton = new EntityAnimated(){
+        EntityAnimated eButton = new EntityAnimated() {
             @Override
             public void onRoomLoad() {
-                if(room.getGame().getDay() > 0)
+                if (room.getGame().getDay() > 0)
                     remove();
             }
         };
@@ -80,7 +80,7 @@ public class RoomManager {
             public void onInteract() {
                 //TODO remove all the Arrays.asList()
                 if (game.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!")){
+                    startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!")) {
                         @Override
                         public void onEnd() {
                             eButton.remove();
@@ -116,7 +116,7 @@ public class RoomManager {
 
             @Override
             public void onRoomLoad() {
-                if(room.getGame().hasEquipment("Electrical Gloves"))
+                if (room.getGame().hasEquipment("Electrical Gloves"))
                     remove();
             }
         };
@@ -133,7 +133,7 @@ public class RoomManager {
                 if (game.getDay() == 0)
                     startDialog(new Dialog(Arrays.asList("Hey there you seem new.", "I remember my first day here.", "I was excited to start my job \nand get working.", "But then I had suddenly \ngotten an injury from the \nelectrical box.", "Oh shoot I'm starting to \nramble.", "We should get back to work.", "Anyways nice meeting you \nalways make sure that you \nhave the proper equipment!")));
                 else
-                    startDialog(new Dialog(Arrays.asList("Hey there again.", "I hope you remember to always \nuse the right equipment!")));
+                    startDialog(new Dialog(Arrays.asList("Hey there again.", "I hope you remember to \nalways use the right \nequipment!")));
             }
         };
 
@@ -149,7 +149,7 @@ public class RoomManager {
                 if (game.getDay() == 0)
                     startDialog(new Dialog(Arrays.asList("Hello!", "Welcome to your first day of \nyour job.", "Today you can spend the day \nlooking around and learning \nabout the workplace.")));
                 else if (game.getDay() == 1)
-                    startDialog(new Dialog(Arrays.asList("Today is your first official day at \nwork!", "I'll start you off lightly by giving \nyou a simple task.", "Please proceed straight up to fix \nthe electrical panel, it seems to be \nmalfunctioning today")));
+                    startDialog(new Dialog(Arrays.asList("Today is your first official day \nat work!", "I'll start you off lightly by \ngiving you a simple task.", "Please proceed straight up to \nfix the electrical panel, it \nseems to be malfunctioning \ntoday.")));
                 else
                     startDialog(new Dialog(Arrays.asList("Welcome back to work!", "How are you doing?", "Stop right there, it doesn't matter.", "I need you to clean out the mixing \nbin!")));
             }
@@ -167,7 +167,7 @@ public class RoomManager {
                 if (game.getDay() == 0)
                     startDialog(new Dialog(Arrays.asList("Ow", "Oof", "Ow", "Oh hi there.", "Don't mind me, I'm just kinda \nhurt from my last job.", "My boss gave me a task that \nwas too dangerous, and I \ndidn't say no until it was too \nlate.", "You should know that you can \nrefuse work if it is deemed \ntoo dangerous", "Ow")));
                 else
-                    startDialog(new Dialog(Arrays.asList("Ow", "Remember you can refuse work that is dangerous!", "Ow")));
+                    startDialog(new Dialog(Arrays.asList("Ow", "Remember you can refuse \nwork that is dangerous!", "Ow")));
             }
         };
 
@@ -181,13 +181,21 @@ public class RoomManager {
         rooms[1][3] = new Room("Rooms/Factory/Factory Floor 4.png");
         rooms[1][4] = new Room("Rooms/Outside/Outside Game Room.png");
 
-        Entity statisticsMan = new Entity(){
+        Entity statisticsMan = new Entity() {
             @Override
             public void onInteract() {
                 if (game.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("Hello there I'm just getting some research done for workplace safety statistics!", "Oh, you're new?", "Well let me tell you that in 2015 110.5 per 10000 full time workers between the ages of 16-19 suffered a non fatal injury.", "Take care of yourself in there!")));
+                    startDialog(new Dialog(Arrays.asList("Hello there I'm just getting \nsome research done for \nworkplace safety statistics!", "Oh, you're new?", "Well let me tell you that in \n2015 110.5 per 10000 full time \nworkers between the ages of \n16-19 suffered a non fatal \ninjury.", "Take care of yourself in there!")));
+                else
+                    startDialog(new Dialog(Arrays.asList("Hey there again.", stats[(int)(Math.random() * 3)])));
             }
         };
+
+        statisticsMan.setImage(new Image("Entities/Statistics Man.png", 80, 0, true, true));
+        statisticsMan.setPosition(50, 100);
+
+        rooms[1][4].addEntity(statisticsMan);
+
         rooms[1][5] = new Room("Rooms/Factory/Factory Floor 4.png");
         rooms[1][6] = new Room("Rooms/Factory/Factory Floor 6.png");
         rooms[0][4] = new Room("Rooms/Factory/Game Room.png");
