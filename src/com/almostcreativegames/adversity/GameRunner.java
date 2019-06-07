@@ -396,25 +396,25 @@ public class GameRunner extends Application {
                 lastNanoTime[0] = currentNanoTime;
 
                 //TODO remove these test keys
-                if (inputListener.isKeyPressed("M", 100)) {
+                if (inputListener.isKeyPressed("M", 500)) {
                     Wire wire = new Wire();
                     Battle battle = new Battle("Battle/Battle.png", wire, currentRoom, GameRunner.this);
                     renderer.loadRoom(battle);
                 }
 
-                if (inputListener.isKeyPressed("C", 100)) {
+                if (inputListener.isKeyPressed("C", 500)) {
                     addAttribute("Job done");
                 }
 
-                if (inputListener.isKeyPressed("N", 100)) {
+                if (inputListener.isKeyPressed("N", 500)) {
                     if (currentRoom instanceof Battle)
                         ((Battle) currentRoom).endBattle();
                 }
 
-                if (inputListener.isKeyPressed("F11", 200))
+                if (inputListener.isKeyPressed("F11", 500))
                     stage.setFullScreen(!stage.isFullScreen());
 
-                if (inputListener.isKeyPressed("E", 200)) {
+                if (inputListener.isKeyPressed("E", 300)) {
                     if (dialogBox.hasDialog()) {
                         dialogBox.nextMessage();
                     } else
@@ -486,6 +486,14 @@ public class GameRunner extends Application {
         dialogBox.setDialog(dialog);
         dialogBox.show();
         getCurrentPlayer().setCanMove(false);
+    }
+
+    /**
+     * Stops any ongoing dialog
+     */
+    public void stopDialog() {
+        dialogBox.setDialog(null);
+        dialogBox.hide();
     }
 
     /**

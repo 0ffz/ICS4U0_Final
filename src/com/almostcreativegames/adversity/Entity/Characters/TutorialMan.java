@@ -178,7 +178,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                     }
                 });
             }
-        }, 5000);
+        }, 3500);
     }
 
     @Override

@@ -53,6 +53,40 @@ public class RoomManager {
         bed.setPosition(100, 725);
         rooms[3][0].addEntity(bed);
 
+        Entity wasdButton = new Entity() {
+            @Override
+            public void onRoomLoad() {
+                if (room.getGame().getDay() > 0)
+                    remove();
+            }
+
+            @Override
+            public void onIntersect() {
+                remove();
+            }
+        };
+        wasdButton.setImage("Menu/Tutorial/WASD.png");
+        wasdButton.setPosition(200, 800);
+        rooms[3][0].addEntity(wasdButton);
+
+        EntityAnimated arrow = new EntityAnimated() {
+            @Override
+            public void onRoomLoad() {
+                if (room.getGame().getDay() > 0)
+                    remove();
+            }
+
+            @Override
+            public void onIntersect() {
+                remove();
+            }
+        };
+        arrow.addAnimation("flash", new SpriteAnimation("Menu/Tutorial/Arrow.png", 0, 0, 36, 23, 1, 2, 5, 5, 1));
+        arrow.setCurrentAnimation("flash");
+        arrow.setPosition(800, 450);
+
+        rooms[3][0].addEntity(arrow);
+
         rooms[3][1] = new Room("Rooms/Home/Living Room.png");
 
         EntityAnimated eButton = new EntityAnimated() {
@@ -63,7 +97,7 @@ public class RoomManager {
             }
         };
 
-        eButton.addAnimation("appear", new SpriteAnimation("Entities/E.png", 0, 0, 50, 50, 2, 2, 1, 1, 2));
+        eButton.addAnimation("appear", new SpriteAnimation("Menu/Tutorial/E to interact.png", 0, 0, 200, 50, 1, 2, 1, 1, 1));
         eButton.setCurrentAnimation("appear");
         eButton.setPosition(370, 700);
 

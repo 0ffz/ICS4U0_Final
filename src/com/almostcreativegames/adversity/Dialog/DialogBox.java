@@ -53,6 +53,9 @@ public class DialogBox extends Button {
      * Plays the next message from the current dialog. If the dialog doesn't have a message, sets it to null
      */
     public void nextMessage() {
+        if (dialog == null)
+            return;
+
         Dialog previousDialog = dialog;
         text = dialog.nextMessage();
         if (text == null) {

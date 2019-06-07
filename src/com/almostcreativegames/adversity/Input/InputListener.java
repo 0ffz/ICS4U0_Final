@@ -38,6 +38,7 @@ public class InputListener {
         scene.setOnKeyReleased(e -> {
             String code = e.getCode().toString();
             input.remove(code);
+            delays.remove(code);
         });
     }
 

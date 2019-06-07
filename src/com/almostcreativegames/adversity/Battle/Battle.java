@@ -229,6 +229,7 @@ public class Battle extends Room {
      */
     public void endBattle() {
         renderer.loadRoom(fromRoom);
+        game.stopDialog();
 
         //return previous player to be playable again
         previousPlayer.setCanMove(true);

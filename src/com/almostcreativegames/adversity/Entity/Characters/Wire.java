@@ -7,7 +7,6 @@ import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
 import com.almostcreativegames.adversity.Entity.Menu.Button;
-import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import javafx.scene.image.Image;
 
@@ -45,19 +44,17 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
 
     @Override
     public void onRoomLoad() {
-        if(room.getGame().getDay() > 0)
+        if (room.getGame().getDay() > 0)
             remove();
     }
 
     @Override
     public void onInteract() {
-        if(room.getGame().getDay() != 1){
-            startDialog(new Dialog("You probably shouldn't touch\nthat"));
-        }
-        if(room.getGame().hasAttribute("Talked to tutorial")) {
+        if (room.getGame().hasAttribute("Talked to tutorial") && room.getGame().getDay() == 1) {
             Battle battle = new Battle("Battle/Battle.png", this, room, room.getGame());
             room.getGame().getRenderer().loadRoom(battle);
-        }
+        } else
+            startDialog(new Dialog("You probably shouldn't touch\nthat"));
     }
 
     @Override
