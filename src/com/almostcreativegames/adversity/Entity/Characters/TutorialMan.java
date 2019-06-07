@@ -8,9 +8,7 @@ import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
 import com.almostcreativegames.adversity.Entity.Menu.Button;
-import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
-import javafx.scene.image.Image;
 
 import java.util.*;
 
@@ -46,10 +44,10 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
     @Override
     public void onInteract() {
-        if(!room.getGame().hasAttribute("Talked to tutorial")) { //if not talked to him yet, begin dialog
+        if (!room.getGame().hasAttribute("Talked to tutorial")) { //if not talked to him yet, begin dialog
             TutorialBattle battle = new TutorialBattle("Battle/Battle.png", this, room, room.getGame());
             room.getGame().getRenderer().loadRoom(battle);
-        } else if(room.getGame().getDay() == 0)
+        } else if (room.getGame().getDay() == 0)
             startDialog(new Dialog(
                     "Go on home, I'll\nhandle your stuff today"
             ));
@@ -106,35 +104,6 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
     }
 
     /**
-     * Creates a spark Entity that hurts the player
-     *
-     * @param battle the current battle
-     */
-    //TODO this guy's attack will be just two big entities shaped like fists flying from both sides
-    // they'll guarantee to hit you, so that afterwards he can apologize for it.
-    private void createSpark(Battle battle) {
-        Entity spark = new Entity() {
-            {
-                setImage(new Image("Battle/Wire/Electric spark.png", Math.random() * 20 + 20, 0, true, true));
-                setPosition(Math.random() * 1000, Math.random() * 300 + 100);
-                setLayer(10);
-                addVelocity(0, Math.random() * 400 + 200);
-                friction = 1;
-            }
-
-            @Override
-            public void onIntersect() {
-                battle.getGame().getCurrentPlayer().addHealth(-1);
-                remove();
-                if (battle.checkDead())
-                    timer.cancel();
-            }
-        };
-        sparks.add(spark);
-        battle.addEntity(spark);
-    }
-
-    /**
      * Starts this entity's turn
      *
      * @param battle the current battle
@@ -143,26 +112,60 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
     public void startTurn(Battle battle) {
         timer = new Timer();
 
-        //delayed and repeating tasks from http://mrbool.com/how-to-schedule-recurring-tasks-in-java-applications/28909
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                createSpark(battle);
+        EntityAnimated leftHand = new EntityAnimated() {
+            boolean hit = false;
+
+            {
+                addAnimation("left", new SpriteAnimation("Battle/Hands.png", 0, 0, 46, 30, 1, 1, 15, 20, 1));
+                setCurrentAnimation("left");
+                setPosition(-image.getWidth(), 530);
+                setLayer(10);
+                addVelocity(150, 0);
+                friction = 1;
             }
-        }, 100, 100);
+
+            @Override
+            public void onIntersect() {
+                if (!hit)
+                    battle.getGame().getCurrentPlayer().addHealth(-1);
+                hit = true;
+            }
+        };
+        battle.addEntity(leftHand);
+
+        EntityAnimated rightHand = new EntityAnimated() {
+            boolean hit = false;
+
+            {
+                addAnimation("right", new SpriteAnimation("Battle/Hands.png", 54, 0, 46, 30, 1, 1, 15, 20, 1));
+                setCurrentAnimation("right");
+                setPosition(1000, 530);
+                setLayer(10);
+                addVelocity(-150, 0);
+                friction = 1;
+            }
+
+            @Override
+            public void onIntersect() {
+                if (!hit)
+                    battle.getGame().getCurrentPlayer().addHealth(-1);
+                hit = true;
+            }
+        };
+        battle.addEntity(rightHand);
 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                leftHand.remove();
+                rightHand.remove();
                 timer.cancel();
                 battle.nextTurn();
-                for (Entity spark : sparks)
-                    spark.remove();
                 startDialog(new Dialog(
                         "Oh gosh, sorry I didn't mean\nto hit you that bad...",
                         "You know what, you can take some\ntime off today...",
                         "I'll handle your shift for you",
-                        "Don't get used to it though,\nI'm just feeling extra nice\ntoday"){
+                        "Don't get used to it though,\nI'm just feeling extra nice\ntoday") {
                     @Override
                     public void onEnd() {
                         battle.endBattle();
@@ -175,7 +178,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                     }
                 });
             }
-        }, 10000);
+        }, 5000);
     }
 
     @Override
