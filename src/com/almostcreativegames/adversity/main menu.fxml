@@ -14,8 +14,8 @@
             <Font size="30.0" />
         </font>
     </Text>
-    <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#newGame" prefWidth="400.0" text="New Game" GridPane.rowIndex="1" />
-    <Button fx:id="gameButton" layoutX="106.0" layoutY="160.0" mnemonicParsing="false" onAction="#startGame" prefWidth="400.0" text="Continue Game" GridPane.rowIndex="2" />
+    <Button fx:id="gameButton" layoutX="106.0" layoutY="160.0" mnemonicParsing="false" onAction="#startGame" prefWidth="400.0" text="Continue Game" GridPane.rowIndex="1" />
+    <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#newGame" prefWidth="400.0" text="New Game" GridPane.rowIndex="2" />
     <Button fx:id="instructions" alignment="CENTER" layoutX="116.0" layoutY="175.0" mnemonicParsing="false" prefWidth="400.0" text="Instructions" GridPane.rowIndex="3" />
     <Button fx:id="exit" alignment="CENTER" layoutX="116.0" layoutY="175.0" mnemonicParsing="false" onAction="#exit" prefWidth="400.0" text="Exit" GridPane.rowIndex="4" />
 

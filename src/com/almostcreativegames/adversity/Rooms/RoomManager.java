@@ -55,7 +55,7 @@ public class RoomManager {
 
             @Override
             public void onRoomLoad() {
-                if(game.hasAttribute("Day 1 talked to boss") && game.getDay() == 0){
+                if (game.hasAttribute("Day 1 talked to boss") && game.getDay() == 0) {
                     showInteractIndicator();
                 }
             }
@@ -105,8 +105,33 @@ public class RoomManager {
         rooms[3][1].addEntity(mom);
 
         rooms[3][2] = new Room("Rooms/Outside/Road 1.png");
+        rooms[3][2].addEntity(new EntityAnimated() {
+            {
+                addAnimation("blowing", new SpriteAnimation("Rooms/Outside/Front trees.png", 0, 0, 100, 100, 1, 1, 10, 10, 1));
+                setCurrentAnimation("blowing");
+                setPosition(0, 0);
+                setLayer(9);
+            }
+        });
         rooms[3][3] = new Room("Rooms/Outside/Road 2.png");
+        rooms[3][3].addEntity(new EntityAnimated() {
+            {
+                addAnimation("blowing", new SpriteAnimation("Rooms/Outside/Front trees.png", 100, 0, 100, 100, 1, 1, 10, 10, 1));
+                setCurrentAnimation("blowing");
+                setPosition(0, 0);
+                setLayer(9);
+            }
+        });
         rooms[3][4] = new Room("Rooms/Outside/Outside Factory.png");
+
+        rooms[3][4].addEntity(new EntityAnimated() {
+            {
+                addAnimation("blowing", new SpriteAnimation("Rooms/Outside/Front trees.png", 200, 0, 100, 100, 1, 1, 10, 10, 1));
+                setCurrentAnimation("blowing");
+                setPosition(0, 0);
+                setLayer(9);
+            }
+        });
         rooms[2][2] = new Room("Rooms/Factory/Factory Floor 2.png");
 
         Gloves electricalGloves = new Gloves("Electrical");

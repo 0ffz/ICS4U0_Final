@@ -2,11 +2,13 @@ package com.almostcreativegames.adversity.Battle;
 
 import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Entity.Menu.Button;
+import com.almostcreativegames.adversity.Entity.Menu.Text;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
 import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -26,13 +28,18 @@ public class GameOverScreen extends Room {
     /**
      * Creates a room for the game over screen, containing a soul and options to retry or quit the game.
      *
-     * @param imageURL the background of the battle
-     * @param game     a reference to the game
+     * @param game a reference to the game
      */
-    //TODO could probably remove this if we know for sure we're loading the same background each time
-    public GameOverScreen(String imageURL, GameRunner game) {
-        super(imageURL);
+    public GameOverScreen(GameRunner game) {
+        super("Battle/Empty.png");
         setGame(game);
+
+        //create game over text
+        Text gameOver = new Text("Game Over");
+        gameOver.setFillColor(Color.WHITE);
+        gameOver.setFont(Fonts.TITLE);
+        gameOver.setPosition(500 - gameOver.getTextWidth() / 2, 400);
+        addEntity(gameOver);
 
         //creating soul
         Player soul = new Player();

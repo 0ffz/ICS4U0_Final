@@ -84,6 +84,8 @@ public class GameRunner extends Application {
      */
     public GameRunner(boolean loadSave) {
         this.loadSave = loadSave;
+        if(!loadSave)
+            saveGame();
     }
 
     public static void main(String[] args) {
@@ -470,7 +472,7 @@ public class GameRunner extends Application {
      * Plays the game over screen
      */
     public void gameOver() {
-        GameOverScreen gameOverScreen = new GameOverScreen("Battle/Empty.png", this);
+        GameOverScreen gameOverScreen = new GameOverScreen(this);
         renderer.loadRoom(gameOverScreen);
     }
 
