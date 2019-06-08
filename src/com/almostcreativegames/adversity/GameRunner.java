@@ -33,7 +33,9 @@ import javafx.stage.Stage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The main class for running the game.
@@ -60,7 +62,7 @@ public class GameRunner extends Application {
     private Renderer renderer = new Renderer(gc);
     private RoomManager rooms = new RoomManager(this);
     private DialogBox dialogBox;
-    private Set<Equippable> equipment = new TreeSet<>();
+    private List<Equippable> equipment = new ArrayList<>();
     private double playerHealth = 10;
     private double maxPlayerHealth = 10;
     private List<String> gameAttributes = new ArrayList<>();
@@ -249,8 +251,24 @@ public class GameRunner extends Application {
     /**
      * @return the list of equipment on the player
      */
-    public Set<Equippable> getEquipment() {
+    public List<Equippable> getEquipment() {
         return equipment;
+    }
+
+    /**
+     * Adds a piece of equipment and keeps it sorted with an algorithm
+     *
+     * @param equippable the piece to be added
+     */
+    public void addEquipment(Equippable equippable) {
+        for (int i = 0; i < equipment.size(); i++) {
+            if (equippable.compareTo(equipment.get(i)) <= 0) {
+                equipment.add(i, equippable);
+                return;
+            }
+        }
+        equipment.add(equippable);
+
     }
 
     /**
@@ -321,7 +339,7 @@ public class GameRunner extends Application {
                 while ((line = reader.readLine()) != null) { //read the save file's lines
                     Equippable equippable = new Equippable(line);
                     equippable.setEquipped(Boolean.parseBoolean(reader.readLine()));
-                    equipment.add(equippable);
+                    addEquipment(equippable);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

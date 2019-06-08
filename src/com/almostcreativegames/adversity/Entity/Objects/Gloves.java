@@ -40,7 +40,7 @@ public class Gloves extends Entity {
     @Override
     public void onInteract() {
         Equippable gloves = new Equippable(type + " Gloves");
-        getGame().getEquipment().add(gloves);
+        getGame().addEquipment(gloves);
         startDialog(new Dialog("You picked up some " + type + "\ngloves",
                 "Be sure to equip them when \nneeded while working!"));
         remove();

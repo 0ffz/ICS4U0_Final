@@ -32,7 +32,7 @@ public class Save {
      * @param attributes general game attributes
      * @param equipment  the player's current equipment
      */
-    public static void saveGame(int day, List<String> attributes, Set<Equippable> equipment) {
+    public static void saveGame(int day, List<String> attributes, List<Equippable> equipment) {
         System.out.println("creating save");
 //        System.out.println("Save exists: " + saveExists());
         try {

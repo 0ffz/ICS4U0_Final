@@ -6,12 +6,12 @@ import javafx.scene.image.Image;
 
 
 /**
- * A class for the Chemical Helper entity that you have to talk to
+ * A class for the Boss entity that you have to talk to
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
- * @author Daniel Voznyy
+ * @author Enfei Zhang, Daniel Voznyy
  * @version 0.3.1
  *
  * <h2>Changelog</h2>
