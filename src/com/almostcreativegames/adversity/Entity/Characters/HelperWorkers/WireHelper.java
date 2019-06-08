@@ -27,7 +27,7 @@ public class WireHelper extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (getGame().getDay() == 1 && !talkedTo) {
+        if (getGame().getDay() == 1 && !talkedTo && getGame().hasAttribute("Day 2 talked to boss")) {
             talkedTo = true;
             showInteractIndicator();
         }

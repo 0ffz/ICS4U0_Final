@@ -33,7 +33,7 @@ public class Gloves extends Entity {
             setPosition(200, 715);
         } else {
             setImage(new Image("Entities/Electrical Gloves.png", 50, 50, true, true));
-            setPosition(200, 815);
+            setPosition(200, 890);
         }
     }
 

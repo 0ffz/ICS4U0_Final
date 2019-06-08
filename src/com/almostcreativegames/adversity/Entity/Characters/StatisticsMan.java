@@ -29,8 +29,13 @@ public class StatisticsMan extends Entity {
 
     @Override
     public void onInteract() {
-        if (getGame().getDay() == 0)
-            startDialog(new Dialog("Hello there I'm just getting \nsome research done for \nworkplace safety statistics!", "Oh, you're new?", "Well let me tell you that in \n2015 110.5 per 10000 full time \nworkers between the ages of \n16-19 suffered a non fatal \ninjury.", "Take care of yourself in there!"));
+        if (!getGame().hasAttribute("Spoken to Statistics"))
+            startDialog(new Dialog("Hello there I'm just getting \nsome research done for \nworkplace safety statistics!", "Oh, you're new?", "Well let me tell you that in \n2015 110.5 per 10000 full time \nworkers between the ages of \n16-19 suffered a non fatal \ninjury.", "Take care of yourself in there!"){
+                @Override
+                public void onEnd() {
+                    getGame().addAttribute("Spoken to Statistics");
+                }
+            });
         else
             startDialog(new Dialog("Hey there again.", stats[(int) (Math.random() * 2)]));
     }

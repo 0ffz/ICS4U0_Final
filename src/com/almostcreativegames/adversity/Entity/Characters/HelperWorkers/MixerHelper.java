@@ -19,6 +19,8 @@ import javafx.scene.image.Image;
  */
 public class MixerHelper extends Entity {
 
+    private boolean talkedTo;
+
     {
         setName("Mixer Helper");
         setImage(new Image("Entities/Mixer Helper.png", 80, 0, true, true));
@@ -27,15 +29,17 @@ public class MixerHelper extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (getGame().getDay() == 4)
-        showInteractIndicator();
+        if (getGame().getDay() == 3 && !talkedTo && getGame().hasAttribute("Day 4 talked to boss")) {
+            talkedTo = true;
+            showInteractIndicator();
+        }
     }
 
     @Override
     public void onInteract() {
-        if (getGame().getDay() == 4) {
+        if (getGame().getDay() == 3) {
             if (getGame().hasAttribute("Spoken to mixerHelper"))
-                startDialog(new Dialog("Oh what's wrong?", "You need me to turn off the \nconveyor belt?", "No problem buddy I'll do it \nright now!") {
+                startDialog(new Dialog("Oh what's wrong?", "You need me to turn off the \nmixing bowl?", "Sorry bud, but it doesn't \nturn off!", "You should probably go see \nthe boss!") {
                     @Override
                     public void onEnd() {
                         getGame().addAttribute("Spoken to MixerHelper");
@@ -43,7 +47,12 @@ public class MixerHelper extends Entity {
                     }
                 });
             else
-                startDialog(new Dialog("Hey you the new guy?", "Well this is the mixing bin \nyou gotta clean!"));
+                startDialog(new Dialog("Hey you the new guy?", "Well this is the mixing bin \nyou gotta clean!"){
+                    @Override
+                    public void onEnd() {
+                        getGame().addAttribute("Spoken to mixerHelper");
+                    }
+                });
         } else
             startDialog(new Dialog("Hey don't bother me I'm \ndoing my job.", "You should go do your job"));
     }

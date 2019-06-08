@@ -161,20 +161,9 @@ public class RoomManager {
 
         rooms[2][5] = new Room("Rooms/Factory/Factory Floor.png");
 
-        Entity workerTwo = new Entity() {
-            @Override
-            public void onInteract() {
-                if (game.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("Ow", "Oof", "Ow", "Oh hi there.", "Don't mind me, I'm just kinda \nhurt from my last job.", "My boss gave me a task that \nwas too dangerous, and I \ndidn't say no until it was too \nlate.", "You should know that you can \nrefuse work if it is deemed \ntoo dangerous", "Ow")));
-                else
-                    startDialog(new Dialog(Arrays.asList("Ow", "Remember you can refuse \nwork that is dangerous!", "Ow")));
-            }
-        };
+        RefuseWorkEmployee infoWorker = new RefuseWorkEmployee();
 
-        workerTwo.setImage(new Image("Entities/Worker 2.png", 80, 0, true, true));
-        workerTwo.setPosition(790, 800);
-
-        rooms[2][5].addEntity(workerTwo);
+        rooms[2][5].addEntity(infoWorker);
 
         rooms[2][6] = new Room("Rooms/Factory/Factory Floor 3.png");
         rooms[1][2] = new Room("Rooms/Factory/Factory Floor 5.png");
