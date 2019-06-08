@@ -31,7 +31,7 @@ public class Player extends EntityAnimated implements HealthBehaviour {
 
     @Override
     public void update(double time, double friction) {
-        InputListener input = room.getGame().getInputListener();
+        InputListener input = getGame().getInputListener();
         if (canMove) {
             if (input.isKeyPressed("LEFT") || input.isKeyPressed("A")) addVelocity(-100, 0);
             if (input.isKeyPressed("RIGHT") || input.isKeyPressed("D")) addVelocity(100, 0);
@@ -73,16 +73,16 @@ public class Player extends EntityAnimated implements HealthBehaviour {
 
     @Override
     public void addHealth(double amount) {
-        room.getGame().setPlayerHealth(room.getGame().getPlayerHealth() + amount);
+        getGame().setPlayerHealth(getGame().getPlayerHealth() + amount);
     }
 
     @Override
     public double getHealth() {
-        return room.getGame().getPlayerHealth();
+        return getGame().getPlayerHealth();
     }
 
     @Override
     public double getMaxHealth() {
-        return room.getGame().getMaxPlayerHealth();
+        return getGame().getMaxPlayerHealth();
     }
 }

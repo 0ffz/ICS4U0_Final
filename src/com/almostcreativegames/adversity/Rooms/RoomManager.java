@@ -2,6 +2,7 @@ package com.almostcreativegames.adversity.Rooms;
 
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Drawing.Renderer;
+import com.almostcreativegames.adversity.Entity.Characters.Boss;
 import com.almostcreativegames.adversity.Entity.Characters.TutorialMan;
 import com.almostcreativegames.adversity.Entity.Characters.Wire;
 import com.almostcreativegames.adversity.Entity.Entity;
@@ -56,7 +57,7 @@ public class RoomManager {
         Entity wasdButton = new Entity() {
             @Override
             public void onRoomLoad() {
-                if (room.getGame().getDay() > 0)
+                if (getGame().getDay() > 0)
                     remove();
             }
 
@@ -72,7 +73,7 @@ public class RoomManager {
         EntityAnimated arrow = new EntityAnimated() {
             @Override
             public void onRoomLoad() {
-                if (room.getGame().getDay() > 0)
+                if (getGame().getDay() > 0)
                     remove();
             }
 
@@ -92,7 +93,7 @@ public class RoomManager {
         EntityAnimated eButton = new EntityAnimated() {
             @Override
             public void onRoomLoad() {
-                if (room.getGame().getDay() > 0)
+                if (getGame().getDay() > 0)
                     remove();
             }
         };
@@ -142,7 +143,7 @@ public class RoomManager {
 
             @Override
             public void onRoomLoad() {
-                if (room.getGame().hasEquipment("Electrical Gloves"))
+                if (getGame().hasEquipment("Electrical Gloves"))
                     remove();
             }
         };
@@ -161,7 +162,7 @@ public class RoomManager {
 
             @Override
             public void onRoomLoad() {
-                if (room.getGame().hasEquipment("Electrical Gloves"))
+                if (getGame().hasEquipment("Electrical Gloves"))
                     remove();
             }
         };
@@ -189,25 +190,13 @@ public class RoomManager {
 
         rooms[2][4] = new Room("Rooms/Factory/Factory Entrance.png");
 
-        Entity boss = new Entity() {
-            @Override
-            public void onInteract() {
-                if (game.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("Hello!", "Welcome to your first day of \nyour job.", "Today you can spend the day \nlooking around and learning \nabout the workplace.")));
-                else if (game.getDay() == 1)
-                    startDialog(new Dialog(Arrays.asList("Today is your first official day \nat work!", "I'll start you off lightly by \ngiving you a simple task.", "Please proceed straight up to \nfix the electrical panel, it \nseems to be malfunctioning \ntoday.")));
-                else
-                    startDialog(new Dialog(Arrays.asList("Welcome back to work!", "How are you doing?", "Stop right there, it doesn't matter.", "I need you to clean out the mixing \nbin!")));
-            }
-        };
-
         TutorialMan tutorialMan = new TutorialMan();
         tutorialMan.setPosition(50, 700);
 
-        boss.setImage(new Image("Entities/Boss.png", 80, 0, true, true));
-        boss.setPosition(590, 715);
+        Boss boss = new Boss(tutorialMan);
 
         rooms[2][4].addEntity(boss);
+        boss.showInteractIndicator();
         rooms[2][4].addEntity(tutorialMan);
 
 

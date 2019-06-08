@@ -1,13 +1,11 @@
 package com.almostcreativegames.adversity.Entity;
 
 import com.almostcreativegames.adversity.Dialog.Dialog;
+import com.almostcreativegames.adversity.GameRunner;
 import com.almostcreativegames.adversity.Rooms.Room;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A class for managing sprites. Stores position, image, velocity
@@ -37,6 +35,7 @@ public class Entity {
     protected double width;
     protected double height;
     protected double friction = 1.3;
+    private EntityAnimated interactIndicator;
     private double lifetime;
     private String name = "unnamed";
     private double velocityX;
@@ -57,7 +56,14 @@ public class Entity {
     }
 
     public void startDialog(Dialog dialog) {
-        room.getGame().startDialog(dialog, room);
+        getGame().startDialog(dialog, room);
+    }
+
+    /**
+     * @return a reference to the GameRunner
+     */
+    public GameRunner getGame() {
+        return room.getGame();
     }
 
     /**
@@ -318,5 +324,20 @@ public class Entity {
     public String toString() {
         return " Position: [" + x + "," + y + "]"
                 + " Velocity: [" + velocityX + "," + velocityY + "]";
+    }
+
+    public void hideInderactIndicator() {
+        if (interactIndicator != null) {
+            interactIndicator.remove();
+            interactIndicator = null;
+        }
+    }
+
+    public void showInteractIndicator() {
+        interactIndicator = new EntityAnimated();
+        interactIndicator.addAnimation("flash", new SpriteAnimation("Menu/Tutorial/E to interact.png", 0, 0, 50, 50, 1, 2, 1, 1, 1));
+        interactIndicator.setCurrentAnimation("flash");
+        interactIndicator.setPosition(x + width / 2 - 25, y - 60);
+        room.addEntity(interactIndicator);
     }
 }

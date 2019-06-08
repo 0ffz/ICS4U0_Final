@@ -44,16 +44,23 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
     @Override
     public void onInteract() {
-        if (!room.getGame().hasAttribute("Talked to tutorial")) { //if not talked to him yet, begin dialog
-            TutorialBattle battle = new TutorialBattle("Battle/Battle.png", this, room, room.getGame());
-            room.getGame().getRenderer().loadRoom(battle);
-        } else if (room.getGame().getDay() == 0)
+        hideInderactIndicator();
+
+        if (!getGame().hasAttribute("Day 1 talked to boss")){
             startDialog(new Dialog(
-                    "Go on home, I'll\nhandle your stuff today"
+                    "You must be new, talk to\nthe boss right there, he'll\nget you set up."
+            ));
+        }
+        else if (!getGame().hasAttribute("Talked to tutorial")) { //if not talked to him yet, begin dialog
+            TutorialBattle battle = new TutorialBattle("Battle/Battle.png", this, room, room.getGame());
+            getGame().getRenderer().loadRoom(battle);
+        } else if (getGame().getDay() == 0)
+            startDialog(new Dialog(
+                    "Feel free to look around the\nfactory, I'll handle your stuff\ntoday."
             ));
         else
             startDialog(new Dialog(
-                    "Hello again buddy",
+                    "Hello again buddy.",
                     "We're buddies, right?",
                     "Of course we are, I covered\nyour shift after all!",
                     "Well, good luck on your job!"
@@ -66,16 +73,16 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
             @Override
             public void onInteract() {
                 startDialog(new Dialog(
-                        "The man is rather tall",
-                        "He has a weird scent coming\noff him",
-                        "He seems to be trying to say\nsomething",
+                        "The man is rather tall.",
+                        "He has a weird scent coming\noff him.",
+                        "He seems to be trying to say\nsomething.",
                         "Well then, looks like you've\npressed the button already!",
-                        "Many of the jobs you'll\nencounter will have an\n\"Inspect\" button",
+                        "Many of the jobs you'll\nencounter will have an\n\"Inspect\" button.",
                         "This button tells you a little\nbit about the task you're\nworking with!",
                         "Beware though, pressing it\nstill uses up your turn!",
-                        "Normally, the task you're\ndoing would battle you\nback, but I'm nice so I\nwon't hit you or anything",
+                        "Normally, the task you're\ndoing would battle you\nback, but I'm nice so I\nwon't hit you or anything.",
                         "Although, you do seem in\ndesperate need of training...",
-                        "Alright, tell you what,\nI'll throw some fake punches\nat you",
+                        "Alright, tell you what,\nI'll throw some fake punches\nat you.",
                         "Get ready!") {
                     @Override
                     public void onEnd() {
@@ -98,9 +105,10 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                 "The weird guy says:",
                 "Congrats, you won your\nfirst battle!",
                 "Get ready to battle many\nmore challenging tasks...",
-                "I think you'll be good\nat this job",
+                "I think you'll be good\nat this job.",
                 "Oh, seems like the day\n is over now!",
-                "Go home and rest a bit,\n alright?"));
+                "Look around the factory\nand rest a bit, alright?",
+                "Feel free to go home\nafter that."));
     }
 
     /**
@@ -169,8 +177,8 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                     @Override
                     public void onEnd() {
                         battle.endBattle();
-                        room.getGame().addAttribute("Talked to tutorial");
-                        room.getGame().addAttribute("Job done");
+                        getGame().addAttribute("Talked to tutorial");
+                        getGame().addAttribute("Job done");
                         startDialog(new Dialog(
                                 "Well then, I'll see you\ntomorrow",
                                 "Have fun at home!"

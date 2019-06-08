@@ -443,7 +443,6 @@ public class GameRunner extends Application {
 
         stage.setOnCloseRequest((e) -> {
 //            openMainMenu();
-            saveGame();
         });
     }
 
