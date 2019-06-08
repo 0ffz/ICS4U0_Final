@@ -47,12 +47,11 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
     public void onInteract() {
         hideInderactIndicator();
 
-        if (!getGame().hasAttribute("Day 1 talked to boss")){
+        if (!getGame().hasAttribute("Day 1 talked to boss")) {
             startDialog(new Dialog(
                     "You must be new, talk to\nthe boss right there, he'll\nget you set up."
             ));
-        }
-        else if (!getGame().hasAttribute("Talked to tutorial")) { //if not talked to him yet, begin dialog
+        } else if (!getGame().hasAttribute("Talked to tutorial")) { //if not talked to him yet, begin dialog
             TutorialBattle battle = new TutorialBattle("Battle/Battle.png", this, room, room.getGame());
             getGame().getRenderer().loadRoom(battle);
         } else if (getGame().getDay() == 0)
@@ -110,6 +109,11 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                 "Oh, seems like the day\n is over now!",
                 "Look around the factory\nand rest a bit, alright?",
                 "Feel free to go home\nafter that."));
+    }
+
+    @Override
+    public void onBattleStart(Battle battle) {
+
     }
 
     /**
@@ -188,6 +192,11 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                 });
             }
         }, 3500);
+    }
+
+    @Override
+    public void onPlayerTurn(Battle battle) {
+
     }
 
     @Override

@@ -30,5 +30,9 @@ public interface BattleBehaviour {
 
     void startTurn(Battle battle);
 
+    void onPlayerTurn(Battle battle);
+
     void onWin(Battle battle);
+
+    void onBattleStart(Battle battle);
 }
