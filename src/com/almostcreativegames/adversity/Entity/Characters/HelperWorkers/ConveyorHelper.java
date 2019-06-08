@@ -26,23 +26,29 @@ public class ConveyorHelper extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (getGame().getDay() == 3)
-        showInteractIndicator();
+        if (getGame().getDay() == 2 && getGame().hasAttribute("Day 3 talked to boss") || getGame().hasAttribute("Spoken to Conveyor Helper") || getGame().hasAttribute("Conveyor half finished"))
+            showInteractIndicator();
     }
 
     @Override
     public void onInteract() {
-        if (getGame().getDay() == 3) {
+        if (getGame().getDay() == 2) {
             if (getGame().hasAttribute("Spoken to Conveyor Helper"))
-                startDialog(new Dialog("Oh what's wrong?", "You need me to turn off the \nmixing bowl?", "Sorry bud, but it doesn't \nturn off!"){
+                startDialog(new Dialog("Oh what's wrong?", "You need me to turn off the \nconveyor belt?", "No problem buddy I'll do it \nright now!") {
                     @Override
                     public void onEnd() {
-                        getGame().addAttribute("Spoken to Conveyor Helper 2");
-                        hideInderactIndicator();
+                        getGame().addAttribute("Conveyor Belt Off");
+                    }
+                });
+            else if (getGame().hasAttribute("Conveyor half finished"))
+                startDialog(new Dialog("You need the next section?", "Alright turning it on", "3", "2", "1", "and off"){
+                    @Override
+                    public void onEnd() {
+                        getGame().addAttribute("Conveyor Belt Moved");
                     }
                 });
             else {
-                startDialog(new Dialog("Hey you the new guy?", "Well this is the conveyor \nbelt you gotta fix!"){
+                startDialog(new Dialog("Hey you the new guy?", "Well this is the conveyor \nbelt you gotta fix!") {
                     @Override
                     public void onEnd() {
                         getGame().addAttribute("Spoken to Conveyor Helper");
@@ -51,6 +57,7 @@ public class ConveyorHelper extends Entity {
             }
         } else
             startDialog(new Dialog("Hey don't bother me I'm \ndoing my job.", "You should go do your job"));
+        hideInderactIndicator();
     }
 
 }

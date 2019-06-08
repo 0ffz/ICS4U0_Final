@@ -27,13 +27,13 @@ public class ChemicalHelper extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (getGame().getDay() == 2)
+        if (getGame().getDay() == 5)
         showInteractIndicator();
     }
 
     @Override
     public void onInteract() {
-        if (getGame().getDay() == 2)
+        if (getGame().getDay() == 5)
             startDialog(new Dialog("Hey you the new guy?", "Well this is the chemical \nbin you gotta clean!"){
                 @Override
                 public void onEnd() {

@@ -55,18 +55,37 @@ public class Boss extends Entity {
                         "I know it's your second day,\nbut I also know Mr. Tutorial\ndid your job for you\nyesterday...",
                         "I'll let it slide this time,\nbut you'll be in trouble after\nthat.",
                         "Let's start you off lightly by \ngiving you a simple task.",
-                        "Please proceed straight up to \nfix the electrical panel, it \nseems to be malfunctioning \ntoday."));
-            getGame().addAttribute("Day 2 talked to boss");
+                        "Please proceed straight up to \nfix the electrical panel, it \nseems to be malfunctioning \ntoday.") {
+                    @Override
+                    public void onEnd() {
+                        getGame().addAttribute("Day 2 talked to boss");
+                    }
+                });
         } else if (getGame().getDay() == 2) {
-            startDialog(new Dialog("Welcome back to work!",
-                    "How are you doing?",
-                    "Stop right there, it doesn't\nmatter.",
-                    "I need you to clean out the\nmixing bin!"));
-            getGame().addAttribute("Day 3 talked to boss");
-        } else if (getGame().getDay() == 3) {
             startDialog(new Dialog("Hello again, worker",
-                    "Today I want you to..."));
-            getGame().addAttribute("Day 4 talked to boss");
+                    "Today I want you to clean \nthe conveyor belt", "It seems to be getting \nreally dusty!"));
+            getGame().addAttribute("Day 3 talked to boss");
+
+        } else if (getGame().getDay() == 3) {
+            if (getGame().hasAttribute("Talked to MixerHelper"))
+                startDialog(new Dialog("What are you doing back \nhere?",
+                        "Oh, you can't clean it \nbecause the machine won't \nturn off?",
+                        "I'm sorry I'll try to get \nsomeone to go fix it.", "You should go home now"){
+                    @Override
+                    public void onEnd() {
+                        getGame().addAttribute("Job Done");
+                    }
+                });
+            else
+                startDialog(new Dialog("Welcome back to work!",
+                        "How are you doing?",
+                        "Stop right there, it doesn't\nmatter.",
+                        "I need you to clean out the\nmixing bin!") {
+                    @Override
+                    public void onEnd() {
+                        getGame().addAttribute("Day 4 talked to boss");
+                    }
+                });
         }
         hideInderactIndicator();
     }
@@ -74,9 +93,12 @@ public class Boss extends Entity {
     @Override
     public void onRoomLoad() {
         if (!getGame().hasAttribute("Day 1 talked to boss")
-                || getGame().getDay() == 1 && (!getGame().hasAttribute("Day 2 talked to boss") || getGame().hasAttribute("Wire cut"))
+                || getGame().getDay() == 1 && (!getGame().hasAttribute("Day 2 talked to boss")
+                || getGame().hasAttribute("Wire cut"))
                 || getGame().getDay() == 2 && !getGame().hasAttribute("Day 3 talked to boss")
-                || getGame().getDay() == 3 && !getGame().hasAttribute("Day 4 talked to boss"))
+                || getGame().hasAttribute("Spoken to MixerHelper")
+                || getGame().getDay() == 3 && !getGame().hasAttribute("Day 4 talked to boss")
+                || getGame().hasAttribute("Conveyor Fixed"))
             showInteractIndicator();
     }
 }
