@@ -49,7 +49,15 @@ public class RoomManager {
             @Override
             public void onInteract() {
                 game.nextDayIfJobDone();
+                hideInderactIndicator();
                 //Transitions.sleepScene();
+            }
+
+            @Override
+            public void onRoomLoad() {
+                if(game.hasAttribute("Day 1 talked to boss") && game.getDay() == 0){
+                    showInteractIndicator();
+                }
             }
         };
         bed.setImage(new Image("Entities/Bed.png", 150, 0, true, true));
