@@ -84,7 +84,7 @@ public class GameRunner extends Application {
      */
     public GameRunner(boolean loadSave) {
         this.loadSave = loadSave;
-        if(!loadSave)
+        if (!loadSave)
             saveGame();
     }
 
@@ -137,7 +137,8 @@ public class GameRunner extends Application {
      * @param attribute the attribute's name
      */
     public void addAttribute(String attribute) {
-        gameAttributes.add(attribute);
+        if (!hasAttribute(attribute))
+            gameAttributes.add(attribute);
     }
 
     /**
@@ -178,11 +179,10 @@ public class GameRunner extends Application {
     private void playMorningMessage() {
         List<String> messages = new ArrayList<>();
         messages.add("Day " + (day + 1) + " of your job begins!");
-        if (day == 1){
+        if (day == 1) {
             messages.add("You seem to still be\nwearing the same clothes...\nMaybe you will change them\ntomorrow.");
             messages.add("Sleeping has also made\nyou feel restored...\n\n(Health restored)");
-        }
-        else if (day == 2)
+        } else if (day == 2)
             messages.add("After much consideration,\nyou have not decided to\nchange your clothes today.");
         else if (day == 3)
             messages.add("You wonder how often your\nboss changes his clothes.");

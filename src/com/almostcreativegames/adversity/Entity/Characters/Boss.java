@@ -57,19 +57,26 @@ public class Boss extends Entity {
                         "Let's start you off lightly by \ngiving you a simple task.",
                         "Please proceed straight up to \nfix the electrical panel, it \nseems to be malfunctioning \ntoday."));
             getGame().addAttribute("Day 2 talked to boss");
-        } else
+        } else if (getGame().getDay() == 2) {
             startDialog(new Dialog("Welcome back to work!",
                     "How are you doing?",
                     "Stop right there, it doesn't\nmatter.",
                     "I need you to clean out the\nmixing bin!"));
+            getGame().addAttribute("Day 3 talked to boss");
+        } else if (getGame().getDay() == 3) {
+            startDialog(new Dialog("Hello again, worker",
+                    "Today I want you to..."));
+            getGame().addAttribute("Day 4 talked to boss");
+        }
         hideInderactIndicator();
     }
 
     @Override
     public void onRoomLoad() {
-        if (!getGame().hasAttribute("Day 1 talked to boss"))
-            showInteractIndicator();
-        else if (!getGame().hasAttribute("Day 2 talked to boss") || (getGame().getDay() == 1 && getGame().hasAttribute("Wire cut")))
+        if (!getGame().hasAttribute("Day 1 talked to boss")
+                || getGame().getDay() == 1 && (!getGame().hasAttribute("Day 2 talked to boss") || getGame().hasAttribute("Wire cut"))
+                || getGame().getDay() == 2 && !getGame().hasAttribute("Day 3 talked to boss")
+                || getGame().getDay() == 3 && !getGame().hasAttribute("Day 4 talked to boss"))
             showInteractIndicator();
     }
 }

@@ -55,8 +55,10 @@ public class RoomManager {
 
             @Override
             public void onRoomLoad() {
-                if (game.hasAttribute("Day 1 talked to boss") && game.getDay() == 0
-                || game.hasAttribute("Day 2 talked to boss") && game.getDay() == 1) {
+                if (game.getDay() == 0 && game.hasAttribute("Day 1 talked to boss")
+                        || game.getDay() == 1 && game.hasAttribute("Day 2 talked to boss")
+                        || game.getDay() == 2 && game.hasAttribute("Day 3 talked to boss")
+                        || game.getDay() == 3 && game.hasAttribute("Day 4 talked to boss")) {
                     showInteractIndicator();
                 }
             }
