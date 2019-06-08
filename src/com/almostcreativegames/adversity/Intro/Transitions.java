@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+//TODO remove class if we're not using it
 public class Transitions {
 
     public static void introScene(Stage idk) {

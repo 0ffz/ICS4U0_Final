@@ -37,6 +37,7 @@ public class Battle extends Room {
     protected Player previousPlayer;
     protected BattleButton act;
     protected BattleButton item;
+    protected Button leave;
     protected HealthDisplay playerHealth;
     protected HealthDisplay enemyHealth;
     protected boolean playerTurn = true;
@@ -52,7 +53,7 @@ public class Battle extends Room {
     //TODO could probably remove this if we know for sure we're loading the same background each time
     public Battle(String imageURL, Entity enemy, Room fromRoom, GameRunner game) {
         super(imageURL);
-         previousPlayer = game.getCurrentPlayer();
+        previousPlayer = game.getCurrentPlayer();
 
         //if the entity being fought does not have the right behaviours, end the battle
         if (!(enemy instanceof BattleBehaviour && enemy instanceof HealthBehaviour)) {
@@ -124,6 +125,18 @@ public class Battle extends Room {
                 }
             });
         }
+
+        //leave button
+        leave = new Button("LEAVE") {
+            @Override
+            public void onInteract() {
+                endBattle();
+            }
+        };
+        leave.setFont(Fonts.BATTLE_BUTTON);
+        leave.setImage(new Image("Menu/Button.png", 200, 0, true, true));
+        leave.setPosition(460, 875);
+        addEntity(leave);
 
 
         //Adding a back button to all menus
@@ -214,6 +227,7 @@ public class Battle extends Room {
     public void hideMenuButtons() {
         act.hide();
         item.hide();
+        leave.hide();
     }
 
     /**
@@ -222,6 +236,7 @@ public class Battle extends Room {
     public void closeMenus() {
         act.closeMenu();
         item.closeMenu();
+        leave.show();
     }
 
     /**

@@ -163,6 +163,7 @@ public class GameRunner extends Application {
         if (hasAttribute("Job done")) {
             day++;
             removeAttribute("Job done");
+            setPlayerHealth(10);
             Save.saveGame(day, gameAttributes, equipment);
             playSleepingScene();
             playMorningMessage();
@@ -177,8 +178,10 @@ public class GameRunner extends Application {
     private void playMorningMessage() {
         List<String> messages = new ArrayList<>();
         messages.add("Day " + (day + 1) + " of your job begins!");
-        if (day == 1)
+        if (day == 1){
             messages.add("You seem to still be\nwearing the same clothes...\nMaybe you will change them\ntomorrow.");
+            messages.add("Sleeping has also made\nyou feel restored...\n\n(Health restored)");
+        }
         else if (day == 2)
             messages.add("After much consideration,\nyou have not decided to\nchange your clothes today.");
         else if (day == 3)
