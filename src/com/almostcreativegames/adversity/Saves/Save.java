@@ -47,7 +47,7 @@ public class Save {
                 output.println(attribute);
 
             //print equipment to file
-            output.println("Equipment");
+            output.println("Objects");
 
             for (Equippable equippable : equipment) {
                 output.println(equippable.getName());

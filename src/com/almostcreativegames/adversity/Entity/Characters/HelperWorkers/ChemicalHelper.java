@@ -4,8 +4,18 @@ import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Entity;
 import javafx.scene.image.Image;
 
-import java.util.Arrays;
-
+/**
+ * A class for the Chemical Helper entity that you have to talk to
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Enfei Zhang
+ * @version 0.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>0.3.1 - Chemical Helper moved from RoomManager to it's own class</p>
+ */
 public class ChemicalHelper extends Entity {
 
     {
@@ -13,6 +23,7 @@ public class ChemicalHelper extends Entity {
         setImage(new Image("Entities/Chemical Helper.png", 80, 0, true, true));
         setPosition(60, 640);
     }
+
 
     @Override
     public void onRoomLoad() {
