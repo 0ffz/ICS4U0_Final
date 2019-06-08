@@ -7,9 +7,9 @@ import com.almostcreativegames.adversity.Battle.SleepScreen;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
-import com.almostcreativegames.adversity.Entity.Objects.Wire;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Equippable;
+import com.almostcreativegames.adversity.Entity.Objects.Wire;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Input.InputListener;
@@ -307,8 +307,8 @@ public class GameRunner extends Application {
                 String line;
 
                 day = Integer.parseInt(reader.readLine());
-                //read the save file's lines until "Objects"
-                while ((line = reader.readLine()) != null && !(line.equals("Objects")))
+                //read the save file's lines until "Equipment"
+                while ((line = reader.readLine()) != null && !(line.equals("Equipment")))
                     if (!hasAttribute(line)) //avoid repeating any attributes just in case
                         addAttribute(line);
 
