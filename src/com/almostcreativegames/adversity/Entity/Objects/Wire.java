@@ -1,4 +1,4 @@
-package com.almostcreativegames.adversity.Entity.Characters;
+package com.almostcreativegames.adversity.Entity.Objects;
 
 import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Dialog.Dialog;
@@ -32,6 +32,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
 
     {
         setName("Sparking wire");
+        setPosition(100, 270);
     }
 
     @Override

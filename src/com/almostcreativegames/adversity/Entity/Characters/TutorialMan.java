@@ -32,6 +32,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
     {
         setName("Mr. Tutorial");
+        setPosition(50, 700);
     }
 
     @Override
@@ -171,7 +172,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                 battle.nextTurn();
                 startDialog(new Dialog(
                         "Oh gosh, sorry I didn't mean\nto hit you that bad...",
-                        "You know what, you can take some\ntime off today...",
+                        "You know what, you can take\n some time off today...",
                         "I'll handle your shift for you",
                         "Don't get used to it though,\nI'm just feeling extra nice\ntoday") {
                     @Override

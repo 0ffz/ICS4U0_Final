@@ -2,12 +2,15 @@ package com.almostcreativegames.adversity.Rooms;
 
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Drawing.Renderer;
-import com.almostcreativegames.adversity.Entity.Characters.Boss;
-import com.almostcreativegames.adversity.Entity.Characters.TutorialMan;
-import com.almostcreativegames.adversity.Entity.Characters.Wire;
+import com.almostcreativegames.adversity.Entity.Characters.*;
+import com.almostcreativegames.adversity.Entity.Characters.HelperWorkers.ChemicalHelper;
+import com.almostcreativegames.adversity.Entity.Characters.HelperWorkers.ConveyorHelper;
+import com.almostcreativegames.adversity.Entity.Characters.HelperWorkers.MixerHelper;
+import com.almostcreativegames.adversity.Entity.Characters.HelperWorkers.WireHelper;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
-import com.almostcreativegames.adversity.Entity.Equippable;
+import com.almostcreativegames.adversity.Entity.Objects.Gloves;
+import com.almostcreativegames.adversity.Entity.Objects.Wire;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
 import javafx.scene.image.Image;
@@ -36,7 +39,6 @@ public class RoomManager {
     private Room[][] rooms = new Room[4][7];
     private int currentX;
     private int currentY;
-    private String[] stats = {"904 workers died from \nworkplace related injuries \nin 2016 alone.", "13% of the total young \nworkforce is composed of \nyoung workers.", "In 2015 403 young workers \ndied in the workplace."};
 
     public RoomManager(GameRunner game) {
         currentX = 0;
@@ -90,108 +92,30 @@ public class RoomManager {
 
         rooms[3][1] = new Room("Rooms/Home/Living Room.png");
 
-        EntityAnimated eButton = new EntityAnimated() {
-            @Override
-            public void onRoomLoad() {
-                if (getGame().getDay() > 0)
-                    remove();
-            }
-        };
-
-        eButton.addAnimation("appear", new SpriteAnimation("Menu/Tutorial/E to interact.png", 0, 0, 200, 50, 1, 2, 1, 1, 1));
-        eButton.setCurrentAnimation("appear");
-        eButton.setPosition(370, 700);
-
-        Entity mom = new Entity() {
-            @Override
-            public void onInteract() {
-                //TODO remove all the Arrays.asList()
-                if (game.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("You should be going to work \nhoney.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!")) {
-                        @Override
-                        public void onEnd() {
-                            eButton.remove();
-                        }
-                    });
-                else
-                    startDialog(new Dialog(Arrays.asList("See you later honey.", "Remember not to get hurt!")));
-            }
-        };
-
-
-        mom.setImage(new Image("Entities/Mom.png", 80, 0, true, true));
-        mom.setPosition(300, 715);
+        Mom mom = new Mom();
 
         rooms[3][1].addEntity(mom);
-        if (game.getDay() == 0)
-            rooms[3][1].addEntity(eButton);
 
         rooms[3][2] = new Room("Rooms/Outside/Road 1.png");
         rooms[3][3] = new Room("Rooms/Outside/Road 2.png");
         rooms[3][4] = new Room("Rooms/Outside/Outside Factory.png");
         rooms[2][2] = new Room("Rooms/Factory/Factory Floor 2.png");
 
-        Entity electricalGloves = new Entity() {
-            @Override
-            public void onInteract() {
-                Equippable gloves = new Equippable("Electrical Gloves");
-                game.getEquipment().add(gloves);
-                startDialog(new Dialog("You picked up some Electrical \ngloves",
-                        "Be sure to equip them when \nneeded while working!"));
-                remove();
-            }
-
-            @Override
-            public void onRoomLoad() {
-                if (getGame().hasEquipment("Electrical Gloves"))
-                    remove();
-            }
-        };
-        electricalGloves.setImage(new Image("Entities/Electrical Gloves.png", 50, 50, true, true));
-        electricalGloves.setPosition(200, 815);
-
-        Entity chemicalGloves = new Entity() {
-            @Override
-            public void onInteract() {
-                Equippable gloves = new Equippable("Chemical Gloves");
-                game.getEquipment().add(gloves);
-                startDialog(new Dialog("You picked up some Chemical \ngloves",
-                        "Be sure to equip them when \nneeded while working!"));
-                remove();
-            }
-
-            @Override
-            public void onRoomLoad() {
-                if (getGame().hasEquipment("Electrical Gloves"))
-                    remove();
-            }
-        };
-        chemicalGloves.setImage(new Image("Entities/Chemical Gloves.png", 50, 50, true, true));
-        chemicalGloves.setPosition(200, 715);
+        Gloves electricalGloves = new Gloves("Electrical");
+        Gloves chemicalGloves = new Gloves("Chemical");
 
         rooms[2][2].addEntity(electricalGloves);
         rooms[2][2].addEntity(chemicalGloves);
 
         rooms[2][3] = new Room("Rooms/Factory/Factory Floor.png");
 
-        Entity electricalEmployee = new Entity() {
-            @Override
-            public void onInteract() {
-                if (game.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("Hey there you seem new.", "I remember my first day here.", "I was excited to start my job \nand get working.", "But then I had suddenly \ngotten an injury from the \nelectrical box.", "Oh shoot I'm starting to \nramble.", "We should get back to work.", "Anyways nice meeting you \nalways make sure that you \nhave the proper equipment!")));
-                else
-                    startDialog(new Dialog(Arrays.asList("Hey there again.", "I hope you remember to \nalways use the right \nequipment!")));
-            }
-        };
+        ElectricalEmployee electricalEmployee = new ElectricalEmployee();
 
-        electricalEmployee.setImage(new Image("Entities/Electrician.png", 80, 0, true, true));
-        electricalEmployee.setPosition(300, 390);
         rooms[2][3].addEntity(electricalEmployee);
 
         rooms[2][4] = new Room("Rooms/Factory/Factory Entrance.png");
 
         TutorialMan tutorialMan = new TutorialMan();
-        tutorialMan.setPosition(50, 700);
 
         Boss boss = new Boss(tutorialMan);
 
@@ -222,18 +146,7 @@ public class RoomManager {
         rooms[1][3] = new Room("Rooms/Factory/Factory Floor 4.png");
         rooms[1][4] = new Room("Rooms/Outside/Outside Game Room.png");
 
-        Entity statisticsMan = new Entity() {
-            @Override
-            public void onInteract() {
-                if (game.getDay() == 0)
-                    startDialog(new Dialog(Arrays.asList("Hello there I'm just getting \nsome research done for \nworkplace safety statistics!", "Oh, you're new?", "Well let me tell you that in \n2015 110.5 per 10000 full time \nworkers between the ages of \n16-19 suffered a non fatal \ninjury.", "Take care of yourself in there!")));
-                else
-                    startDialog(new Dialog(Arrays.asList("Hey there again.", stats[(int) (Math.random() * 2)])));
-            }
-        };
-
-        statisticsMan.setImage(new Image("Entities/Statistics Man.png", 80, 0, true, true));
-        statisticsMan.setPosition(50, 100);
+        StatisticsMan statisticsMan = new StatisticsMan();
 
         rooms[1][4].addEntity(statisticsMan);
 
@@ -242,61 +155,11 @@ public class RoomManager {
         rooms[0][4] = new Room("Rooms/Factory/Game Room.png");
 
         Wire wire = new Wire();
-        wire.setPosition(100, 270);
 
-        Entity electricalHelper = new Entity() {
-            @Override
-            public void onInteract() {
-                if (game.getDay() == 1)
-                    startDialog(new Dialog(Arrays.asList("Hey you the new guy?", "Well this is the wire you \ngotta fix!")));
-                else
-                    startDialog(new Dialog(Arrays.asList("Hey don't bother me I'm \ndoing my job.", "You should go do your job")));
-            }
-        };
-        electricalHelper.setImage(new Image("Entities/Wire Helper.png", 80, 0, true, true));
-        electricalHelper.setPosition(50, 370);
-
-        Entity chemicalHelper = new Entity() {
-            @Override
-            public void onInteract() {
-                if (game.getDay() == 2)
-                    startDialog(new Dialog(Arrays.asList("Hey you the new guy?", "Well this is the chemical \nbin you gotta clean!")));
-                else
-                    startDialog(new Dialog(Arrays.asList("Hey don't bother me I'm \ndoing my job.", "You should go do your job")));
-            }
-        };
-        chemicalHelper.setImage(new Image("Entities/Chemical Helper.png", 80, 0, true, true));
-        chemicalHelper.setPosition(60, 640);
-
-        Entity conveyorHelper = new Entity() {
-            @Override
-            public void onInteract() {
-                if (game.getDay() == 3) {
-                    if (game.hasAttribute("Spoken to mixerHelper"))
-                        startDialog(new Dialog(Arrays.asList("Oh what's wrong?", "You need me to turn off the \nmixing bowl?", "Sorry bud, but it doesn't \nturn off!")));
-                    else
-                        startDialog(new Dialog(Arrays.asList("Hey you the new guy?", "Well this is the conveyor \nbelt you gotta fix!")));
-                } else
-                    startDialog(new Dialog(Arrays.asList("Hey don't bother me I'm \ndoing my job.", "You should go do your job")));
-            }
-        };
-        conveyorHelper.setImage(new Image("Entities/Conveyor Helper.png", 80, 0, true, true));
-        conveyorHelper.setPosition(650, 800);
-
-        Entity mixerHelper = new Entity() {
-            @Override
-            public void onInteract() {
-                if (game.getDay() == 4) {
-                    if (game.hasAttribute("Spoken to mixerHelper"))
-                        startDialog(new Dialog(Arrays.asList("Oh what's wrong?", "You need me to turn off the \nconveyor belt?", "No problem buddy I'll do it \nright now!")));
-                    else
-                        startDialog(new Dialog(Arrays.asList("Hey you the new guy?", "Well this is the mixing bin \nyou gotta clean!")));
-                } else
-                    startDialog(new Dialog(Arrays.asList("Hey don't bother me I'm \ndoing my job.", "You should go do your job")));
-            }
-        };
-        mixerHelper.setImage(new Image("Entities/Mixer Helper.png", 80, 0, true, true));
-        mixerHelper.setPosition(550, 80);
+        WireHelper electricalHelper = new WireHelper();
+        ChemicalHelper chemicalHelper = new ChemicalHelper();
+        ConveyorHelper conveyorHelper = new ConveyorHelper();
+        MixerHelper mixerHelper = new MixerHelper();
 
         rooms[0][4].addEntity(electricalHelper);
         rooms[0][4].addEntity(chemicalHelper);
