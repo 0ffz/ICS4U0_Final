@@ -67,8 +67,8 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
             @Override
             public void onInteract() {
                 startDialog(new Dialog(
-                        "The wire seems to have electrical\nsparks coming off of it",
-                        "You probably shouldn't touch it\nbare handed") {
+                        "The wire seems to have\nelectrical sparks coming off\nof it.",
+                        "You probably shouldn't touch\nit bare handed.") {
                     @Override
                     public void onEnd() {
                         battle.nextTurn();
@@ -85,7 +85,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
                             "You managed to cut\npart of the wire!") {
                         @Override
                         public void onEnd() {
-                            addHealth(-5);
+                            addHealth(-4);
                             battle.nextTurn();
                         }
                     });
@@ -117,6 +117,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
         startDialog(new Dialog(Arrays.asList(
                 "The wire finally got cut!",
                 "You should talk to the boss\nnow")));
+        getGame().addAttribute("Wire cut");
     }
 
     /**

@@ -1,8 +1,10 @@
 package com.almostcreativegames.adversity;
 
+import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Saves.Save;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -23,15 +25,23 @@ import javafx.stage.Stage;
 
 public class Controller {
     public Button newGameButton;
-    public Button gameButton;
+    public Button continueGameButton;
+    public Button instructions;
     public Button exit;
+    public Text title;
 
     /**
      * Disables the continue game button if there is no saved game
      */
     public void initialize() {
         if (!Save.saveExists())
-            gameButton.setDisable(true);
+            continueGameButton.setDisable(true);
+        title.setFont(Fonts.HOME_SCREEN);
+        title.setText("Don't get hurt,\nstay at work");
+        continueGameButton.setFont(Fonts.NORMAL);
+        newGameButton.setFont(Fonts.NORMAL);
+        instructions.setFont(Fonts.NORMAL);
+        exit.setFont(Fonts.NORMAL);
     }
 
     /**

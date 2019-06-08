@@ -55,7 +55,8 @@ public class RoomManager {
 
             @Override
             public void onRoomLoad() {
-                if (game.hasAttribute("Day 1 talked to boss") && game.getDay() == 0) {
+                if (game.hasAttribute("Day 1 talked to boss") && game.getDay() == 0
+                || game.hasAttribute("Day 2 talked to boss") && game.getDay() == 1) {
                     showInteractIndicator();
                 }
             }
@@ -153,7 +154,6 @@ public class RoomManager {
         Boss boss = new Boss(tutorialMan);
 
         rooms[2][4].addEntity(boss);
-        boss.showInteractIndicator();
         rooms[2][4].addEntity(tutorialMan);
 
 

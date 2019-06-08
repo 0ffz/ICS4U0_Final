@@ -9,12 +9,12 @@
 <?import javafx.scene.text.Text?>
 
 <GridPane alignment="CENTER" hgap="10.0" prefHeight="800.0" prefWidth="800.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.almostcreativegames.adversity.Controller">
-    <Text text="Don't Get Hurt, Stay at Work Launcher">
+    <Text fx:id="title" text="Don't Get Hurt, Stay at Work Launcher">
         <font>
             <Font size="30.0" />
         </font>
     </Text>
-    <Button fx:id="gameButton" layoutX="106.0" layoutY="160.0" mnemonicParsing="false" onAction="#startGame" prefWidth="400.0" text="Continue Game" GridPane.rowIndex="1" />
+    <Button fx:id="continueGameButton" layoutX="106.0" layoutY="160.0" mnemonicParsing="false" onAction="#startGame" prefWidth="400.0" text="Continue Game" GridPane.rowIndex="1" />
     <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#newGame" prefWidth="400.0" text="New Game" GridPane.rowIndex="2" />
     <Button fx:id="instructions" alignment="CENTER" layoutX="116.0" layoutY="175.0" mnemonicParsing="false" prefWidth="400.0" text="Instructions" GridPane.rowIndex="3" />
     <Button fx:id="exit" alignment="CENTER" layoutX="116.0" layoutY="175.0" mnemonicParsing="false" onAction="#exit" prefWidth="400.0" text="Exit" GridPane.rowIndex="4" />

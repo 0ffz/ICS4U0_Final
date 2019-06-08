@@ -36,7 +36,10 @@ public class WireHelper extends Entity {
     @Override
     public void onInteract() {
         if (getGame().getDay() == 1)
-            startDialog(new Dialog("Hey you the new guy?", "Well this is the wire you \ngotta fix!") {
+            startDialog(new Dialog("Hey you the new guy?",
+                    "Well this is the wire you \ngotta fix!",
+                    "There's some gloves in the\nstorage room down and to\nthe left.",
+                    "You should go grab them.") {
                 @Override
                 public void onEnd() {
                     hideInderactIndicator();
