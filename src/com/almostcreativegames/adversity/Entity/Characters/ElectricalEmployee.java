@@ -4,8 +4,19 @@ import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Entity;
 import javafx.scene.image.Image;
 
-import java.util.Arrays;
 
+/**
+ * A class for the Electrical Employee entity that you have to talk to
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Enfei Zhang
+ * @version 0.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>0.3.1 - Electrical Employee Entity moved from RoomManager to it's own class</p>
+ */
 public class ElectricalEmployee extends Entity {
 
     {

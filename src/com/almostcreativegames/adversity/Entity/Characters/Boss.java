@@ -4,8 +4,19 @@ import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Entity;
 import javafx.scene.image.Image;
 
-import java.util.Arrays;
 
+/**
+ * A class for the Chemical Helper entity that you have to talk to
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 0.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>0.3.1 - Boss entity moved from RoomManager to it's own class</p>
+ */
 public class Boss extends Entity {
     private Entity tutorialMan;
 
@@ -35,9 +46,9 @@ public class Boss extends Entity {
                     }
                 });
         } else if (getGame().getDay() == 1)
-            startDialog(new Dialog(Arrays.asList("Today is your first official day \nat work!", "I'll start you off lightly by \ngiving you a simple task.", "Please proceed straight up to \nfix the electrical panel, it \nseems to be malfunctioning \ntoday.")));
+            startDialog(new Dialog("Today is your first official day \nat work!", "I'll start you off lightly by \ngiving you a simple task.", "Please proceed straight up to \nfix the electrical panel, it \nseems to be malfunctioning \ntoday."));
         else
-            startDialog(new Dialog(Arrays.asList("Welcome back to work!", "How are you doing?", "Stop right there, it doesn't matter.", "I need you to clean out the mixing \nbin!")));
+            startDialog(new Dialog("Welcome back to work!", "How are you doing?", "Stop right there, it doesn't matter.", "I need you to clean out the mixing \nbin!"));
         hideInderactIndicator();
     }
 }

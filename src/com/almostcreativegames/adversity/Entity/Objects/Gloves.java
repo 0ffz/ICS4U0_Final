@@ -5,10 +5,26 @@ import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Equippable;
 import javafx.scene.image.Image;
 
+/**
+ * A class for the Gloves entity that you have to find and collect
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Enfei Zhang
+ * @version 0.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>0.3.1 - Gloves moved from RoomManager to it's own class</p>
+ */
 public class Gloves extends Entity {
 
     private String type;
 
+    /**
+     * Gloves Constructor
+     * @param type the type of gloves so that they can be differentiated
+     */
     public Gloves(String type) {
         this.type = type;
         setName(type + " Gloves");
