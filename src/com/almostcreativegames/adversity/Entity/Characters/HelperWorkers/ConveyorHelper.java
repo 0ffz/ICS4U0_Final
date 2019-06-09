@@ -32,7 +32,6 @@ public class ConveyorHelper extends Entity {
 
     @Override
     public void onRoomLoad() {
-        //TODO stop this from popping up every time you talk to him
         if (getGame().getDay() == 2 && (getGame().hasAttribute("Day 3 talked to boss") && !(getGame().hasAttribute("Spoken to conveyor helper"))))
             showInteractIndicator();
     }

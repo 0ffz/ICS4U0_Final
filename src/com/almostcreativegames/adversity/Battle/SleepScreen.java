@@ -74,7 +74,12 @@ public class SleepScreen extends Room {
             public void run() {
                 game.getRenderer().loadRoom(previous);
                 timer.cancel();
+                onComplete();
             }
         }, 5000);
+    }
+
+    public void onComplete(){
+
     }
 }

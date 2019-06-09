@@ -35,13 +35,13 @@ public class Mom extends Entity {
     @Override
     public void onInteract() {
         hideInderactIndicator();
-        if (getGame().getDay() == 0) {
+        if(getGame().hasAttribute("Job done"))
+            startDialog(new Dialog("Welcome home honey.",
+                    "You look pretty tired.\nWhy don't you go get some\nrest.",
+                    "I'll see you tomorrow!"));
+        else if (getGame().getDay() == 0) {
             talkedTo = true;
-            startDialog(new Dialog("I'm so proud of you honey!", "You're so grown up now!", "Soon you'll be going to \nuniversity and now you even \nhave a job!", "Anyways you should be going \nto work now honey.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!") {
-                @Override
-                public void onEnd() {
-                }
-            });
+            startDialog(new Dialog("I'm so proud of you honey!", "You're so grown up now!", "Soon you'll be going to \nuniversity and now you even \nhave a job!", "Anyways you should be going \nto work now honey.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!"));
         } else {
             startDialog(new Dialog("See you later honey.", "Remember not to get hurt!"));
         }

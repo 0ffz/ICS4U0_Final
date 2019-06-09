@@ -64,7 +64,7 @@ public class EndScreen extends Room {
                 "So it's time for us to go \non vacation",
                 "Now you think to yourself",
                 "Well, you finally have\ntime to relax...",
-                "This new job was a little weird,\nbut you're still happy\nto have saved up for\nuniversity this way.") {
+                "This new job was a little\nweird,but you're still happy\nto have saved up for\nuniversity this way.") {
             @Override
             public void onEnd() {
                 driving.remove();
