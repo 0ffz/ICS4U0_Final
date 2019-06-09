@@ -346,8 +346,7 @@ public class GameRunner extends Application {
                 saveGame();
             }
         }
-        //TODO remove all prints
-        System.out.println(Arrays.toString(gameAttributes.toArray()));
+        //TODO remove prints in Save
 
         this.stage = stage;
 
@@ -358,8 +357,7 @@ public class GameRunner extends Application {
         Scene scene = new Scene(new Group(root), 1000, 1000);
         stage.setScene(scene);
         stage.setResizable(true);
-        //TODO make game start fullscreen
-//        stage.setFullScreen(true);
+        stage.setFullScreen(true);
         stage.setFullScreenExitHint("Press 'F11' to toggle fullscreen");
 
         //Initialize the input listener
@@ -417,22 +415,6 @@ public class GameRunner extends Application {
                 double elapsedTime = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
                 lastNanoTime[0] = currentNanoTime;
 
-                //TODO remove these test keys
-                if (inputListener.isKeyPressed("M", 500)) {
-                    ConveyorBelt conveyorBelt = new ConveyorBelt();
-                    Battle battle = new Battle("Battle/Battle.png", conveyorBelt, currentRoom, GameRunner.this);
-                    renderer.loadRoom(battle);
-                }
-
-                if (inputListener.isKeyPressed("C", 500)) {
-                    addAttribute("Job done");
-                }
-
-                if (inputListener.isKeyPressed("N", 500)) {
-                    if (currentRoom instanceof Battle)
-                        ((Battle) currentRoom).endBattle();
-                }
-
                 if (inputListener.isKeyPressed("F11", 500))
                     stage.setFullScreen(!stage.isFullScreen());
 
@@ -464,8 +446,7 @@ public class GameRunner extends Application {
         stage.show();
 
         stage.setOnCloseRequest((e) -> {
-            //TODO uncomment this
-//            openMainMenu();
+            openMainMenu();
         });
     }
 

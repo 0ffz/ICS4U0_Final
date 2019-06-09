@@ -33,7 +33,6 @@ public class Save {
      * @param equipment  the player's current equipment
      */
     public static void saveGame(int day, List<String> attributes, List<Equippable> equipment) {
-        System.out.println("creating save");
 //        System.out.println("Save exists: " + saveExists());
         try {
             File file = new File(saveDir);
@@ -67,7 +66,6 @@ public class Save {
      * @return a BufferedReader opened to the save file
      */
     public static BufferedReader getSave() {
-        System.out.println(saveExists());
         try {
             if (!saveExists())
                 return null;

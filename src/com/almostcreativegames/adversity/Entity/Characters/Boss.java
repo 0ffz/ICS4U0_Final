@@ -30,7 +30,6 @@ public class Boss extends Entity {
         this.tutorialMan = tutorialMan;
     }
 
-    //TODO don't add attributes in onEnd, you can just do it right away and make the code cleaner
     @Override
     public void onInteract() {
         hideInderactIndicator();
