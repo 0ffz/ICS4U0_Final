@@ -51,7 +51,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
 
     @Override
     public void onInteract() {
-        if (getGame().hasAttribute("Talked to tutorial") && room.getGame().getDay() == 1) {
+        if (getGame().hasAttribute("Talked to tutorial") && getGame().getDay() == 1) {
             if (getGame().hasAttribute("Talked to WireHelper")) {
                 Battle battle = new Battle("Battle/Battle.png", this, room, getGame());
                 getGame().getRenderer().loadRoom(battle);
@@ -116,8 +116,13 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
         remove();
         startDialog(new Dialog(Arrays.asList(
                 "The wire finally got cut!",
-                "You should talk to the boss\nnow")));
+                "You should talk to the boss\nnow.")));
         getGame().addAttribute("Wire cut");
+    }
+
+    @Override
+    public void onBattleStart(Battle battle) {
+
     }
 
     /**
@@ -173,6 +178,11 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
                     spark.remove();
             }
         }, 10000);
+    }
+
+    @Override
+    public void onPlayerTurn(Battle battle) {
+
     }
 
     @Override

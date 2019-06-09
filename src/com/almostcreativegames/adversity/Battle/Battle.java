@@ -6,6 +6,7 @@ import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Equippable;
 import com.almostcreativegames.adversity.Entity.Menu.*;
+import com.almostcreativegames.adversity.Entity.Objects.ConveyorBelt;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
@@ -63,6 +64,7 @@ public class Battle extends Room {
 
         setGame(game);
         this.fromRoom = fromRoom;
+        enemy.setRoom(this);
         this.enemy = ((BattleBehaviour) enemy);
 
         fightingSprite = ((BattleBehaviour) enemy).getBattleSprite();
@@ -168,6 +170,7 @@ public class Battle extends Room {
         enemyHealth.setPosition(300, 20);
         enemyHealth.setDimensions(400, 25);
         addEntity(enemyHealth);
+        ((BattleBehaviour) enemy).onBattleStart(this);
     }
 
     /**
@@ -219,6 +222,7 @@ public class Battle extends Room {
      */
     private void startPlayerTurn() {
         closeMenus();
+        enemy.onPlayerTurn(this);
     }
 
     /**
@@ -243,6 +247,7 @@ public class Battle extends Room {
      * Ends the battle and returns to the overworld
      */
     public void endBattle() {
+        ((Entity) enemy).setRoom(fromRoom);
         renderer.loadRoom(fromRoom);
         game.stopDialog();
 

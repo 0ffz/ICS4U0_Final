@@ -9,6 +9,7 @@ import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Equippable;
+import com.almostcreativegames.adversity.Entity.Objects.ConveyorBelt;
 import com.almostcreativegames.adversity.Entity.Objects.Wire;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
@@ -268,7 +269,6 @@ public class GameRunner extends Application {
             }
         }
         equipment.add(equippable);
-
     }
 
     /**
@@ -420,8 +420,8 @@ public class GameRunner extends Application {
 
                 //TODO remove these test keys
                 if (inputListener.isKeyPressed("M", 500)) {
-                    Wire wire = new Wire();
-                    Battle battle = new Battle("Battle/Battle.png", wire, currentRoom, GameRunner.this);
+                    ConveyorBelt conveyorBelt = new ConveyorBelt();
+                    Battle battle = new Battle("Battle/Battle.png", conveyorBelt, currentRoom, GameRunner.this);
                     renderer.loadRoom(battle);
                 }
 
