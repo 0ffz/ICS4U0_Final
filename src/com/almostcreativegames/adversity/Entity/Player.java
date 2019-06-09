@@ -10,10 +10,11 @@ import com.almostcreativegames.adversity.Input.InputListener;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.1
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.2.1 - Moved most of GameRunner's manipulation of the player into its own class</p>
+ * <p>1.3.2 - Added health behaviours</p>
  */
 public class Player extends EntityAnimated implements HealthBehaviour {
     private boolean canMove = true;
