@@ -49,10 +49,7 @@ public class Gloves extends Entity {
 
     @Override
     public void onRoomLoad() {
-        System.out.println("On room load called for " + type + " Gloves");
-        if (getGame().hasEquipment(type + " Gloves")) {
-            System.out.println("Removing " + type + " Gloves");
+        if (getGame().hasEquipment(type + " Gloves"))
             remove();
-        }
     }
 }

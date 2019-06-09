@@ -318,7 +318,6 @@ public class GameRunner extends Application {
     /**
      * Runs when launched. The basis of this code was taken from a money bag collecting game from
      * https://github.com/tutsplus/Introduction-to-JavaFX-for-Game-Development
-     * TODO create references page
      *
      * @param stage the stage that got created
      */
@@ -346,7 +345,6 @@ public class GameRunner extends Application {
                 saveGame();
             }
         }
-        //TODO remove prints in Save
 
         this.stage = stage;
 
@@ -565,7 +563,6 @@ public class GameRunner extends Application {
             this.scene = scene;
         }
 
-        //TODO Adapt to work with non-square canvases if we ever need to
         @Override
         public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
             final double newWidth = scene.getWidth();

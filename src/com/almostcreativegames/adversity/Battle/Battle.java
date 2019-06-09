@@ -72,7 +72,6 @@ public class Battle extends Room {
 
         //hide overworld player
         previousPlayer.setCanMove(false);
-        previousPlayer.hide(); //TODO might not need this
 
         //creating soul
         soul = new Player();
@@ -91,7 +90,6 @@ public class Battle extends Room {
         addEntity(soul);
         game.setCurrentPlayer(soul);
 
-        //TODO create all the other buttons with textures
         //creating buttons with options
         //act button
         act = new BattleButton("ACT");
@@ -179,7 +177,6 @@ public class Battle extends Room {
         if (playerHealth.isDead()) {
             endBattle();
             game.gameOver();
-            //TODO call game end method in GameRunner
             return true;
         }
         if (enemyHealth.isDead()) {
@@ -250,7 +247,6 @@ public class Battle extends Room {
 
         //return previous player to be playable again
         previousPlayer.setCanMove(true);
-        previousPlayer.show();
         game.setCurrentPlayer(previousPlayer);
         enemy.onBattleEnd(this);
     }

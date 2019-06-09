@@ -105,7 +105,6 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
         Button clean = new Button("Clean") {
             @Override
             public void onInteract() {
-                //TODO remove !
                 if (getGame().hasAttribute("Conveyor Belt Off"))
                     startDialog(new Dialog(
                             "You begin to clean the\nbelt.") {

@@ -26,8 +26,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Renderer {
     private GraphicsContext gc;
     private Room currentRoom;
-    //TODO Instead of containing a list of Sprites, have a layer object which would render in order
-    // based on an object's y coordinate.
     private Map<Integer, CopyOnWriteArrayList<Entity>> layers = new TreeMap<>(); //Concurrent version of ArrayList solves concurrency problems https://stackoverflow.com/questions/6916385/is-there-a-concurrent-list-in-javas-jdk
 
     /**

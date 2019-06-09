@@ -24,7 +24,6 @@ public interface BattleBehaviour {
     Entity getBattleSprite();
 
     List<Button> getActOptions(Battle battle);
-    //TODO add getEquipOptions and whatever other menu options there are
 
     void onBattleEnd(Battle battle);
 

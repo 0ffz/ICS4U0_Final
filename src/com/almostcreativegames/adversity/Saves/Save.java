@@ -33,7 +33,6 @@ public class Save {
      * @param equipment  the player's current equipment
      */
     public static void saveGame(int day, List<String> attributes, List<Equippable> equipment) {
-//        System.out.println("Save exists: " + saveExists());
         try {
             File file = new File(saveDir);
             file.mkdirs();
@@ -82,8 +81,7 @@ public class Save {
     public static void delete() {
         if (saveExists()) {
             try {
-//                System.out.println(Paths.get(saveDir + fileName));
-                System.out.println(Files.deleteIfExists(Paths.get(saveDir + fileName)));
+                Files.deleteIfExists(Paths.get(saveDir + fileName));
             } catch (IOException e) {
                 e.printStackTrace();
             }

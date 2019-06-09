@@ -43,9 +43,8 @@ public class Text extends Entity {
         return this;
     }
 
-    public Text setText(String text) {
+    public void setText(String text) {
         this.text = text;
-        return this;
     }
 
     @Override

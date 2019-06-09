@@ -8,18 +8,14 @@ import java.util.List;
 
 public class BattleButton extends Button {
     private List<Button> subOptions = new ArrayList<>();
-    //TODO I don't think we need this?
     private Battle battle;
 
     public BattleButton(String text) {
         super(text);
     }
 
-    //TODO some of the methods return the class itself, which is nice for setting lots of stuff for one object, but we
-    // need to decide whether they should all return void or `this` for consistency.
-    public BattleButton setText(String text) {
+    public void setText(String text) {
         this.text = text;
-        return this;
     }
 
     public void setBattle(Battle battle) {

@@ -18,6 +18,22 @@ This is our submission for our final project in the ICS4U0 course, where we had 
 3. Next, go to `File > Project Sructure` (shortcut `Ctrl+Alt+Shift+S`), go to the `Project` tab and set your JDK to `Java 8`. You may need to create the JDK by pressing the `New` button and linking to where it is installed. On Windows, this is `C:\Program Files\Java\jdk1.8.0_<version>` by default.
 4. Run the `Main.java` file under `src` by opening it, and pressing `Ctrl+Shift+F10`
 
+## Version control
+
+This project is [hosted on GitHub](https://github.com/0ffz/ICS4U0_Final) but also contains version numbers in the top comments of each class.
+
+The following explains the version numbers:
+
+They are split into three sections `x.y.z`
+
+* `x` describes the overall state of the class. `1` signifies it is viable for the final product, `0` signifies it is unfinished.
+* `y` describes the date of the update.
+    * `0`: May 21, 2019
+    * `1`: May 27, 2019
+    * `2`: June 3, 2019
+    * `3`: June 10, 2019 - The final due date of
+* `z` describes the number of version the file has gone through, starting from 1.
+
 ## References
 
 The basis of the GameRunner class originated from a [Money Bag Collecting demo](https://github.com/tutsplus/Introduction-to-JavaFX-for-Game-Development). The main aspects of code remaining from it are the input listener's ArrayList of inputs, the AnimationTimer, and the basis for the Entity class (ex. position, image and boundaries).
