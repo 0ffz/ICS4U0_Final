@@ -11,7 +11,6 @@ import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * A class for the Mixer entity that is battleable
@@ -32,6 +31,9 @@ public class Mixer extends EntityAnimated implements BattleBehaviour, HealthBeha
     {
         setName("Mixer");
         setPosition(650, 200);
+
+        addAnimation("invisible", new SpriteAnimation("Empty.png", 0, 0, 1, 1, 1, 1, 300, 200, 1));
+        setCurrentAnimation("invisible");
     }
 
     @Override
@@ -53,7 +55,7 @@ public class Mixer extends EntityAnimated implements BattleBehaviour, HealthBeha
         hideInderactIndicator();
         if (room.getGame().getDay() == 3) {
             if (getGame().hasAttribute("Talked to MixerHelper")) {
-                Battle battle = new Battle("Battle/Battle.png", this, room, getGame());
+                Battle battle = new Battle(this, room, getGame());
                 getGame().getRenderer().loadRoom(battle);
             } else
                 startDialog(new Dialog("Maybe you should talk to\nthe mixer guy first."));
@@ -145,11 +147,5 @@ public class Mixer extends EntityAnimated implements BattleBehaviour, HealthBeha
     @Override
     public double getMaxHealth() {
         return 20;
-    }
-
-    @Override
-    protected void registerAnimations() {
-        addAnimation("invisible", new SpriteAnimation("Empty.png", 0, 0, 1, 1, 1, 1, 300, 200, 1));
-        setCurrentAnimation("invisible");
     }
 }

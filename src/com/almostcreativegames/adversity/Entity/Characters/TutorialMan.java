@@ -1,7 +1,6 @@
 package com.almostcreativegames.adversity.Entity.Characters;
 
 import com.almostcreativegames.adversity.Battle.Battle;
-import com.almostcreativegames.adversity.Battle.TutorialBattle;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Behaviours.BattleBehaviour;
 import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
@@ -33,6 +32,9 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
     {
         setName("Mr. Tutorial");
         setPosition(50, 700);
+
+        addAnimation("idle", new SpriteAnimation("Entities/Tutorial Man.png", 0, 0, 20, 50, 2, 1, 5, 5, 1));
+        setCurrentAnimation("idle");
     }
 
     @Override
@@ -52,7 +54,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                     "You must be new, talk to\nthe boss right there, he'll\nget you set up."
             ));
         } else if (!getGame().hasAttribute("Talked to tutorial")) { //if not talked to him yet, begin dialog
-            TutorialBattle battle = new TutorialBattle("Battle/Battle.png", this, room, room.getGame());
+            Battle battle = new Battle(this, room, room.getGame());
             getGame().getRenderer().loadRoom(battle);
         } else if (getGame().getDay() == 0)
             startDialog(new Dialog(
@@ -104,7 +106,26 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
     @Override
     public void onBattleStart(Battle battle) {
-
+        startDialog(new Dialog(
+                "Welcome to a tutorial on\nbattles. Press \"E\" to\ncontinue!",
+                "This is what a battle looks\nlike!",
+                "You'll find these when doing\ntasks here, so I thought\nI'd help you out...",
+                "So you don't end up like me\non my first day.",
+                "Hehe, anyways...",
+                "At the top, you'll see the\nname of the task you're\ndoing as well as its health.",
+                "On the bottom you'll see your\nown health!",
+                "When the task's health\nreaches 0, you complete the\ntask and get to go home!",
+                "When your health reaches 0\nWell, let's just say it's to the\nhospital for you.",
+                "When doing a task, you\ncontrol your soul, which\nlooks like a heart.",
+                "You can walk around and\npress any of the buttons\nbelow with \"E\".",
+                "The first is \"ACT\", which\ncontains different actions\nyou can do by pressing\n\"E\" while standing over them.",
+                "The next is \"ITEM\", which\ncontains items you can equip.",
+                "You can equip or unequip\nthem by pressing \"E\" while\nstanding over them.",
+                "Equipment is equipped\nwhen there is a little [x]\nnext to it.",
+                "\"LEAVE\" lets you leave the \nfight.",
+                "One last thing,\nAfter you choose an option,\nmy turn will start.",
+                "Don't worry, I don't bite,\nbut some of the stuff in the\nwarehouse does, so just be\ncareful.",
+                "Now, go out and battle me!"));
     }
 
     /**
@@ -204,11 +225,5 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
     @Override
     public double getMaxHealth() {
         return 10;
-    }
-
-    @Override
-    protected void registerAnimations() {
-        addAnimation("idle", new SpriteAnimation("Entities/Tutorial Man.png", 0, 0, 20, 50, 2, 1, 5, 5, 1));
-        setCurrentAnimation("idle");
     }
 }

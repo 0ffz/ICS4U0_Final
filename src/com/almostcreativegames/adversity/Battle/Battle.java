@@ -6,7 +6,6 @@ import com.almostcreativegames.adversity.Entity.Behaviours.HealthBehaviour;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Equippable;
 import com.almostcreativegames.adversity.Entity.Menu.*;
-import com.almostcreativegames.adversity.Entity.Objects.ConveyorBelt;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
@@ -28,7 +27,7 @@ import javafx.scene.image.Image;
  * the battle and return to the room from which the battle occurred. The room contains health bars, a player, fighting
  * entity sprite, an ACT and EQUIP button which both open submenus, with back buttons</p>
  * <p>0.3.2 - Added turn based mechanics to the battle. The player gets to choose actions, and enemy plays their own
- * appropriate minigame. Now also does death checks</p>
+ * appropriate minigame. Now also does death checks. Removed imageURL since it's always the same.</p>
  */
 public class Battle extends Room {
     protected Room fromRoom; //the room from which the Battle Menu was opened (we use it to return to that room later)
@@ -46,14 +45,12 @@ public class Battle extends Room {
     /**
      * Defines a new battle object, in which a new room is created and entered.
      *
-     * @param imageURL the background of the battle
      * @param enemy    the enemy Entity being fought
      * @param fromRoom the room to return to after the battle is over
      * @param game     a reference to the GameRunner
      */
-    //TODO could probably remove this if we know for sure we're loading the same background each time
-    public Battle(String imageURL, Entity enemy, Room fromRoom, GameRunner game) {
-        super(imageURL);
+    public Battle(Entity enemy, Room fromRoom, GameRunner game) {
+        super("Battle/Battle.png");
         previousPlayer = game.getCurrentPlayer();
 
         //if the entity being fought does not have the right behaviours, end the battle

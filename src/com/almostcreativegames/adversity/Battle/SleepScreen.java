@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * The room that gets loaded when the player goes to sleep
+ * The room that gets loaded when the player goes to sleep. Goes to previous room after
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
@@ -25,15 +25,14 @@ import java.util.TimerTask;
  */
 public class SleepScreen extends Room {
     /**
-     * Creates a room containing the player sleeping in the bed. After some time, returns to the previos room
+     * Creates a room containing the player sleeping in the bed. After some time, returns to the previous room after
+     * 5000ms and calls the onComplete method for other classes to use.
      *
-     * @param imageURL the background of the battle
      * @param previous the previous room
      * @param game     a reference to the game
      */
-    //TODO could probably remove this if we know for sure we're loading the same background each time
-    public SleepScreen(String imageURL, Room previous, GameRunner game) {
-        super(imageURL);
+    public SleepScreen(Room previous, GameRunner game) {
+        super("Battle/Empty.png");
         setGame(game);
 
         //level/chapter indicator
@@ -68,6 +67,7 @@ public class SleepScreen extends Room {
         sleepZZZ.setPosition(500 - sleepZZZ.getImage().getWidth() / 2, 500 - sleepZZZ.getImage().getHeight() / 2);
         addEntity(sleepZZZ);
 
+        //close the room in 5000ms
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -79,7 +79,7 @@ public class SleepScreen extends Room {
         }, 5000);
     }
 
-    public void onComplete(){
+    public void onComplete() {
 
     }
 }

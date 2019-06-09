@@ -26,7 +26,6 @@ public class EntityAnimated extends Entity {
 
     public EntityAnimated() {
         super();
-        registerAnimations();
     }
 
     /**
@@ -47,12 +46,6 @@ public class EntityAnimated extends Entity {
     public void setCurrentAnimation(String name) {
         currentAnimation = animations.get(name);
         setImage(currentAnimation.getFrame(0));
-    }
-
-    /**
-     * Acts as a method for subclasses to override which allows them to auto register animations on instantiation
-     */
-    protected void registerAnimations() {
     }
 
     /**
