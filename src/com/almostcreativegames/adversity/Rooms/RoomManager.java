@@ -175,6 +175,11 @@ public class RoomManager {
         rooms[1][4].addEntity(statisticsMan);
 
         rooms[1][5] = new Room("Rooms/Factory/Factory Floor 4.png");
+
+        TeamworkInfoWorker teamworkInfoWorker = new TeamworkInfoWorker();
+
+        rooms[1][5].addEntity(teamworkInfoWorker);
+
         rooms[1][6] = new Room("Rooms/Factory/Factory Floor 6.png");
         rooms[0][4] = new Room("Rooms/Factory/Game Room.png");
 

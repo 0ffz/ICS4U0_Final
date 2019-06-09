@@ -8,8 +8,9 @@ import javafx.scene.image.Image;
 public class RefuseWorkEmployee extends Entity {
 
     {
+        setName("Refuse Work Info");
         setImage(new Image("Entities/Worker 2.png", 80, 0, true, true));
-         setPosition(790, 800);
+        setPosition(790, 800);
     }
 
     @Override

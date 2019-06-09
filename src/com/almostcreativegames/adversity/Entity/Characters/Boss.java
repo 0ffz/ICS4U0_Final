@@ -92,7 +92,7 @@ public class Boss extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (!getGame().hasAttribute("Day 1 talked to boss")
+        if (getGame().getDay() == 0 && !getGame().hasAttribute("Day 1 talked to boss")
                 || getGame().getDay() == 1 && (!getGame().hasAttribute("Day 2 talked to boss")
                 || getGame().hasAttribute("Wire cut"))
                 || getGame().getDay() == 2 && !getGame().hasAttribute("Day 3 talked to boss")
