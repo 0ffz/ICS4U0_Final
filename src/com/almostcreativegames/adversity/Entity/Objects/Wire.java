@@ -19,10 +19,11 @@ import java.util.*;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.1
+ * @version 1.2.2
  *
  * <h2>Changelog</h2>
  * <p>0.2.1 - Wire class created with necessary animation a interactions implemented</p>
+ * <p>1.2.2 - Battle completed</p>
  */
 public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
     private Timer timer;

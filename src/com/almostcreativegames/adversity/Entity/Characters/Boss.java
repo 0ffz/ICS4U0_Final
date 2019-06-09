@@ -12,10 +12,11 @@ import javafx.scene.image.Image;
  * ICS4U0 with Krasteva V.
  *
  * @author Enfei Zhang, Daniel Voznyy
- * @version 0.3.1
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.3.1 - Boss entity moved from RoomManager to it's own class</p>
+ * <p>1.3.2 - Updated dialogs and cleaned up the code</p>
  */
 public class Boss extends Entity {
     private Entity tutorialMan;

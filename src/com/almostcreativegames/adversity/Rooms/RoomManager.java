@@ -35,6 +35,9 @@ import java.util.Arrays;
  * Daniel: Now contains a reference to the GameRunner, which can then be used to access something like
  * the renderer and creates the necessary entities per room and completed the factory. Added wire to starting room.
  * Enfei: Added Mom and Boss entities to be created in rooms</p>
+ * <p>1.2.4 -
+ * Daniel: Added tutorial entities into the rooms
+ * Enfei: Moved characters from RoomManager into their own classes</p>
  */
 
 public class RoomManager {

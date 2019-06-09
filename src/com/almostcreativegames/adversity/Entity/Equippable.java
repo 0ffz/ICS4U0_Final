@@ -2,6 +2,18 @@ package com.almostcreativegames.adversity.Entity;
 
 import java.util.Objects;
 
+/**
+ * A class for the Equippable entities
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 1.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>1.3.1 - Equippable class created with necessary implementation</p>
+ */
 public class Equippable implements Comparable<Equippable>{
     private String name;
 

@@ -13,22 +13,22 @@ import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import java.util.*;
 
 /**
- * A class for the wire entity that can be battleable
+ * A class for the Tutorial Man entity that can be battleable
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.1
+ * @version 1.2.2
  *
  * <h2>Changelog</h2>
- * <p>0.2.1 - Wire class created with necessary animation a interactions implemented</p>
+ * <p>0.2.1 - TutorialMan class created with necessary animation a interactions implemented</p>
+ * <p>1.2.2 - TutorialMan proper battle animations implemented and Code Cleanup</p>
  */
 public class TutorialMan extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
     private Timer timer;
 
     private double health = 10;
-    private ArrayList<Entity> sparks = new ArrayList<>();
 
     {
         setName("Mr. Tutorial");

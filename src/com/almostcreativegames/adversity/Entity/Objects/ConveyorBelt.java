@@ -19,10 +19,13 @@ import java.util.*;
  * ICS4U0 with Krasteva V.
  *
  * @author Enfei Zhang
- * @version 0.3.1
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.3.1 - ConveyorBelt class created</p>
+ * <p>1.3.2 -
+ * Daniel: Implemented the battle and necessary animations and interactions
+ * Enfei: Code Cleanup</p>
  */
 public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
     private Timer timer;

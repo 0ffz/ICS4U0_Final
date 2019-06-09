@@ -6,16 +6,17 @@ import javafx.scene.image.Image;
 
 
 /**
- * A class for the Statistics Man entity that you have to talk to
+ * A class for the Statistics Man entity that you can talk to
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
  * @author Enfei Zhang
- * @version 0.3.1
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.3.1 - Statistics Man moved from RoomManager to it's own class</p>
+ * <p>1.3.2 - Code cleanup</p>
  */
 public class StatisticsMan extends Entity {
 
