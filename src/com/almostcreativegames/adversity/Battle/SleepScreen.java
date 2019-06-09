@@ -1,6 +1,8 @@
 package com.almostcreativegames.adversity.Battle;
 
+import com.almostcreativegames.adversity.Drawing.Fonts;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
+import com.almostcreativegames.adversity.Entity.Menu.Text;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.GameRunner;
@@ -33,6 +35,20 @@ public class SleepScreen extends Room {
     public SleepScreen(String imageURL, Room previous, GameRunner game) {
         super(imageURL);
         setGame(game);
+
+        //level/chapter indicator
+        Text chapter = new Text("");
+        int day = getGame().getDay();
+        if (day == 0)
+            chapter.setText("Chapter 1");
+        else if (day > 0 && day < 4)
+            chapter.setText("Chapter 2");
+        else
+            chapter.setText("Chapter 3");
+
+        chapter.setFont(Fonts.HOME_SCREEN);
+        chapter.setPosition(500 - chapter.getTextWidth() / 2, 200);
+        addEntity(chapter);
 
         //hide overworld player
         Player player = game.getCurrentPlayer();
