@@ -34,16 +34,16 @@ public class Mom extends Entity {
 
     @Override
     public void onInteract() {
-        //TODO remove all the Arrays.asList()
+        hideInderactIndicator();
         if (getGame().getDay() == 0) {
-            hideInderactIndicator();
             talkedTo = true;
             startDialog(new Dialog("You should be going to work \nhoney.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!") {
                 @Override
                 public void onEnd() {
                 }
             });
-        } else
+        } else {
             startDialog(new Dialog("See you later honey.", "Remember not to get hurt!"));
+        }
     }
 }

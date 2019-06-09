@@ -168,7 +168,7 @@ public class GameRunner extends Application {
             day++;
             removeAttribute("Job done");
             setPlayerHealth(10);
-            Save.saveGame(day, gameAttributes, equipment);
+            saveGame();
             playSleepingScene();
             playMorningMessage();
         } else {
@@ -341,10 +341,8 @@ public class GameRunner extends Application {
                     equippable.setEquipped(Boolean.parseBoolean(reader.readLine()));
                     addEquipment(equippable);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) { //if no save exists, make one
-                Save.saveGame(day, gameAttributes, equipment);
+            } catch (Exception e) { //if no save exists, make one
+                saveGame();
             }
         }
         //TODO remove all prints
@@ -395,9 +393,9 @@ public class GameRunner extends Application {
         //play intro if player started a new game
         if (!loadSave) {
             playSleepingScene();
-            startDialog(new Dialog("You just woke up from sleep",
-                    "It seems like today is an\nimportant day, but you can't\nseem to remember why",
-                    "Surprisingly, you are already\ndressed in your clothes",
+            startDialog(new Dialog("You just woke up from sleep.",
+                    "It seems like today is an\nimportant day, but you can't\nseem to remember why.",
+                    "Surprisingly, you are already\ndressed in your clothes.",
                     "You should probably go see\nmom to check what you're\ndoing today"), rooms.getCurrentRoom());
         } else {
             playMorningMessage();

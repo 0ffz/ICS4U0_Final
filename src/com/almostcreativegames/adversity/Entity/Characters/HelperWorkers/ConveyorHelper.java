@@ -17,7 +17,6 @@ import javafx.scene.image.Image;
  * <p>0.3.1 - Conveyor Helper moved from RoomManager to it's own class</p>
  */
 public class ConveyorHelper extends Entity {
-
     {
         setName("Conveyor Helper");
         setImage(new Image("Entities/Conveyor Helper.png", 80, 0, true, true));
@@ -26,34 +25,31 @@ public class ConveyorHelper extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (getGame().getDay() == 2 && getGame().hasAttribute("Day 3 talked to boss") || getGame().hasAttribute("Spoken to Conveyor Helper") || getGame().hasAttribute("Conveyor half finished"))
+        //TODO stop this from popping up every time you talk to him
+        if (getGame().getDay() == 2 && (getGame().hasAttribute("Day 3 talked to boss") || (getGame().hasAttribute("Inspected conveyor belt")) && !getGame().hasAttribute("Conveyor Belt Off")))
             showInteractIndicator();
     }
 
     @Override
     public void onInteract() {
-        if (getGame().getDay() == 2) {
-            if (getGame().hasAttribute("Spoken to Conveyor Helper"))
-                startDialog(new Dialog("Oh what's wrong?", "You need me to turn off the \nconveyor belt?", "No problem buddy I'll do it \nright now!") {
+        if (getGame().getDay() == 2 && getGame().hasAttribute("Day 3 talked to boss")) {
+            if(getGame().hasAttribute("Conveyor cleaned")) {
+                startDialog(new Dialog("Nice cleaning there!"));
+            } else if (getGame().hasAttribute("Conveyor Belt Off")) {
+                startDialog(new Dialog("Go on back to the conveyor\nbelt, it's off now."));
+            } else if (getGame().hasAttribute("Inspected conveyor belt"))
+                startDialog(new Dialog("Oh what's wrong?", "You need me to turn off the \nconveyor belt?",
+                        "No problem buddy I'll do it \nright now!", "3", "2", "1",
+                        "Aaaand it's off!") {
                     @Override
                     public void onEnd() {
                         getGame().addAttribute("Conveyor Belt Off");
                     }
                 });
-            else if (getGame().hasAttribute("Conveyor half finished"))
-                startDialog(new Dialog("You need the next section?", "Alright turning it on", "3", "2", "1", "and off"){
-                    @Override
-                    public void onEnd() {
-                        getGame().addAttribute("Conveyor Belt Moved");
-                    }
-                });
             else {
-                startDialog(new Dialog("Hey you the new guy?", "Well this is the conveyor \nbelt you gotta fix!") {
-                    @Override
-                    public void onEnd() {
-                        getGame().addAttribute("Spoken to Conveyor Helper");
-                    }
-                });
+                startDialog(new Dialog("Hey you the new guy?",
+                        "Well this is the conveyor \nbelt you gotta fix!",
+                        "Just go on one of those\nchairs and press \"E\"!"));
             }
         } else
             startDialog(new Dialog("Hey don't bother me I'm \ndoing my job.", "You should go do your job"));

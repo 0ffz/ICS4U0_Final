@@ -1,5 +1,7 @@
 package com.almostcreativegames.adversity.Entity;
 
+import java.util.Objects;
+
 public class Equippable implements Comparable<Equippable>{
     private String name;
 
@@ -32,6 +34,26 @@ public class Equippable implements Comparable<Equippable>{
         this.name = name;
     }
 
+    /**
+     * Overriding equals so we can check whether an equippable is contained just by its name in the List of equipment
+     * @param o object to be compared to
+     * @return whether they are the same
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Equippable that = (Equippable) o;
+
+        return Objects.equals(name, that.name);
+    }
+
+    /**
+     * Overriding compareTo
+     * @param o object to be compared to
+     * @return a comparison between both Equippables' names
+     */
     @Override
     public int compareTo(Equippable o) {
         return name.compareTo(o.getName());

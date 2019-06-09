@@ -39,6 +39,7 @@ public class Gloves extends Entity {
 
     @Override
     public void onInteract() {
+        hideInderactIndicator();
         Equippable gloves = new Equippable(type + " Gloves");
         getGame().addEquipment(gloves);
         startDialog(new Dialog("You picked up some " + type + "\ngloves",
@@ -48,7 +49,10 @@ public class Gloves extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (getGame().hasEquipment(type + " Gloves"))
+        System.out.println("On room load called for " + type + " Gloves");
+        if (getGame().hasEquipment(type + " Gloves")) {
+            System.out.println("Removing " + type + " Gloves");
             remove();
+        }
     }
 }

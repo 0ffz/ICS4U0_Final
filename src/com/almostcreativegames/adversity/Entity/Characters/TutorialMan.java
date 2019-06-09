@@ -100,15 +100,6 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
 
     @Override
     public void onWin(Battle battle) {
-        battle.getGame().addAttribute("Job done");
-        startDialog(new Dialog(
-                "The weird guy says:",
-                "Congrats, you won your\nfirst battle!",
-                "Get ready to battle many\nmore challenging tasks...",
-                "I think you'll be good\nat this job.",
-                "Oh, seems like the day\n is over now!",
-                "Look around the factory\nand rest a bit, alright?",
-                "Feel free to go home\nafter that."));
     }
 
     @Override
@@ -176,8 +167,9 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                 battle.nextTurn();
                 startDialog(new Dialog(
                         "Oh gosh, sorry I didn't mean\nto hit you that bad...",
-                        "You know what, you can take\n some time off today...",
-                        "I'll handle your shift for you",
+                        "You look pretty bad.\nYou know what, take some time\noff today...",
+                        "I'll handle your shift for you.",
+                        "Sorry about that, just\ndon't tell the boss",
                         "Don't get used to it though,\nI'm just feeling extra nice\ntoday") {
                     @Override
                     public void onEnd() {
@@ -186,7 +178,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                         getGame().addAttribute("Job done");
                         startDialog(new Dialog(
                                 "Well then, I'll see you\ntomorrow",
-                                "Have fun at home!"
+                                "Look around the factory,\nthen have fun at home!"
                         ));
                     }
                 });

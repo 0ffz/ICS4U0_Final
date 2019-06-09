@@ -50,7 +50,6 @@ public class RoomManager {
             public void onInteract() {
                 game.nextDayIfJobDone();
                 hideInderactIndicator();
-                //Transitions.sleepScene();
             }
 
             @Override
@@ -137,7 +136,14 @@ public class RoomManager {
         });
         rooms[2][2] = new Room("Rooms/Factory/Factory Floor 2.png");
 
-        Gloves electricalGloves = new Gloves("Electrical");
+        Gloves electricalGloves = new Gloves("Electrical"){
+            @Override
+            public void onRoomLoad() {
+                super.onRoomLoad();
+                if(getGame().hasAttribute("Talked to WireHelper") && !getGame().hasEquipment("Electrical Gloves"))
+                    showInteractIndicator();
+            }
+        };
         Gloves chemicalGloves = new Gloves("Chemical");
 
         rooms[2][2].addEntity(electricalGloves);

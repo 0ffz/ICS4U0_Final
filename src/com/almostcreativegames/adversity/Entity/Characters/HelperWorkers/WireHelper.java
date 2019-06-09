@@ -39,7 +39,8 @@ public class WireHelper extends Entity {
             startDialog(new Dialog("Hey you the new guy?",
                     "Well this is the wire you \ngotta fix!",
                     "There's some gloves in the\nstorage room down and to\nthe left.",
-                    "You should go grab them.") {
+                    "You should go grab them.",
+                    "Come back here after that\nand fix the wire") {
                 @Override
                 public void onEnd() {
                     hideInderactIndicator();

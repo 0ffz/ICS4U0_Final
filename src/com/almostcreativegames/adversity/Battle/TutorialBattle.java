@@ -44,9 +44,9 @@ public class TutorialBattle extends Battle {
                 "The first is \"ACT\", which\ncontains different actions\nyou can do by pressing\n\"E\" while standing over them",
                 "The next is \"ITEM\", which\ncontains items you can equip",
                 "You can equip or unequip\nthem by pressing \"E\" while\nstanding over them",
-                "An equipment piece is\nequipped when there is\na little [x] next to it",
-                "I won't keep you here much\nlonger, so here's the last\nthing",
-                "After you choose an option,\nmy turn will start",
+                "Equipment is equipped\nwhen there is a\n little [x] next to it",
+                "\"LEAVE\" lets you leave the fight",
+                "One last thing,\nAfter you choose an option,\nmy turn will start",
                 "Don't worry, I don't bite,\nbut some of the stuff in the\nwarehouse does, so just be\ncareful",
                 "Now, go out and battle me!"), this);
     }

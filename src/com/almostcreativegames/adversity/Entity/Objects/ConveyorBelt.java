@@ -34,7 +34,7 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
     {
         setName("Conveyor Belt");
         conveyorBelt = new EntityAnimated();
-        conveyorBelt.addAnimation("idle", new SpriteAnimation("Entities/Conveyor belt/Conveyor belt.png", 0, 0, 53, 12, 1, 1, 15, 15, 3));
+        conveyorBelt.addAnimation("idle", new SpriteAnimation("Entities/Conveyor belt/Conveyor belt.png", 0, 0, 53, 12, 1, 1, 15, 15, 1));
         conveyorBelt.setCurrentAnimation("idle");
         conveyorBelt.setPosition(500 - conveyorBelt.getImage().getWidth() / 2, 700);
         conveyorBelt.hide();
@@ -45,8 +45,14 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
     @Override
     public Entity getBattleSprite() {
         EntityAnimated sprite = new EntityAnimated();
-        sprite.addAnimation("moving", new SpriteAnimation("Entities/Conveyor belt/Conveyor belt.png", 0, 0, 53, 12, 1, 3, 15, 15, 3));
-        sprite.setCurrentAnimation("moving");
+        if(getGame().hasAttribute("Conveyor Belt Off")){
+            sprite.addAnimation("idle", new SpriteAnimation("Entities/Conveyor belt/Conveyor belt.png", 0, 0, 53, 12, 1, 1, 15, 15, 1));
+            sprite.setCurrentAnimation("idle");
+        }
+        else {
+            sprite.addAnimation("moving", new SpriteAnimation("Entities/Conveyor belt/Conveyor belt.png", 0, 0, 53, 12, 1, 3, 15, 15, 3));
+            sprite.setCurrentAnimation("moving");
+        }
         return sprite;
     }
 
@@ -71,7 +77,7 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
         Button inspect = new Button("Inspect") {
             @Override
             public void onInteract() {
-                if (getGame().hasAttribute("Conveyor belt off"))
+                if (getGame().hasAttribute("Conveyor Belt Off"))
                     startDialog(new Dialog(
                             "The conveyor belt is\nturned off.") {
                         @Override
@@ -81,9 +87,11 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
                     });
                 else
                     startDialog(new Dialog(
-                            "The conveyor belt is\ncurrently moving.") {
+                            "The conveyor belt is\ncurrently moving.",
+                            "You should talk to the\nconveyor belt guy about\nturning it off") {
                         @Override
                         public void onEnd() {
+                            getGame().addAttribute("Inspected conveyor belt");
                             battle.closeMenus();
                         }
                     });
@@ -93,7 +101,7 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
             @Override
             public void onInteract() {
                 //TODO remove !
-                if (!getGame().hasAttribute("Conveyor belt off"))
+                if (getGame().hasAttribute("Conveyor Belt Off"))
                     startDialog(new Dialog(
                             "You begin to clean the\nbelt.") {
                         @Override
@@ -135,7 +143,7 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
         startDialog(new Dialog(Arrays.asList(
                 "The belt is now clean!",
                 "You should talk to the boss\nnow.")));
-        getGame().addAttribute("Wire cut");
+        getGame().addAttribute("Conveyor cleaned");
     }
 
     /**
