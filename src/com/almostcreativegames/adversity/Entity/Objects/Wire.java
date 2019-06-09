@@ -47,7 +47,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
     public void onRoomLoad() {
         if (getGame().getDay() > 1)
             remove();
-        else if(getGame().hasAttribute("Talked to WireHelper"))
+        else if(getGame().hasAttribute("Talked to WireHelper") && getGame().hasEquipment("Electrical Gloves"))
             showInteractIndicator();
     }
 

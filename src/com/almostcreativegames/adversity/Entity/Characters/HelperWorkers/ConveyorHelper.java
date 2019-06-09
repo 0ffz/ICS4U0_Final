@@ -32,7 +32,7 @@ public class ConveyorHelper extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (getGame().getDay() == 2 && (getGame().hasAttribute("Day 3 talked to boss") && !(getGame().hasAttribute("Spoken to conveyor helper"))))
+        if (getGame().getDay() == 2 && ((getGame().hasAttribute("Day 3 talked to boss") && !getGame().hasAttribute("Spoken to conveyor helper"))|| (getGame().hasAttribute("Inspected conveyor belt") && !getGame().hasAttribute("Conveyor Belt Off"))))
             showInteractIndicator();
     }
 
@@ -43,19 +43,15 @@ public class ConveyorHelper extends Entity {
                 startDialog(new Dialog("Nice cleaning there!"));
             } else if (getGame().hasAttribute("Conveyor Belt Off")) {
                 startDialog(new Dialog("Go on back to the conveyor\nbelt, it's off now."));
-            } else if (getGame().hasAttribute("Inspected conveyor belt"))
+            } else if (getGame().hasAttribute("Inspected conveyor belt")) {
                 startDialog(new Dialog("Oh what's wrong?", "You need me to turn off the \nconveyor belt?",
                         "No problem buddy I'll do it \nright now!", "3", "2", "1",
-                        "Aaaand it's off!") {
-                    @Override
-                    public void onEnd() {
-                        getGame().addAttribute("Conveyor Belt Off");
-                    }
-                });
-            else {
+                        "Aaaand it's off!"));
+                getGame().addAttribute("Conveyor Belt Off");
+            } else {
                 startDialog(new Dialog("Hey you the new guy?",
                         "Well this is the conveyor \nbelt you gotta clean!",
-                        "Just go on one of those\nchairs!"){
+                        "Just go on one of those\nchairs!") {
                     @Override
                     public void onEnd() {
                         conveyorBelt.showInteractIndicator();
