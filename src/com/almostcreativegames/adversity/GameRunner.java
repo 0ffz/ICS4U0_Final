@@ -10,7 +10,6 @@ import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Equippable;
 import com.almostcreativegames.adversity.Entity.Objects.ConveyorBelt;
-import com.almostcreativegames.adversity.Entity.Objects.Wire;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Input.InputListener;
@@ -33,7 +32,6 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -188,10 +186,8 @@ public class GameRunner extends Application {
         } else if (day == 2)
             messages.add("After much consideration,\nyou have not decided to\nchange your clothes today.");
         else if (day == 3)
-            messages.add("You wonder how often your\nboss changes his clothes.");
-        else if (day == 4)
             messages.add("You tell yourself you will\ndefinitely change clothes\ntomorrow. After all,\nyou're going on vacation.");
-        else if (day >= 5) {
+        else if (day >= 4) {
             playEndScene();
             return; //don't play the morning dialog, go to the end scene instead
         }
@@ -463,6 +459,7 @@ public class GameRunner extends Application {
         stage.show();
 
         stage.setOnCloseRequest((e) -> {
+            //TODO uncomment this
 //            openMainMenu();
         });
     }

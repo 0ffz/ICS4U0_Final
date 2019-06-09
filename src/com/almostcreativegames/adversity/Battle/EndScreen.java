@@ -45,7 +45,7 @@ public class EndScreen extends Room {
 
         //create the road background
         EntityAnimated driving = new EntityAnimated();
-        driving.addAnimation("driving", new SpriteAnimation("Rooms/End Scene/End.png", 0, 0, 100, 100, 1, 1, 10, 10, 1));
+        driving.addAnimation("driving", new SpriteAnimation("Rooms/End Scene/End.png", 0, 0, 100, 100, 3, 3, 10, 10, 3));
         driving.setCurrentAnimation("driving");
         driving.setPosition(0, 0);
         addEntity(driving);
@@ -57,7 +57,9 @@ public class EndScreen extends Room {
         car.setPosition(500 - car.getImage().getWidth() / 2, 300);
         addEntity(car);
 
-        game.startDialog(new Dialog("Well, you finally have\ntime to relax...") {
+        //TODO finish interaction with mom
+        game.startDialog(new Dialog("Well, you finally have\ntime to relax...",
+                "This new job is a little weird,\nbut you're still happy\nto be saving up for\nuniversity this way.") {
             @Override
             public void onEnd() {
                 driving.remove();
@@ -74,7 +76,7 @@ public class EndScreen extends Room {
                             case 0:
                                 Text theEnd = new Text("The end");
                                 theEnd.setFillColor(Color.WHITE);
-                                theEnd.setFont(Fonts.TITLE); //TODO convert Fonts
+                                theEnd.setFont(Fonts.TITLE);
                                 theEnd.setPosition(500 - theEnd.getTextWidth() / 2, 500);
                                 addEntity(theEnd);
                                 break;
@@ -86,20 +88,27 @@ public class EndScreen extends Room {
                                 addEntity(title);
                                 break;
                             case 2:
-                                Text authors = new Text("By Daniel Voznyy and Enfei Zhang");
-                                authors.setFillColor(Color.WHITE);
-                                authors.setFont(Fonts.BATTLE_BUTTON);
-                                authors.setPosition(500 - authors.getTextWidth() / 2, 650);
-                                addEntity(authors);
+                                Text company = new Text("Made by Almost Creative Games");
+                                company.setFillColor(Color.WHITE);
+                                company.setFont(Fonts.BATTLE_BUTTON);
+                                company.setPosition(500 - company.getTextWidth() / 2, 650);
+                                addEntity(company);
                                 break;
                             case 3:
+                                Text authors = new Text("Leads: Daniel Voznyy and Enfei Zhang");
+                                authors.setFillColor(Color.WHITE);
+                                authors.setFont(Fonts.BATTLE_BUTTON);
+                                authors.setPosition(500 - authors.getTextWidth() / 2, 700);
+                                addEntity(authors);
+                                break;
+                            case 4:
                                 Text thanks = new Text("Thanks for playing!");
                                 thanks.setFillColor(Color.WHITE);
                                 thanks.setFont(Fonts.BATTLE_BUTTON);
-                                thanks.setPosition(500 - thanks.getTextWidth() / 2, 700);
+                                thanks.setPosition(500 - thanks.getTextWidth() / 2, 750);
                                 addEntity(thanks);
                                 break;
-                            case 5:
+                            case 6:
                                 Save.delete();
                                 timer.cancel();
                                 game.close();
@@ -107,7 +116,7 @@ public class EndScreen extends Room {
                         }
                         iteration++;
                     }
-                }, 200, 2000);
+                }, 0, 2000);
             }
         }, this);
     }

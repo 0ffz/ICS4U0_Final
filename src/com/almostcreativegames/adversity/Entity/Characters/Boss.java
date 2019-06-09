@@ -56,6 +56,7 @@ public class Boss extends Entity {
                 startDialog(new Dialog("Today is your first official day \nat work!",
                         "I know it's your second day,\nbut I also know Mr. Tutorial\ndid your job for you\nyesterday...",
                         "I'll let it slide this time,\nbut you'll be in trouble after\nthat.",
+                        "*You overhear him whisper\nsomething about millenials*",
                         "Let's start you off lightly by \ngiving you a simple task.",
                         "Please proceed straight up to \nfix the electrical panel, it \nseems to be malfunctioning \ntoday."));
             getGame().addAttribute("Day 2 talked to boss");
