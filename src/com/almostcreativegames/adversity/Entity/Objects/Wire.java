@@ -33,6 +33,8 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
     {
         setName("Sparking wire");
         setPosition(100, 270);
+        addAnimation("idle", new SpriteAnimation("Entities/Wire-spritesheet.png", 0, 0, 32, 16, 2, 1, 5, 5, 1));
+        setCurrentAnimation("idle");
     }
 
     @Override
@@ -56,7 +58,7 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
         hideInderactIndicator();
         if (getGame().hasAttribute("Talked to tutorial") && getGame().getDay() == 1) {
             if (getGame().hasAttribute("Talked to WireHelper")) {
-                Battle battle = new Battle("Battle/Battle.png", this, room, getGame());
+                Battle battle = new Battle(this, room, getGame());
                 getGame().getRenderer().loadRoom(battle);
             } else
                 startDialog(new Dialog("You should talk to the wire\nhelper before doing this."));
@@ -202,11 +204,5 @@ public class Wire extends EntityAnimated implements BattleBehaviour, HealthBehav
     @Override
     public double getMaxHealth() {
         return 10;
-    }
-
-    @Override
-    protected void registerAnimations() {
-        addAnimation("idle", new SpriteAnimation("Entities/Wire-spritesheet.png", 0, 0, 32, 16, 2, 1, 5, 5, 1));
-        setCurrentAnimation("idle");
     }
 }

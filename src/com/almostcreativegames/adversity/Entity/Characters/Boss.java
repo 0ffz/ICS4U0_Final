@@ -40,7 +40,12 @@ public class Boss extends Entity {
                 startDialog(new Dialog("Hello!", "Welcome to your first day of \nyour job.",
                         "Today you can spend the day \nlooking around and learning \nabout the workplace.",
                         "Go talk to Mr. Tutorial right\nthere, he'll show you around.",
-                        "After that, go up and talk to\none of the engineers about\nwhat you should do next."));
+                        "After that, go up and talk to\none of the engineers about\nwhat you should do next."){
+                    @Override
+                    public void onEnd() {
+                        tutorialMan.showInteractIndicator();
+                    }
+                });
                 getGame().addAttribute("Day 1 talked to boss");
             }
         } else if (getGame().getDay() == 1) {

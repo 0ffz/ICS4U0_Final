@@ -30,13 +30,10 @@ public class EndScreen extends Room {
     /**
      * Creates a room containing the player in a car, followed by credits
      *
-     * @param imageURL the background of the battle
-     * @param previous the previous room
-     * @param game     a reference to the game
+     * @param game a reference to the game
      */
-    //TODO could probably remove this if we know for sure we're loading the same background each time
-    public EndScreen(String imageURL, Room previous, GameRunner game) {
-        super(imageURL);
+    public EndScreen(GameRunner game) {
+        super("Battle/Empty.png");
         setGame(game);
 
         //hide overworld player
@@ -71,6 +68,7 @@ public class EndScreen extends Room {
 
                 Timer timer = new Timer();
 
+                //list out a new line of credits every 2000ms
                 timer.schedule(new TimerTask() {
                     int iteration = 0;
 
@@ -113,6 +111,7 @@ public class EndScreen extends Room {
                                 addEntity(thanks);
                                 break;
                             case 6:
+                                //delete the save and end the game
                                 Save.delete();
                                 timer.cancel();
                                 game.close();

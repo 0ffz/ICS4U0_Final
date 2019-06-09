@@ -197,10 +197,10 @@ public class GameRunner extends Application {
      * Plays the end scene
      */
     private void playEndScene() {
-        SleepScreen sleepScreen = new SleepScreen("Battle/Empty.png", rooms.getCurrentRoom(), this){
+        SleepScreen sleepScreen = new SleepScreen(rooms.getCurrentRoom(), this){
             @Override
             public void onComplete() {
-                EndScreen endScreen = new EndScreen("Battle/Empty.png", rooms.getCurrentRoom(), GameRunner.this);
+                EndScreen endScreen = new EndScreen(GameRunner.this);
                 renderer.loadRoom(endScreen);
             }
         };
@@ -211,7 +211,7 @@ public class GameRunner extends Application {
      * Plays the sleeping scene
      */
     private void playSleepingScene() {
-        SleepScreen sleepScreen = new SleepScreen("Battle/Empty.png", rooms.getCurrentRoom(), this);
+        SleepScreen sleepScreen = new SleepScreen(rooms.getCurrentRoom(), this);
         renderer.loadRoom(sleepScreen);
     }
 

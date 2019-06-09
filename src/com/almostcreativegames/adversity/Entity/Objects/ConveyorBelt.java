@@ -34,6 +34,8 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
     {
         setName("Conveyor Belt");
         setPosition(870, 500);
+        addAnimation("invisible", new SpriteAnimation("Empty.png", 0, 0, 1, 1, 1, 1, 100, 500, 1));
+        setCurrentAnimation("invisible");
 
         //setup the conveyor belt battle image the player will be cleaning dirt off of
         conveyorBelt = new EntityAnimated();
@@ -67,7 +69,7 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
         hideInderactIndicator();
         if (room.getGame().getDay() == 2) {
             if (getGame().hasAttribute("Spoken to conveyor helper")) {
-                Battle battle = new Battle("Battle/Battle.png", this, room, getGame());
+                Battle battle = new Battle(this, room, getGame());
                 getGame().getRenderer().loadRoom(battle);
             } else
                 startDialog(new Dialog("Maybe you should talk to\nthe conveyor guy first."));
@@ -255,11 +257,5 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
     @Override
     public double getMaxHealth() {
         return 20;
-    }
-
-    @Override
-    protected void registerAnimations() {
-        addAnimation("invisible", new SpriteAnimation("Empty.png", 0, 0, 1, 1, 1, 1, 100, 500, 1));
-        setCurrentAnimation("invisible");
     }
 }

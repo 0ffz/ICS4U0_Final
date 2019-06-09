@@ -24,7 +24,6 @@ import javafx.stage.Stage;
  * <p>1.3.1 - Created room</p>
  */
 public class GameOverScreen extends Room {
-
     /**
      * Creates a room for the game over screen, containing a soul and options to retry or quit the game.
      *
