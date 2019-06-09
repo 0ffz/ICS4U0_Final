@@ -22,7 +22,7 @@ This is our submission for our final project in the ICS4U0 course, where we had 
 
 This project is [hosted on GitHub](https://github.com/0ffz/ICS4U0_Final) but also contains version numbers in the top comments of each class.
 
-The following explains the version numbers:
+##### Version numbers
 
 They are split into three sections `x.y.z`
 
@@ -33,6 +33,10 @@ They are split into three sections `x.y.z`
     * `2`: June 3, 2019
     * `3`: June 10, 2019 - The final due date of
 * `z` describes the number of version the file has gone through, starting from 1.
+
+##### Authors
+
+If there is no author mentioned next to an edit, it has been done by the first listed author in the `@author` tag.
 
 ## References
 
