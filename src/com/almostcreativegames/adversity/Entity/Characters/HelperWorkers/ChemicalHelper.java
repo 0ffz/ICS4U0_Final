@@ -28,19 +28,16 @@ public class ChemicalHelper extends Entity {
     @Override
     public void onRoomLoad() {
         if (getGame().getDay() == 5)
-        showInteractIndicator();
+            showInteractIndicator();
     }
 
     @Override
     public void onInteract() {
         if (getGame().getDay() == 5)
-            startDialog(new Dialog("Hey you the new guy?", "Well this is the chemical \nbin you gotta clean!"){
-                @Override
-                public void onEnd() {
-                    hideInderactIndicator();
-                }
-            });
+            startDialog(new Dialog("Hey you the new guy?", "Well this is the chemical \nbin you gotta clean!"));
         else
             startDialog(new Dialog("Hey don't bother me I'm \ndoing my job.", "You should go do your job"));
+        hideInderactIndicator();
+
     }
 }

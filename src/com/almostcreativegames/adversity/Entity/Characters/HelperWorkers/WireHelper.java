@@ -2,7 +2,9 @@ package com.almostcreativegames.adversity.Entity.Characters.HelperWorkers;
 
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Entity.Objects.Wire;
 import javafx.scene.image.Image;
+import sun.plugin.services.WIExplorerBrowserService;
 
 /**
  * A class for the Wire Helper entity that you have to talk to
@@ -17,6 +19,12 @@ import javafx.scene.image.Image;
  * <p>0.3.1 - Wire Helper moved from RoomManager to it's own class</p>
  */
 public class WireHelper extends Entity {
+
+    private Wire wire;
+
+    public WireHelper (Wire wire){
+        this.wire = wire;
+    }
 
     {
         setName("Wire Helper");
@@ -33,19 +41,21 @@ public class WireHelper extends Entity {
 
     @Override
     public void onInteract() {
-        if (getGame().getDay() == 1)
+        if (getGame().getDay() == 1) {
             startDialog(new Dialog("Hey you the new guy?",
                     "Well this is the wire you \ngotta fix!",
                     "There's some gloves in the\nstorage room down and to\nthe left.",
                     "You should go grab them.",
-                    "Come back here after that\nand fix the wire") {
+                    "Come back here after that\nand fix the wire"){
                 @Override
                 public void onEnd() {
-                    hideInderactIndicator();
-                    getGame().addAttribute("Talked to WireHelper");
+                    if (getGame().hasEquipment("Electrical Gloves"))
+                        wire.showInteractIndicator();
                 }
             });
-        else
+            getGame().addAttribute("Talked to WireHelper");
+        } else
             startDialog(new Dialog("Hey don't bother me I'm \ndoing my job.", "You should go do your job"));
+        hideInderactIndicator();
     }
 }

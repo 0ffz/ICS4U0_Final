@@ -56,10 +56,7 @@ public class RoomManager {
 
             @Override
             public void onRoomLoad() {
-                if (game.getDay() == 0 && game.hasAttribute("Day 1 talked to boss")
-                        || game.getDay() == 1 && game.hasAttribute("Day 2 talked to boss")
-                        || game.getDay() == 2 && game.hasAttribute("Day 3 talked to boss")
-                        || game.getDay() == 3 && game.hasAttribute("Day 4 talked to boss")) {
+                if (game.hasAttribute("Job done")) {
                     showInteractIndicator();
                 }
             }
@@ -195,7 +192,7 @@ public class RoomManager {
         ConveyorBelt conveyorBelt = new ConveyorBelt();
         Mixer mixer = new Mixer();
 
-        WireHelper electricalHelper = new WireHelper();
+        WireHelper electricalHelper = new WireHelper(wire);
         ChemicalHelper chemicalHelper = new ChemicalHelper();
         ConveyorHelper conveyorHelper = new ConveyorHelper(conveyorBelt);
         MixerHelper mixerHelper = new MixerHelper(mixer);

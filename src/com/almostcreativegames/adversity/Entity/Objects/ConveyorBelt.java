@@ -22,7 +22,7 @@ import java.util.*;
  * @version 0.3.1
  *
  * <h2>Changelog</h2>
- * <p>0.3.1 - Chemical Helper moved from RoomManager to it's own class</p>
+ * <p>0.3.1 - ConveyorBelt class created</p>
  */
 public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
     private Timer timer;
