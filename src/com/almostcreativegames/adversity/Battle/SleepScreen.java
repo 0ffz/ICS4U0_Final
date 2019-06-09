@@ -49,7 +49,7 @@ public class SleepScreen extends Room {
         chapter.setPosition(500 - chapter.getTextWidth() / 2, 200);
         addEntity(chapter);
 
-        //hide overworld player
+        //freeze overworld player
         Player player = game.getCurrentPlayer();
         player.setCanMove(false);
 

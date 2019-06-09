@@ -70,7 +70,7 @@ public class Battle extends Room {
         fightingSprite.setPosition(500 - boundary.getWidth() / 2, 200); //center the sprite
         addEntity(fightingSprite);
 
-        //hide overworld player
+        //freeze overworld player
         previousPlayer.setCanMove(false);
 
         //creating soul

@@ -36,7 +36,7 @@ public class EndScreen extends Room {
         super("Battle/Empty.png");
         setGame(game);
 
-        //hide overworld player
+        //freeze overworld player
         Player player = game.getCurrentPlayer();
         player.setCanMove(false);
 

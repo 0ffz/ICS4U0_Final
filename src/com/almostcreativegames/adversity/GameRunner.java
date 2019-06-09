@@ -1,15 +1,14 @@
 package com.almostcreativegames.adversity;
 
-import com.almostcreativegames.adversity.Battle.Battle;
 import com.almostcreativegames.adversity.Battle.EndScreen;
 import com.almostcreativegames.adversity.Battle.GameOverScreen;
 import com.almostcreativegames.adversity.Battle.SleepScreen;
+import com.almostcreativegames.adversity.Battle.StartScreen;
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Dialog.DialogBox;
 import com.almostcreativegames.adversity.Drawing.Renderer;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.Equippable;
-import com.almostcreativegames.adversity.Entity.Objects.ConveyorBelt;
 import com.almostcreativegames.adversity.Entity.Player;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
 import com.almostcreativegames.adversity.Input.InputListener;
@@ -33,7 +32,6 @@ import javafx.stage.Stage;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -197,7 +195,7 @@ public class GameRunner extends Application {
      * Plays the end scene
      */
     private void playEndScene() {
-        SleepScreen sleepScreen = new SleepScreen(rooms.getCurrentRoom(), this){
+        SleepScreen sleepScreen = new SleepScreen(rooms.getCurrentRoom(), this) {
             @Override
             public void onComplete() {
                 EndScreen endScreen = new EndScreen(GameRunner.this);
@@ -389,11 +387,17 @@ public class GameRunner extends Application {
 
         //play intro if player started a new game
         if (!loadSave) {
-            playSleepingScene();
-            startDialog(new Dialog("You just woke up from sleep.",
-                    "It seems like today is an\nimportant day, but you can't\nseem to remember why.",
-                    "Surprisingly, you are already\ndressed in your clothes.",
-                    "You should probably go see\nmom to check what you're\ndoing today"), rooms.getCurrentRoom());
+            StartScreen startScreen = new StartScreen(this){
+                @Override
+                public void onEnd() {
+                    playSleepingScene();
+                    startDialog(new Dialog("You just woke up from sleep.",
+                            "It seems like today is an\nimportant day, but you can't\nseem to remember why.",
+                            "Surprisingly, you are already\ndressed in your clothes.",
+                            "You should probably go see\nmom to check what you're\ndoing today"), rooms.getCurrentRoom());
+                }
+            };
+            renderer.loadRoom(startScreen);
         } else {
             playMorningMessage();
         }
