@@ -63,7 +63,6 @@ public class GameRunner extends Application {
     private DialogBox dialogBox;
     private List<Equippable> equipment = new ArrayList<>();
     private double playerHealth = 10;
-    private double maxPlayerHealth = 10;
     private List<String> gameAttributes = new ArrayList<>();
     private Stage stage;
     private Player currentPlayer;
@@ -228,7 +227,7 @@ public class GameRunner extends Application {
      * @return the player's maximum health
      */
     public double getMaxPlayerHealth() {
-        return maxPlayerHealth;
+        return 10;
     }
 
     /**
@@ -587,5 +586,4 @@ public class GameRunner extends Application {
             resize(scene, newWidth, newHeight);
         }
     }
-
 }

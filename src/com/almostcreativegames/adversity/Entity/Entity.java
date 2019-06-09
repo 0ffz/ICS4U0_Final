@@ -326,21 +326,27 @@ public class Entity {
                 + " Velocity: [" + velocityX + "," + velocityY + "]";
     }
 
-    public void hideInderactIndicator() {
-        if (interactIndicator != null) {
-            interactIndicator.remove();
-            interactIndicator = null;
-        }
-    }
-
+    /**
+     * Creates a flashing "E" indicator above the entity, automatically centering it based on the entity's width
+     */
     public void showInteractIndicator() {
-        if(interactIndicator == null) {
+        if (interactIndicator == null) {
             interactIndicator = new EntityAnimated();
             interactIndicator.addAnimation("flash", new SpriteAnimation("Menu/Tutorial/E to interact.png", 0, 0, 50, 50, 1, 2, 1, 1, 1));
             interactIndicator.setCurrentAnimation("flash");
             interactIndicator.setLayer(9);
             interactIndicator.setPosition(x + width / 2 - 25, y - 60);
             room.addEntity(interactIndicator);
+        }
+    }
+
+    /**
+     * Hides the flashing "E" indicator above the entity
+     */
+    public void hideInderactIndicator() {
+        if (interactIndicator != null) {
+            interactIndicator.remove();
+            interactIndicator = null;
         }
     }
 }

@@ -33,23 +33,23 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
 
     {
         setName("Conveyor Belt");
+        setPosition(870, 500);
+
+        //setup the conveyor belt battle image the player will be cleaning dirt off of
         conveyorBelt = new EntityAnimated();
         conveyorBelt.addAnimation("idle", new SpriteAnimation("Entities/Conveyor belt/Conveyor belt.png", 0, 0, 53, 12, 1, 1, 15, 15, 1));
         conveyorBelt.setCurrentAnimation("idle");
         conveyorBelt.setPosition(500 - conveyorBelt.getImage().getWidth() / 2, 700);
         conveyorBelt.hide();
-
-        //TODO set position and image
     }
 
     @Override
     public Entity getBattleSprite() {
         EntityAnimated sprite = new EntityAnimated();
-        if(getGame().hasAttribute("Conveyor Belt Off")){
+        if (getGame().hasAttribute("Conveyor Belt Off")) {
             sprite.addAnimation("idle", new SpriteAnimation("Entities/Conveyor belt/Conveyor belt.png", 0, 0, 53, 12, 1, 1, 15, 15, 1));
             sprite.setCurrentAnimation("idle");
-        }
-        else {
+        } else {
             sprite.addAnimation("moving", new SpriteAnimation("Entities/Conveyor belt/Conveyor belt.png", 0, 0, 53, 12, 1, 3, 15, 15, 3));
             sprite.setCurrentAnimation("moving");
         }
@@ -64,12 +64,15 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
 
     @Override
     public void onInteract() {
-        if (getGame().hasAttribute("Spoken to Conveyor Helper 2") && room.getGame().getDay() == 3) {
-            //Create Battle
-        } else if (!getGame().hasAttribute("Spoken to Conveyor Helper 2") && room.getGame().getDay() == 3)
-            startDialog(new Dialog("The conveyor belt seems to \nstill be moving!", "I probably shouldn't touch \nthat"));
-        else
-            startDialog(new Dialog("You probably shouldn't touch\nthat"));
+        hideInderactIndicator();
+        if (room.getGame().getDay() == 2) {
+            if (getGame().hasAttribute("Spoken to conveyor helper")) {
+                Battle battle = new Battle("Battle/Battle.png", this, room, getGame());
+                getGame().getRenderer().loadRoom(battle);
+            } else
+                startDialog(new Dialog("Maybe you should talk to\nthe conveyor guy first."));
+        } else
+            startDialog(new Dialog("You probably shouldn't touch\nthat."));
     }
 
     @Override
@@ -199,17 +202,18 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
     }
 
     @Override
-    public void onPlayerTurn(Battle battle){
-        for(Entity dirt: dirtPieces)
+    public void onPlayerTurn(Battle battle) {
+        for (Entity dirt : dirtPieces)
             dirt.remove();
         dirtPieces.clear();
-        for(Entity gear: gears)
+        for (Entity gear : gears)
             gear.remove();
         gears.clear();
         conveyorBelt.hide();
 
         startDialog(new Dialog("Just a little more\ncleaning"));
     }
+
     /**
      * Starts this entity's turn
      *
@@ -255,6 +259,7 @@ public class ConveyorBelt extends EntityAnimated implements BattleBehaviour, Hea
 
     @Override
     protected void registerAnimations() {
-        super.registerAnimations();
+        addAnimation("invisible", new SpriteAnimation("Empty.png", 0, 0, 1, 1, 1, 1, 100, 500, 1));
+        setCurrentAnimation("invisible");
     }
 }

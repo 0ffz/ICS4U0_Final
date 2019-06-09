@@ -2,6 +2,7 @@ package com.almostcreativegames.adversity.Entity.Characters.HelperWorkers;
 
 import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Entity;
+import com.almostcreativegames.adversity.Entity.Objects.ConveyorBelt;
 import javafx.scene.image.Image;
 
 /**
@@ -17,10 +18,16 @@ import javafx.scene.image.Image;
  * <p>0.3.1 - Conveyor Helper moved from RoomManager to it's own class</p>
  */
 public class ConveyorHelper extends Entity {
+    private ConveyorBelt conveyorBelt;
+
     {
         setName("Conveyor Helper");
         setImage(new Image("Entities/Conveyor Helper.png", 80, 0, true, true));
         setPosition(650, 800);
+    }
+
+    public ConveyorHelper(ConveyorBelt conveyorBelt) {
+        this.conveyorBelt = conveyorBelt;
     }
 
     @Override
@@ -33,7 +40,7 @@ public class ConveyorHelper extends Entity {
     @Override
     public void onInteract() {
         if (getGame().getDay() == 2 && getGame().hasAttribute("Day 3 talked to boss")) {
-            if(getGame().hasAttribute("Conveyor cleaned")) {
+            if (getGame().hasAttribute("Conveyor cleaned")) {
                 startDialog(new Dialog("Nice cleaning there!"));
             } else if (getGame().hasAttribute("Conveyor Belt Off")) {
                 startDialog(new Dialog("Go on back to the conveyor\nbelt, it's off now."));
@@ -49,7 +56,13 @@ public class ConveyorHelper extends Entity {
             else {
                 startDialog(new Dialog("Hey you the new guy?",
                         "Well this is the conveyor \nbelt you gotta fix!",
-                        "Just go on one of those\nchairs and press \"E\"!"));
+                        "Just go on one of those\nchairs!"){
+                    @Override
+                    public void onEnd() {
+                        conveyorBelt.showInteractIndicator();
+                    }
+                });
+                getGame().addAttribute("Spoken to conveyor helper");
             }
         } else
             startDialog(new Dialog("Hey don't bother me I'm \ndoing my job.", "You should go do your job"));

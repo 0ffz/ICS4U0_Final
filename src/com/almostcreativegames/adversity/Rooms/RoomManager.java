@@ -9,6 +9,7 @@ import com.almostcreativegames.adversity.Entity.Characters.HelperWorkers.MixerHe
 import com.almostcreativegames.adversity.Entity.Characters.HelperWorkers.WireHelper;
 import com.almostcreativegames.adversity.Entity.Entity;
 import com.almostcreativegames.adversity.Entity.EntityAnimated;
+import com.almostcreativegames.adversity.Entity.Objects.ConveyorBelt;
 import com.almostcreativegames.adversity.Entity.Objects.Gloves;
 import com.almostcreativegames.adversity.Entity.Objects.Wire;
 import com.almostcreativegames.adversity.Entity.SpriteAnimation;
@@ -190,17 +191,19 @@ public class RoomManager {
         rooms[0][4] = new Room("Rooms/Factory/Game Room.png");
 
         Wire wire = new Wire();
+        ConveyorBelt conveyorBelt = new ConveyorBelt();
 
         WireHelper electricalHelper = new WireHelper();
         ChemicalHelper chemicalHelper = new ChemicalHelper();
-        ConveyorHelper conveyorHelper = new ConveyorHelper();
+        ConveyorHelper conveyorHelper = new ConveyorHelper(conveyorBelt);
         MixerHelper mixerHelper = new MixerHelper();
 
         rooms[0][4].addEntity(electricalHelper);
+        rooms[0][4].addEntity(wire);
         rooms[0][4].addEntity(chemicalHelper);
         rooms[0][4].addEntity(mixerHelper);
         rooms[0][4].addEntity(conveyorHelper);
-        rooms[0][4].addEntity(wire);
+        rooms[0][4].addEntity(conveyorBelt);
 
         for (Room[] row : rooms)
             for (Room room : row)
