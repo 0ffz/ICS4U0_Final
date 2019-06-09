@@ -41,7 +41,7 @@ import java.util.List;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy & Enfei Zhang
- * @version 0.2.3
+ * @version 1.2.4
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Basic game setup</p>
@@ -50,6 +50,12 @@ import java.util.List;
  * <p>0.2.3 -
  * Daniel: Moved player collision and input detection into separate class. Added entity interaction system (pressing "E")
  * Enfei: Added dialogBox</p>
+ * <p>1.2.4 -
+ * Daniel: Added equipment and game attributes.
+ * Added save loading mechanics.
+ * Added system for playing morning message and cutscenes (start, bed, and end).
+ * Added methods to close window, and end dialogs.
+ * Enfei: Removed unnecessary keyboard inputs + general cleanup</p>
  */
 public class GameRunner extends Application {
     private int day = 0;
@@ -387,7 +393,7 @@ public class GameRunner extends Application {
 
         //play intro if player started a new game
         if (!loadSave) {
-            StartScreen startScreen = new StartScreen(this){
+            StartScreen startScreen = new StartScreen(this) {
                 @Override
                 public void onEnd() {
                     playSleepingScene();

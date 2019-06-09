@@ -12,11 +12,12 @@ import java.util.HashMap;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 1.2.1
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>1.2.1 - Created class which holds a static ArrayList for inputs and needs to be registered to listen to input by
  * a runner class. Added delay functionality directly into the isKeyPressed method</p>
+ * <p>1.3.2 - Made InputListener non-static</p>
  */
 public class InputListener {
     private ArrayList<String> input = new ArrayList<>(); //the keys that are currently pressed

@@ -6,7 +6,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The class that will create saves of our game
@@ -15,12 +14,13 @@ import java.util.Set;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.0.1
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Save class created with the premise of saving implemented.</p>
+ * <p>1.3.2 - Now saves game attributes and equipment.
+ * Added methods for reading and deleting the save file.</p>
  */
-
 public class Save {
     private static String saveDir = System.getProperty("user.home") + File.separator + "almostcreative" + File.separator + "dghsaw";
     private static String fileName = File.separator + "save.dat" + File.separator;

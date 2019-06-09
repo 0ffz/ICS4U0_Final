@@ -15,12 +15,14 @@ import javafx.stage.Stage;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.1.2
+ * @version 1.2.3
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Checks for saved game when initialized. When start game button pressed, closes menu and opens game
  * window. Closes window when exit button pressed</p>
  * <p>0.1.2 - Removed print message</p>
+ * <p>1.2.3 - Set fonts to buttons on screen.
+ * Made continue game and new game buttons</p>
  */
 
 public class Controller {

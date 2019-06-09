@@ -41,6 +41,7 @@ public class Dialog {
 
     /**
      * Gets the current message being displayed
+     *
      * @return the message in the list that is being displayed
      */
     public String getCurrentMessage() {
