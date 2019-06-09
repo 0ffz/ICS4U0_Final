@@ -11,6 +11,18 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class for the Text on the battle menu
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 1.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>1.3.1 - Text class created with necessary implementation</p>
+ */
 public class Text extends Entity {
     protected String text;
     protected Color fillColor = Color.WHITE;

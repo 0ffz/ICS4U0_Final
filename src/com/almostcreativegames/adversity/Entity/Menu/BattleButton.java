@@ -6,6 +6,18 @@ import com.almostcreativegames.adversity.Entity.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class for the Battle Button on the battle menu
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 1.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>1.3.1 - BattleButton class created with necessary implementation</p>
+ */
 public class BattleButton extends Button {
     private List<Button> subOptions = new ArrayList<>();
     private Battle battle;

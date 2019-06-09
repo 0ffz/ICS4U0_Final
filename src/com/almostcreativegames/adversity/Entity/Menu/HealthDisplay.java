@@ -6,7 +6,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
+ * A class to display health on the battle menu
  *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 1.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>1.3.1 - HealthDisplay class created with necessary implementation</p>
  */
 public class HealthDisplay extends Entity {
     private HealthBehaviour parent;

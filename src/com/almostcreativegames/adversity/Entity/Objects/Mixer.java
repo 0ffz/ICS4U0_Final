@@ -13,16 +13,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A class for the Conveyor Belt entity that you have to talk to
+ * A class for the Mixer entity that is battleable
  *
  * <h2>Course Info</h2>
  * ICS4U0 with Krasteva V.
  *
- * @author Enfei Zhang
- * @version 0.3.1
+ * @author Daniel Voznyy
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
- * <p>0.3.1 - Chemical Helper moved from RoomManager to it's own class</p>
+ * <p>0.3.1 - Mixer Class created</p>
+ * <p>1.3.2 - Battle animations and interactions implemented</p>
  */
 public class Mixer extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
     private double health = 20;

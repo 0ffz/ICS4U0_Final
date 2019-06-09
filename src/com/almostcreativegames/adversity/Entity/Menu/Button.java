@@ -3,6 +3,18 @@ package com.almostcreativegames.adversity.Entity.Menu;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * A class for the Button on the battle menu
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Daniel Voznyy
+ * @version 1.3.1
+ *
+ * <h2>Changelog</h2>
+ * <p>1.3.1 - Button class created with necessary implementation</p>
+ */
 public class Button extends Text {
     public Button(String text) {
         super(text);

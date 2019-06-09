@@ -40,8 +40,8 @@ public class Dialog {
     }
 
     /**
-     * Gets 
-     * @return
+     * Gets the current message being displayed
+     * @return the message in the list that is being displayed
      */
     public String getCurrentMessage() {
         return messages.get(index - 1);

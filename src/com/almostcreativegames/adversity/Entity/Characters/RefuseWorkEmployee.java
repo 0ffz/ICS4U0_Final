@@ -4,7 +4,19 @@ import com.almostcreativegames.adversity.Dialog.Dialog;
 import com.almostcreativegames.adversity.Entity.Entity;
 import javafx.scene.image.Image;
 
-
+/**
+ * A class for the Refuse Work Info Employee entity that you can talk to
+ *
+ * <h2>Course Info</h2>
+ * ICS4U0 with Krasteva V.
+ *
+ * @author Enfei Zhang
+ * @version 1.3.2
+ *
+ * <h2>Changelog</h2>
+ * <p>0.3.1 - Refuse Work Info Employee Entity moved from RoomManager to it's own class</p>
+ * <p>1.3.2 - Cleaned up te code</p>
+ */
 public class RefuseWorkEmployee extends Entity {
 
     {
