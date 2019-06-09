@@ -37,7 +37,7 @@ public class Mom extends Entity {
         hideInderactIndicator();
         if (getGame().getDay() == 0) {
             talkedTo = true;
-            startDialog(new Dialog("You should be going to work \nhoney.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!") {
+            startDialog(new Dialog("I'm so proud of you honey!", "You're so grown up now!", "Soon you'll be going to \nuniversity and now you even \nhave a job!", "Anyways you should be going \nto work now honey.", "Don't wanna be late on your \nfirst day!", "Oh and remember honey to \nalways stay safe!") {
                 @Override
                 public void onEnd() {
                 }

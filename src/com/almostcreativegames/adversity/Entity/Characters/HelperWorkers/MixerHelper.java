@@ -29,7 +29,7 @@ public class MixerHelper extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (getGame().getDay() == 3 && !talkedTo && getGame().hasAttribute("Day 4 talked to boss")) {
+        if (getGame().getDay() == 3 && !talkedTo && getGame().hasAttribute("Day 4 talked to boss") && !(getGame().hasAttribute("Spoken to MixerHelper"))) {
             talkedTo = true;
             showInteractIndicator();
         }

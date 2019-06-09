@@ -58,8 +58,13 @@ public class EndScreen extends Room {
         addEntity(car);
 
         //TODO finish interaction with mom
-        game.startDialog(new Dialog("Well, you finally have\ntime to relax...",
-                "This new job is a little weird,\nbut you're still happy\nto be saving up for\nuniversity this way.") {
+        game.startDialog(new Dialog("Honey I'm proud of you \naccomplishments over the \npast few days!",
+                "You did great at your job!",
+                "Now you even have enough \nmoney to pay for part of \nyour tuition",
+                "So it's time for us to go \non vacation",
+                "Now you think to yourself",
+                "Well, you finally have\ntime to relax...",
+                "This new job was a little weird,\nbut you're still happy\nto have saved up for\nuniversity this way.") {
             @Override
             public void onEnd() {
                 driving.remove();

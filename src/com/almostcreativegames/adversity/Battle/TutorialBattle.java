@@ -45,7 +45,7 @@ public class TutorialBattle extends Battle {
                 "The next is \"ITEM\", which\ncontains items you can equip",
                 "You can equip or unequip\nthem by pressing \"E\" while\nstanding over them",
                 "Equipment is equipped\nwhen there is a\n little [x] next to it",
-                "\"LEAVE\" lets you leave the fight",
+                "\"LEAVE\" lets you leave the \nfight",
                 "One last thing,\nAfter you choose an option,\nmy turn will start",
                 "Don't worry, I don't bite,\nbut some of the stuff in the\nwarehouse does, so just be\ncareful",
                 "Now, go out and battle me!"), this);

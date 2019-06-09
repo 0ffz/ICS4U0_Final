@@ -37,6 +37,6 @@ public class StatisticsMan extends Entity {
                 }
             });
         else
-            startDialog(new Dialog("Hey there again.", stats[(int) (Math.random() * 2)]));
+            startDialog(new Dialog("Hey there again.", "Did you know?", stats[(int) (Math.random() * 2)]));
     }
 }

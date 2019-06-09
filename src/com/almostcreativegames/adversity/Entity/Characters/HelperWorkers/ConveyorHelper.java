@@ -33,7 +33,7 @@ public class ConveyorHelper extends Entity {
     @Override
     public void onRoomLoad() {
         //TODO stop this from popping up every time you talk to him
-        if (getGame().getDay() == 2 && (getGame().hasAttribute("Day 3 talked to boss") || (getGame().hasAttribute("Inspected conveyor belt")) && !getGame().hasAttribute("Conveyor Belt Off")))
+        if (getGame().getDay() == 2 && (getGame().hasAttribute("Day 3 talked to boss") && !(getGame().hasAttribute("Spoken to conveyor helper"))))
             showInteractIndicator();
     }
 
@@ -55,7 +55,7 @@ public class ConveyorHelper extends Entity {
                 });
             else {
                 startDialog(new Dialog("Hey you the new guy?",
-                        "Well this is the conveyor \nbelt you gotta fix!",
+                        "Well this is the conveyor \nbelt you gotta clean!",
                         "Just go on one of those\nchairs!"){
                     @Override
                     public void onEnd() {

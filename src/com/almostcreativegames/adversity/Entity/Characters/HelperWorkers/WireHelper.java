@@ -17,7 +17,6 @@ import javafx.scene.image.Image;
  * <p>0.3.1 - Wire Helper moved from RoomManager to it's own class</p>
  */
 public class WireHelper extends Entity {
-    private boolean talkedTo;
 
     {
         setName("Wire Helper");
@@ -27,8 +26,7 @@ public class WireHelper extends Entity {
 
     @Override
     public void onRoomLoad() {
-        if (getGame().getDay() == 1 && !talkedTo && getGame().hasAttribute("Day 2 talked to boss")) {
-            talkedTo = true;
+        if (getGame().getDay() == 1 && getGame().hasAttribute("Day 2 talked to boss") && !(getGame().hasAttribute("Talked to WireHelper"))) {
             showInteractIndicator();
         }
     }

@@ -167,7 +167,7 @@ public class TutorialMan extends EntityAnimated implements BattleBehaviour, Heal
                 battle.nextTurn();
                 startDialog(new Dialog(
                         "Oh gosh, sorry I didn't mean\nto hit you that bad...",
-                        "You look pretty bad.\nYou know what, take some time\noff today...",
+                        "You look pretty bad.\nYou know what, take some \ntime off today...",
                         "I'll handle your shift for you.",
                         "Sorry about that, just\ndon't tell the boss",
                         "Don't get used to it though,\nI'm just feeling extra nice\ntoday") {
