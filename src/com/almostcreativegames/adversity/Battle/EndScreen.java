@@ -57,7 +57,6 @@ public class EndScreen extends Room {
         car.setPosition(500 - car.getImage().getWidth() / 2, 300);
         addEntity(car);
 
-        //TODO finish interaction with mom
         game.startDialog(new Dialog("Honey I'm proud of your \naccomplishments over the \npast few days!",
                 "You did great at your job!",
                 "Now you even have enough \nmoney to pay for part of \nyour tuition",
