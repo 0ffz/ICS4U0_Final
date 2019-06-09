@@ -436,7 +436,7 @@ public class GameRunner extends Application {
                 if (inputListener.isKeyPressed("F11", 500))
                     stage.setFullScreen(!stage.isFullScreen());
 
-                if (inputListener.isKeyPressed("E", 300)) {
+                if (inputListener.isKeyPressed("E", 300) || inputListener.isKeyPressed("SPACE", 300)) {
                     if (dialogBox.hasDialog()) {
                         dialogBox.nextMessage();
                     } else

@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 public class Controller {
     public Button newGameButton;
     public Button continueGameButton;
-    public Button instructions;
     public Button exit;
     public Text title;
 
@@ -40,7 +39,6 @@ public class Controller {
         title.setText("Don't get hurt,\nstay at work");
         continueGameButton.setFont(Fonts.NORMAL);
         newGameButton.setFont(Fonts.NORMAL);
-        instructions.setFont(Fonts.NORMAL);
         exit.setFont(Fonts.NORMAL);
     }
 
