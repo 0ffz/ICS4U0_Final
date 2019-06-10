@@ -20,7 +20,7 @@ import javafx.scene.image.Image;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.3.2
+ * @version 1.3.3
  *
  * <h2>Changelog</h2>
  * <p>0.2.1 - Created basis for class, almost identical to Room, with a fighting entity held inside and a method to end
@@ -28,6 +28,7 @@ import javafx.scene.image.Image;
  * entity sprite, an ACT and EQUIP button which both open submenus, with back buttons</p>
  * <p>0.3.2 - Added turn based mechanics to the battle. The player gets to choose actions, and enemy plays their own
  * appropriate minigame. Now also does death checks. Removed imageURL since it's always the same.</p>
+ * <p>1.3.3 - Leave button added</p>
  */
 public class Battle extends Room {
     protected Room fromRoom; //the room from which the Battle Menu was opened (we use it to return to that room later)

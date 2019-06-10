@@ -20,13 +20,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 0.2.3
+ * @version 1.3.4
  *
  * <h2>Changelog</h2>
  * <p>0.0.1 - Beginning of scene system</p>
  * <p>0.1.2 - Renamed to Room, now holds entities, a background and collision map from black and white image.
  * Can check if an entity is going to collide with the collision map. Can move entities between rooms.</p>
- * <p>0.2.3 Added entity collision checker. Fixed bugs to do with concurrency. Now using direct reference to GameRunner object</p>
+ * <p>0.2.3 - Added entity collision checker. Fixed bugs to do with concurrency. Now using direct reference to GameRunner object</p>
+ * <p>1.3.4 - Refactored room images and made creating rooms use the file extension</p>
  */
 
 public class Room {
