@@ -18,11 +18,11 @@ import java.util.*;
  * ICS4U0 with Krasteva V.
  *
  * @author Daniel Voznyy
- * @version 1.2.2
+ * @version 1.3.2
  *
  * <h2>Changelog</h2>
  * <p>0.2.1 - TutorialMan class created with necessary animation a interactions implemented</p>
- * <p>1.2.2 - TutorialMan proper battle animations implemented and Code Cleanup</p>
+ * <p>1.3.2 - TutorialMan proper battle animations implemented and Code Cleanup</p>
  */
 public class TutorialMan extends EntityAnimated implements BattleBehaviour, HealthBehaviour {
     private Timer timer;
