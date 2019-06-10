@@ -48,4 +48,4 @@ The delay and repeating tasks used in battles were learned from [here](http://mr
 
 Fixing concurrency issues with ArrayLists was learned from [here](https://stackoverflow.com/questions/6916385/is-there-a-concurrent-list-in-javas-jdk)
 
-All resources and any other code was created by Daniel Voznyy or Enfei Zhang
+All resources and any other code were created by Daniel Voznyy or Enfei Zhang
